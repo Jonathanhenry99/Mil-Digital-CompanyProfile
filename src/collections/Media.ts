@@ -14,7 +14,7 @@ export const Media: CollectionConfig = {
   slug: "media",
   admin: { group: "Library" },
   access: { read: anyone, create: editors, update: editors, delete: editors },
-  hooks: revalidateCollection("home"),
+  hooks: revalidateCollection("home", "case-studies", "articles", "reports"),
   upload: {
     focalPoint: true,
     mimeTypes: ["image/*", "video/*", "application/pdf"],

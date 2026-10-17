@@ -112,6 +112,16 @@ Panjang total hampir sama (MIL 19,7 layar, TT 19,3 layar). Yang perlu dipangkas 
 
 ---
 
+## 6. Revisi 18 Okt 2026
+
+- **Selang-seling gelap/terang** ala MGD (`.theme-light` per section) supaya halaman tidak terasa monoton. Logo klien tetap di section gelap karena PNG-nya putih.
+- **Work wheel diganti carousel case study** (adaptasi carousel MGD): satu layar, bisa di-drag, filter industri, panah, counter dan progress. Setiap kartu menuju detail case study.
+- **Pita teks besar** ala MGD sebagai pemisah, bergerak mengikuti scroll.
+- **Homepage hanya berisi item inventory**; bab Proses pindah ke halaman Digital Marketing Consultation.
+- **Header**: menu dikelompokkan di kanan bersama jam dan CTA, teks lebih tegas dengan gradasi gelap di atas foto, dan container dilebarkan ke 1760px.
+- **Tombol utama**: biru MIL solid (tidak lagi kotak putih dengan aksen biru).
+- **Semua URL di page inventory sudah dibangun.**
+
 ## 5. Homepage v2 (dibangun 17 Okt 2026)
 
 Status: **sudah diimplementasikan.** Tabel di bawah adalah rencana awalnya; perbedaan dari implementasi:

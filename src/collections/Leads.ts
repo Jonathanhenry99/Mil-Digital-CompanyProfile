@@ -15,8 +15,8 @@ export const SERVICES = ["Consultation", "Advertising", "Creative", "Not sure ye
 export const Leads: CollectionConfig = {
   slug: "leads",
   admin: {
-    useAsTitle: "brandName",
-    defaultColumns: ["brandName", "name", "phone", "status", "createdAt"],
+    useAsTitle: "name",
+    defaultColumns: ["name", "brandName", "source", "status", "createdAt"],
     group: "Leads",
     description: "Free consultation requests. Update the status as you follow up.",
   },
@@ -54,13 +54,13 @@ export const Leads: CollectionConfig = {
       fields: [
         { name: "name", type: "text", required: true },
         { name: "email", type: "email", required: true },
-        { name: "phone", type: "text", required: true, label: "Phone / WhatsApp" },
+        { name: "phone", type: "text", label: "Phone / WhatsApp" },
       ],
     },
     {
       type: "row",
       fields: [
-        { name: "brandName", type: "text", required: true },
+        { name: "brandName", type: "text" },
         { name: "industry", type: "text" },
         { name: "location", type: "text" },
       ],
@@ -80,7 +80,14 @@ export const Leads: CollectionConfig = {
       label: "Digital marketing tried",
       options: ACTIVITIES.map((a) => ({ label: a, value: a })),
     },
-    { name: "message", type: "textarea", required: true, label: "What they want to discuss" },
+    { name: "message", type: "textarea", label: "What they want to discuss" },
+    {
+      name: "quizAnswers",
+      type: "textarea",
+      label: "Brand quiz answers",
+      admin: { description: "Filled when the visitor took the brand quiz before sending a brief." },
+    },
+    { name: "reference", type: "text", admin: { description: "Report or page the lead came from.", position: "sidebar" } },
     { name: "pageOrigin", type: "text", admin: { readOnly: true, position: "sidebar" } },
     { name: "notes", type: "textarea", admin: { position: "sidebar", description: "Internal follow-up notes." } },
   ],

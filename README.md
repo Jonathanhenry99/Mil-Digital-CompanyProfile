@@ -29,6 +29,7 @@ npm run build                # build produksi
 - **Portfolio**: Case studies, Clients (logo marquee), Testimonials. **Insights**: Articles, Reports. **Library**: Media.
 - Foto hero: upload di Homepage → Hero → Background image. Atur titik fokus foto di Media (klik bagian yang harus tetap terlihat).
 - Setiap kali disimpan, halaman terkait langsung diperbarui (cache di-expire otomatis).
+- Koleksi baru: **Jobs** & **Applications** (menu Careers, role HR). Lead kini juga datang dari quiz, download report dan waitlist ATLAS.
 - `npm run seed` mengisi CMS kosong dengan konten awal dari `src/content/home.ts`; `npm run payload run src/seed/company-data.ts` menerapkan data asli MIL (foto tim, stats, testimoni, artikel) ke CMS yang sudah di-seed.
 - `npm run generate:types` setelah mengubah skema di `src/collections` / `src/globals`.
 
@@ -46,4 +47,4 @@ npm run build                # build produksi
 
 ## Status
 
-Fase 2 — homepage terhubung ke CMS (konten sebagian masih placeholder). Halaman lain, quiz, booking dan cloud storage menyusul.
+Fase 3 — semua halaman di page inventory sudah dibangun dan terhubung ke CMS (konten sebagian masih placeholder). Berikutnya: konten asli, notifikasi lead, cloud storage, deploy.

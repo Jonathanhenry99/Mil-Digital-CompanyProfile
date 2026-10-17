@@ -72,7 +72,9 @@ export interface Config {
     testimonials: Testimonial;
     articles: Article;
     reports: Report;
+    jobs: Job;
     leads: Lead;
+    'job-applications': JobApplication;
     media: Media;
     users: User;
     'payload-kv': PayloadKv;
@@ -87,7 +89,9 @@ export interface Config {
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     articles: ArticlesSelect<false> | ArticlesSelect<true>;
     reports: ReportsSelect<false> | ReportsSelect<true>;
+    jobs: JobsSelect<false> | JobsSelect<true>;
     leads: LeadsSelect<false> | LeadsSelect<true>;
+    'job-applications': JobApplicationsSelect<false> | JobApplicationsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -255,6 +259,10 @@ export interface Article {
   readingTime?: string | null;
   excerpt: string;
   cover: number | Media;
+  author?: {
+    name?: string | null;
+    role?: string | null;
+  };
   content?: {
     root: {
       type: string;
@@ -286,6 +294,10 @@ export interface Report {
    * Part of the URL. Leave empty to generate from title.
    */
   slug?: string | null;
+  /**
+   * e.g. F&B, Beauty, Retail
+   */
+  industry?: string | null;
   summary: string;
   cover: number | Media;
   /**
@@ -311,6 +323,42 @@ export interface Report {
   createdAt: string;
 }
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "jobs".
+ */
+export interface Job {
+  id: number;
+  title: string;
+  /**
+   * Part of the URL. Leave empty to generate from title.
+   */
+  slug?: string | null;
+  department: string;
+  location?: string | null;
+  employmentType?: ('full-time' | 'contract' | 'internship') | null;
+  workMode?: ('onsite' | 'hybrid' | 'remote') | null;
+  /**
+   * One or two lines shown in the list.
+   */
+  summary: string;
+  responsibilities?:
+    | {
+        item: string;
+        id?: string | null;
+      }[]
+    | null;
+  requirements?:
+    | {
+        item: string;
+        id?: string | null;
+      }[]
+    | null;
+  status?: ('open' | 'closed') | null;
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * Free consultation requests. Update the status as you follow up.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -322,18 +370,43 @@ export interface Lead {
   source?: ('contact-form' | 'quiz' | 'booking' | 'report' | 'atlas-waitlist') | null;
   name: string;
   email: string;
-  phone: string;
-  brandName: string;
+  phone?: string | null;
+  brandName?: string | null;
   industry?: string | null;
   location?: string | null;
   services?: ('Consultation' | 'Advertising' | 'Creative' | 'Not sure yet')[] | null;
   budget?: string | null;
   activities?: ('Advertising' | 'Social Media' | 'Branding' | 'Influencer' | 'Others')[] | null;
-  message: string;
+  message?: string | null;
+  /**
+   * Filled when the visitor took the brand quiz before sending a brief.
+   */
+  quizAnswers?: string | null;
+  /**
+   * Report or page the lead came from.
+   */
+  reference?: string | null;
   pageOrigin?: string | null;
   /**
    * Internal follow-up notes.
    */
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "job-applications".
+ */
+export interface JobApplication {
+  id: number;
+  status?: ('new' | 'reviewing' | 'interview' | 'offer' | 'rejected') | null;
+  job?: (number | null) | Job;
+  name: string;
+  email: string;
+  phone?: string | null;
+  portfolio: string;
+  message?: string | null;
   notes?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -414,8 +487,16 @@ export interface PayloadLockedDocument {
         value: number | Report;
       } | null)
     | ({
+        relationTo: 'jobs';
+        value: number | Job;
+      } | null)
+    | ({
         relationTo: 'leads';
         value: number | Lead;
+      } | null)
+    | ({
+        relationTo: 'job-applications';
+        value: number | JobApplication;
       } | null)
     | ({
         relationTo: 'media';
@@ -528,6 +609,12 @@ export interface ArticlesSelect<T extends boolean = true> {
   readingTime?: T;
   excerpt?: T;
   cover?: T;
+  author?:
+    | T
+    | {
+        name?: T;
+        role?: T;
+      };
   content?: T;
   publishedAt?: T;
   updatedAt?: T;
@@ -541,6 +628,7 @@ export interface ArticlesSelect<T extends boolean = true> {
 export interface ReportsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  industry?: T;
   summary?: T;
   cover?: T;
   findings?:
@@ -553,6 +641,35 @@ export interface ReportsSelect<T extends boolean = true> {
   file?: T;
   gated?: T;
   publishedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "jobs_select".
+ */
+export interface JobsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  department?: T;
+  location?: T;
+  employmentType?: T;
+  workMode?: T;
+  summary?: T;
+  responsibilities?:
+    | T
+    | {
+        item?: T;
+        id?: T;
+      };
+  requirements?:
+    | T
+    | {
+        item?: T;
+        id?: T;
+      };
+  status?: T;
+  order?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -573,7 +690,25 @@ export interface LeadsSelect<T extends boolean = true> {
   budget?: T;
   activities?: T;
   message?: T;
+  quizAnswers?: T;
+  reference?: T;
   pageOrigin?: T;
+  notes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "job-applications_select".
+ */
+export interface JobApplicationsSelect<T extends boolean = true> {
+  status?: T;
+  job?: T;
+  name?: T;
+  email?: T;
+  phone?: T;
+  portfolio?: T;
+  message?: T;
   notes?: T;
   updatedAt?: T;
   createdAt?: T;

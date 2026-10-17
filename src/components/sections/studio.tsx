@@ -56,12 +56,12 @@ function StatRow({ stat }: { stat: Stat }) {
   return (
     <div ref={ref} className="grid min-h-[62svh] grid-cols-12 content-center gap-5">
       <div className="col-span-12 pl-[30%] md:col-span-7 md:col-start-6 md:pl-0">
-        <p className={cn("t-display flex items-baseline text-[clamp(3.4rem,9vw,8.5rem)] transition-colors duration-500", on ? "text-foreground" : "text-[#2a2d33]")}>
+        <p className={cn("t-display flex items-baseline text-[clamp(3.4rem,9vw,8.5rem)] transition-colors duration-500", on ? "text-foreground" : "text-dim")}>
           {stat.prefix ? <span className="mr-2 text-[0.35em]">{stat.prefix}</span> : null}
           <Odometer value={stat.value.toFixed(stat.decimals ?? 0)} />
           {stat.suffix ? <span className={cn("text-[0.55em] transition-colors duration-500", on ? "text-signal" : "")}>{stat.suffix}</span> : null}
         </p>
-        <p className={cn("mt-2 pl-[clamp(1.5rem,5vw,5.5rem)] text-[clamp(1.375rem,2.6vw,2.375rem)] font-medium leading-tight tracking-[-0.015em] transition-colors duration-500", on ? "text-[#d8dbe0]" : "text-[#2c2f35]")}>
+        <p className={cn("mt-2 pl-[clamp(1.5rem,5vw,5.5rem)] text-[clamp(1.375rem,2.6vw,2.375rem)] font-medium leading-tight tracking-[-0.015em] transition-colors duration-500", on ? "text-fg-body" : "text-dim")}>
           {stat.label}
         </p>
         <p className={cn("mt-4 max-w-[26em] pl-[clamp(1.5rem,5vw,5.5rem)] text-[15px] transition-colors duration-500", on ? "text-fg-2" : "text-transparent")}>
@@ -84,6 +84,7 @@ export function Studio({ stats, wheel, photo }: { stats: Stat[]; wheel: string[]
   const { scrollYProgress: flow } = useScroll({ target: flowRef, offset: ["start end", "end end"] });
 
   return (
+    <>
     <section data-ground="#0c0d0f" aria-label="About MIL Digital">
       <div ref={introRef} className="grain relative flex min-h-svh items-center overflow-hidden">
         <motion.div style={{ y: photoY }} className="absolute -inset-y-[10%] inset-x-0">
@@ -103,6 +104,9 @@ export function Studio({ stats, wheel, photo }: { stats: Stat[]; wheel: string[]
         </div>
       </div>
 
+    </section>
+
+    <section className="theme-light" aria-label="MIL in numbers">
       <div ref={flowRef} className="relative">
         {/* A layer as tall as the chapter, with the wheel stuck to the viewport
             inside it, so the wheel can never outlive the chapter. */}
@@ -128,5 +132,6 @@ export function Studio({ stats, wheel, photo }: { stats: Stat[]; wheel: string[]
         </div>
       </div>
     </section>
+    </>
   );
 }

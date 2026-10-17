@@ -80,7 +80,7 @@ function PaperClip() {
  * MIL's free consultation form). Saves to CMS → Leads, then offers a
  * pre-written WhatsApp message to continue the conversation.
  */
-export function BriefPaper({ service, className, onClose }: { service?: string; className?: string; onClose?: () => void }) {
+export function BriefPaper({ service, quiz, className, onClose }: { service?: string; quiz?: string; className?: string; onClose?: () => void }) {
   const pathname = usePathname();
   const uid = React.useId().replace(/:/g, "");
   const id = (k: string) => `${uid}-${k}`;
@@ -178,6 +178,7 @@ export function BriefPaper({ service, className, onClose }: { service?: string; 
               noValidate
             >
               <input type="hidden" name="pageOrigin" value={pathname} />
+              {quiz ? <input type="hidden" name="quiz" value={quiz} /> : null}
               <div aria-hidden className="absolute -left-[9999px] size-px overflow-hidden">
                 <label>
                   Website <input type="text" name="website" tabIndex={-1} autoComplete="off" />

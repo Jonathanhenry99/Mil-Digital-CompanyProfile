@@ -11,6 +11,7 @@ import { Clients } from "./collections/Clients";
 import { CaseStudies } from "./collections/CaseStudies";
 import { Articles, Reports, Testimonials } from "./collections/Content";
 import { Leads } from "./collections/Leads";
+import { JobApplications, Jobs } from "./collections/Careers";
 import { Home } from "./globals/Home";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -23,7 +24,7 @@ export default buildConfig({
     importMap: { baseDir: path.resolve(dirname) },
     meta: { titleSuffix: " · MIL Digital CMS" },
   },
-  collections: [CaseStudies, Clients, Testimonials, Articles, Reports, Leads, Media, Users],
+  collections: [CaseStudies, Clients, Testimonials, Articles, Reports, Jobs, Leads, JobApplications, Media, Users],
   globals: [Home],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",

@@ -72,25 +72,34 @@ export function Header({ features }: { features: CaseStudy[] }) {
         onMouseLeave={() => setOpen(null)}
         onFocus={() => setHidden(false)}
       >
+        {/* Over the hero a soft dark fade keeps the nav readable on bright photos. */}
+        <div
+          aria-hidden
+          className={cn(
+            "pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/60 via-black/25 to-transparent transition-opacity duration-500",
+            scrolled || open !== null ? "opacity-0" : "opacity-100",
+          )}
+        />
         <div
           className={cn(
-            "border-b transition-[background-color,border-color,backdrop-filter] duration-500",
-            scrolled || open !== null ? "border-line bg-[#0c0d0f]/80 backdrop-blur-xl" : "border-transparent",
+            "relative border-b transition-[background-color,border-color,backdrop-filter] duration-500",
+            scrolled || open !== null ? "border-line bg-[#0c0d0f]/85 backdrop-blur-xl" : "border-transparent",
           )}
         >
-          <div className="container-x flex h-16 items-center justify-between gap-6 md:h-20">
+          <div className="container-x flex h-16 items-center gap-6 md:h-20">
             <Link href="/" aria-label="MIL Digital home" className="shrink-0">
               <Logo />
             </Link>
 
-            <nav aria-label="Main" className="hidden items-center gap-7 lg:flex">
+            <nav aria-label="Main" className="ml-auto hidden items-center gap-8 lg:flex">
               {nav.map((item, i) => (
                 <NavEntry key={item.label} item={item} index={i} open={open} setOpen={setOpen} pathname={pathname} />
               ))}
             </nav>
 
-            <div className="flex items-center gap-5">
-              <StudioClock city={site.city} className="hidden items-center gap-2 text-[13px] text-fg-2 xl:inline-flex" />
+            <div className="ml-auto flex items-center gap-6 lg:ml-0">
+              <span aria-hidden className="hidden h-5 w-px bg-white/25 xl:block" />
+              <StudioClock city={site.city} className="hidden items-center gap-2 text-[13px] font-medium text-white/80 xl:inline-flex" />
               <BriefTrigger size="md" className="hidden sm:inline-flex">
                 Book a consultation
               </BriefTrigger>
@@ -135,7 +144,7 @@ function NavEntry({
   setOpen: (i: number | null) => void;
   pathname: string;
 }) {
-  const base = "group relative inline-flex h-10 items-center gap-1 text-[15px] text-foreground/85 transition-colors hover:text-foreground";
+  const base = "group relative inline-flex h-10 items-center gap-1 text-[15px] font-medium text-white transition-colors hover:text-white [text-shadow:0_1px_12px_rgb(0_0_0/0.35)]";
   const underline = (on: boolean) => (
     <span className={cn("absolute inset-x-0 bottom-1.5 h-px origin-left bg-foreground transition-transform duration-500 ease-out-expo", on ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100")} />
   );

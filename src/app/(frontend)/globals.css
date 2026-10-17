@@ -42,6 +42,13 @@
   --paper-muted: #6a6862;
   --paper-line: #cfccc4;
 
+  /* Body copy, dimmed figures, and the primary button (paper on dark) */
+  --fg-body: #cfd2d8;
+  --dim: #2a2d33;
+  --cta-bg: #1b5fd6;
+  --cta-fg: #ffffff;
+  --cta-bg-hover: #2c6fec;
+
   --shadow-tint: 0 0 0;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --gutter: clamp(20px, 4vw, 48px);
@@ -49,7 +56,31 @@
   color-scheme: dark;
 }
 
-:root {
+/* Light chapters alternate with dark ones (like MGD), so the page breathes.
+ * Any section with .theme-light gets its own white ground and dark ink. */
+.theme-light {
+  --bg: #f4f4f1;
+  --surface: #ffffff;
+  --surface-raised: #e8e8e4;
+  --fg: #0c0d0f;
+  --fg-2: #50545b;
+  --fg-3: #8a8e95;
+  --fg-body: #33373d;
+  --dim: #d6d7d9;
+  --line: rgb(12 13 15 / 0.12);
+  --line-strong: rgb(12 13 15 / 0.26);
+  --signal: #1660d9;
+  --signal-soft: #1660d9;
+  --cta-bg: #1b5fd6;
+  --cta-fg: #ffffff;
+  --cta-bg-hover: #2c6fec;
+  color-scheme: light;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+:root,
+.theme-light {
   --background: var(--bg);
   --foreground: var(--fg);
   --card: var(--surface);
@@ -91,6 +122,8 @@
   --color-surface-raised: var(--surface-raised);
   --color-fg-2: var(--fg-2);
   --color-fg-3: var(--fg-3);
+  --color-fg-body: var(--fg-body);
+  --color-dim: var(--dim);
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
   --color-signal: var(--signal);
@@ -176,7 +209,7 @@
 @layer components {
   .container-x {
     width: 100%;
-    max-width: 1440px;
+    max-width: 1760px;
     margin-inline: auto;
     padding-inline: var(--gutter);
   }
@@ -219,7 +252,7 @@
   }
   .t-body {
     max-width: 34em;
-    color: #cfd2d8;
+    color: var(--fg-body);
     text-wrap: pretty;
   }
 

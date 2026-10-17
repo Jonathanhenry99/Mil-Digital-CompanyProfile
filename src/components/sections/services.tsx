@@ -64,7 +64,7 @@ export function Services() {
   const refs = [React.useRef<HTMLElement>(null), React.useRef<HTMLElement>(null), React.useRef<HTMLElement>(null)];
 
   return (
-    <section data-ground="#101216" aria-label="Our services">
+    <section className="theme-light" aria-label="Our services">
       <div className="container-x grid gap-8 pb-14 pt-[var(--sec)] md:grid-cols-12">
         <SplitText as="h2" text={"Three disciplines,\none growth team."} className="t-h2 md:col-span-6" />
         <Reveal className="md:col-span-5 md:col-start-8 md:self-end">
@@ -80,7 +80,7 @@ export function Services() {
           <article
             key={s.href}
             ref={refs[i] as React.RefObject<HTMLElement>}
-            className="relative overflow-hidden border-t border-line bg-[#101216] lg:sticky lg:top-0"
+            className="relative overflow-hidden border-t border-line bg-background lg:sticky lg:top-0"
           >
             <Panel s={s} i={i} next={refs[i + 1] ?? null} />
           </article>

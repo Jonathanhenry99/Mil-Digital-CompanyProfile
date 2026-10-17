@@ -6,10 +6,10 @@ import { cn } from "@/lib/utils";
 /*
  * Square call-to-action: 52px, label left, arrow right. On hover the arrow
  * slides out and a fresh one slides in; pressing shrinks it a touch.
- * `primary` is paper on dark with a blue arrow tile (the MIL accent).
+ * `primary` is solid MIL blue with a white label and arrow.
  */
 const variants = {
-  primary: "bg-paper text-paper-ink hover:bg-white pr-1.5",
+  primary: "bg-[var(--cta-bg)] text-[var(--cta-fg)] hover:bg-[var(--cta-bg-hover)]",
   blue: "bg-signal text-white hover:bg-[#5a9eff]",
   ghost: "border border-line-strong text-foreground hover:border-foreground/70 hover:bg-foreground/[0.06]",
   ink: "bg-paper-ink text-paper hover:bg-[#2b2e33]",
@@ -21,7 +21,7 @@ export function ctaClass(variant: CtaVariant = "primary", size: "md" | "lg" = "l
   return cn(
     "group/cta inline-flex shrink-0 items-center justify-between font-semibold tracking-tight whitespace-nowrap transition-[background-color,border-color,color,transform] duration-200 active:scale-[0.98]",
     size === "lg" ? "h-[52px] gap-6 pl-6 text-sm" : "h-11 gap-4 pl-4 text-[13px]",
-    variant === "primary" ? (size === "lg" ? "pr-1.5" : "pr-1") : size === "lg" ? "pr-[18px]" : "pr-3",
+    size === "lg" ? "pr-[18px]" : "pr-3",
     variants[variant],
     className,
   );
@@ -56,7 +56,7 @@ export function CtaLink({ variant = "primary", size = "lg", className, children,
       {...props}
     >
       {children}
-      <CtaArrow tile={variant === "primary"} />
+      <CtaArrow />
     </Link>
   );
 }

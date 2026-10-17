@@ -8,7 +8,8 @@ import { BriefPaper } from "./brief-paper";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-const BriefContext = React.createContext<{ open: (service?: string) => void }>({ open: () => {} });
+type Open = (service?: string, quiz?: string) => void;
+const BriefContext = React.createContext<{ open: Open }>({ open: () => {} });
 export const useBrief = () => React.useContext(BriefContext);
 
 /**
@@ -16,12 +17,12 @@ export const useBrief = () => React.useContext(BriefContext);
  * up over a dimmed page, optionally with a service already ticked.
  */
 export function BriefProvider({ children }: { children: React.ReactNode }) {
-  const [state, setState] = React.useState<{ open: boolean; service?: string; key: number }>({ open: false, key: 0 });
+  const [state, setState] = React.useState<{ open: boolean; service?: string; quiz?: string; key: number }>({ open: false, key: 0 });
   const returnFocus = React.useRef<HTMLElement | null>(null);
 
-  const open = React.useCallback((service?: string) => {
+  const open = React.useCallback<Open>((service, quiz) => {
     returnFocus.current = document.activeElement as HTMLElement | null;
-    setState((s) => ({ open: true, service, key: s.key + 1 }));
+    setState((s) => ({ open: true, service, quiz, key: s.key + 1 }));
   }, []);
   const close = React.useCallback(() => setState((s) => ({ ...s, open: false })), []);
 
@@ -71,7 +72,7 @@ export function BriefProvider({ children }: { children: React.ReactNode }) {
                   document.querySelector<HTMLInputElement>('[role="dialog"] input[name="name"]')?.focus({ preventScroll: true });
                 }}
               >
-                <BriefPaper service={state.service} onClose={close} />
+                <BriefPaper service={state.service} quiz={state.quiz} onClose={close} />
               </motion.div>
             </div>
           </div>
@@ -84,12 +85,15 @@ export function BriefProvider({ children }: { children: React.ReactNode }) {
 /** A button that opens the Brief sheet. Same look as <CtaLink>. */
 export function BriefTrigger({
   service,
+  quiz,
   variant = "primary",
   size = "lg",
   className,
   children,
 }: {
   service?: string;
+  /** Brand quiz answers to attach to the brief. */
+  quiz?: string;
   variant?: CtaVariant;
   size?: "md" | "lg";
   className?: string;
@@ -97,9 +101,9 @@ export function BriefTrigger({
 }) {
   const { open } = useBrief();
   return (
-    <button type="button" onClick={() => open(service)} className={ctaClass(variant, size, className)}>
+    <button type="button" onClick={() => open(service, quiz)} className={ctaClass(variant, size, className)}>
       {children}
-      <CtaArrow tile={variant === "primary"} />
+      <CtaArrow />
     </button>
   );
 }

@@ -60,6 +60,7 @@ export async function submitLead(_prev: LeadState, form: FormData): Promise<Lead
         activities,
         services,
         message: get("message").slice(0, 4000),
+        quizAnswers: get("quiz").slice(0, 2000) || undefined,
         pageOrigin: get("pageOrigin").slice(0, 200) || undefined,
       },
     });
@@ -80,4 +81,103 @@ export async function submitLead(_prev: LeadState, form: FormData): Promise<Lead
     .join("\n");
 
   return { status: "success", name: get("name").split(" ")[0], whatsapp };
+}
+
+/* ── Smaller forms ───────────────────────────────────────────── */
+
+export type SimpleState =
+  | { status: "idle" }
+  | { status: "success"; fileUrl?: string | null }
+  | { status: "error"; message: string };
+
+const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+const isBot = (form: FormData) => {
+  const startedAt = Number(form.get("startedAt") ?? 0);
+  return Boolean(form.get("website")) || !startedAt || Date.now() - startedAt < 1500;
+};
+
+/** Gated report download: records a lead, then releases the PDF link. */
+export async function requestReport(_prev: SimpleState, form: FormData): Promise<SimpleState> {
+  const get = (k: string) => String(form.get(k) ?? "").trim();
+  if (isBot(form)) return { status: "success", fileUrl: null };
+  if (!get("name") || !isEmail(get("email"))) return { status: "error", message: "Add your name and a valid email." };
+  const slug = get("report");
+  try {
+    const payload = await getPayload({ config });
+    const found = await payload.find({ collection: "reports", where: { slug: { equals: slug } }, limit: 1, depth: 1 });
+    const report = found.docs[0];
+    if (!report) return { status: "error", message: "We couldn't find that report." };
+    await payload.create({
+      collection: "leads",
+      overrideAccess: true,
+      data: {
+        source: "report",
+        name: get("name").slice(0, 120),
+        email: get("email").slice(0, 200),
+        brandName: get("company").slice(0, 120) || undefined,
+        reference: report.title,
+        pageOrigin: `/reports/${slug}`,
+      },
+    });
+    const f = report.file && typeof report.file === "object" ? report.file : null;
+    const fileUrl = f?.url ? (/^https?:/.test(f.url) ? new URL(f.url).pathname : f.url) : null;
+    return { status: "success", fileUrl };
+  } catch (err) {
+    console.error("requestReport failed", err);
+    return { status: "error", message: "Something went wrong. Please try again." };
+  }
+}
+
+/** ATLAS waitlist. */
+export async function joinWaitlist(_prev: SimpleState, form: FormData): Promise<SimpleState> {
+  const get = (k: string) => String(form.get(k) ?? "").trim();
+  if (isBot(form)) return { status: "success" };
+  if (!get("name") || !isEmail(get("email"))) return { status: "error", message: "Add your name and a valid email." };
+  try {
+    const payload = await getPayload({ config });
+    await payload.create({
+      collection: "leads",
+      overrideAccess: true,
+      data: {
+        source: "atlas-waitlist",
+        name: get("name").slice(0, 120),
+        email: get("email").slice(0, 200),
+        brandName: get("brand").slice(0, 120) || undefined,
+        pageOrigin: "/atlas",
+      },
+    });
+    return { status: "success" };
+  } catch (err) {
+    console.error("joinWaitlist failed", err);
+    return { status: "error", message: "Something went wrong. Please try again." };
+  }
+}
+
+/** Job application from /career. */
+export async function applyForJob(_prev: SimpleState, form: FormData): Promise<SimpleState> {
+  const get = (k: string) => String(form.get(k) ?? "").trim();
+  if (isBot(form)) return { status: "success" };
+  if (!get("name") || !isEmail(get("email")) || !get("portfolio")) {
+    return { status: "error", message: "Name, a valid email and a CV or portfolio link are required." };
+  }
+  try {
+    const payload = await getPayload({ config });
+    const jobId = Number(get("job")) || undefined;
+    await payload.create({
+      collection: "job-applications",
+      overrideAccess: true,
+      data: {
+        job: jobId,
+        name: get("name").slice(0, 120),
+        email: get("email").slice(0, 200),
+        phone: get("phone").slice(0, 40) || undefined,
+        portfolio: get("portfolio").slice(0, 500),
+        message: get("message").slice(0, 3000) || undefined,
+      },
+    });
+    return { status: "success" };
+  } catch (err) {
+    console.error("applyForJob failed", err);
+    return { status: "error", message: "Something went wrong. Please try again." };
+  }
 }

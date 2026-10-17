@@ -54,6 +54,19 @@ export const Articles: CollectionConfig = {
     },
     { name: "excerpt", type: "textarea", required: true },
     { name: "cover", type: "upload", relationTo: "media", required: true },
+    {
+      name: "author",
+      type: "group",
+      fields: [
+        {
+          type: "row",
+          fields: [
+            { name: "name", type: "text" },
+            { name: "role", type: "text" },
+          ],
+        },
+      ],
+    },
     { name: "content", type: "richText" },
     { name: "publishedAt", type: "date", admin: { position: "sidebar" } },
   ],
@@ -69,6 +82,7 @@ export const Reports: CollectionConfig = {
   fields: [
     { name: "title", type: "text", required: true },
     slugField("title"),
+    { name: "industry", type: "text", admin: { description: "e.g. F&B, Beauty, Retail" } },
     { name: "summary", type: "textarea", required: true },
     { name: "cover", type: "upload", relationTo: "media", required: true },
     {

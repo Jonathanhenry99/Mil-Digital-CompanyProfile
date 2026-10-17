@@ -68,7 +68,7 @@ export function Process() {
                     <h3 className="text-lg font-semibold tracking-tight">{s.title}</h3>
                     <p
                       className={cn(
-                        "overflow-hidden text-[15px] leading-relaxed text-[#cfd2d8] transition-[opacity,max-height,margin] duration-500",
+                        "overflow-hidden text-[15px] leading-relaxed text-fg-body transition-[opacity,max-height,margin] duration-500",
                         i === step ? "mt-1.5 max-h-24 opacity-100" : "max-h-0 opacity-0",
                       )}
                     >

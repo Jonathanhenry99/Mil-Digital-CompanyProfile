@@ -4,7 +4,7 @@ import { TextLink } from "@/components/ui/cta-link";
 import { ImageGallery, type GalleryItem } from "@/components/ui/image-gallery";
 import { SplitText } from "@/components/motion/split-text";
 
-const card = "block border border-white/10 bg-[#0c0d0f]/80 p-5 backdrop-blur-xl";
+const card = "block border border-line bg-surface/90 p-5 shadow-[0_20px_40px_-24px_rgb(0_0_0/0.45)] backdrop-blur-xl";
 
 /**
  * Chapter 10 (inventory: articles & reports). The featured report and the
@@ -65,7 +65,7 @@ export function Insights({ insights }: { insights: HomeData["insights"] }) {
   ];
 
   return (
-    <section data-ground="#101216" className="sec" aria-label="Insights and reports">
+    <section className="theme-light sec" aria-label="Insights and reports">
       <div className="container-x">
         <div className="mb-12 grid gap-6 md:grid-cols-12 md:items-end">
           <div className="md:col-span-7">

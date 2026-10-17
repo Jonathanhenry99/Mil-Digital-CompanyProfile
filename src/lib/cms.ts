@@ -149,3 +149,175 @@ export async function getHomeData(): Promise<HomeData> {
     },
   };
 }
+
+/* ── Inner pages ─────────────────────────────────────────────── */
+
+export type CaseStudyFull = CaseStudy & {
+  id: number;
+  scale: string | null;
+  summary: string;
+  body: unknown | null;
+  year: string | null;
+};
+
+type CaseDoc = {
+  id: number;
+  slug?: string | null;
+  client: string;
+  title: string;
+  industry: string;
+  scale?: string | null;
+  services: string[];
+  metric: { value: string; label: string };
+  cover: unknown;
+  summary?: string | null;
+  body?: unknown;
+  publishedAt?: string | null;
+};
+
+const toCase = (c: CaseDoc): CaseStudyFull => ({
+  id: c.id,
+  slug: c.slug ?? String(c.id),
+  client: c.client,
+  title: c.title,
+  industry: c.industry,
+  scale: c.scale ?? null,
+  services: c.services,
+  metric: { value: c.metric.value, label: c.metric.label },
+  image: url(c.cover),
+  summary: c.summary ?? "",
+  body: c.body ?? null,
+  year: c.publishedAt ? String(new Date(c.publishedAt).getFullYear()) : null,
+});
+
+export async function getCaseStudies(): Promise<CaseStudyFull[]> {
+  "use cache";
+  cacheTag("case-studies");
+  cacheLife("max");
+  const payload = await getPayload({ config });
+  const res = await payload.find({ collection: "case-studies", sort: "-publishedAt", limit: 100, depth: 1 });
+  return res.docs.map((d) => toCase(d as CaseDoc));
+}
+
+export async function getCaseStudy(slug: string): Promise<CaseStudyFull | null> {
+  const all = await getCaseStudies();
+  return all.find((c) => c.slug === slug) ?? null;
+}
+
+export type ArticleFull = {
+  slug: string;
+  category: string;
+  title: string;
+  excerpt: string;
+  readingTime: string;
+  image: string;
+  author: { name: string; role: string } | null;
+  publishedAt: string | null;
+  content: unknown | null;
+};
+
+export async function getArticles(): Promise<ArticleFull[]> {
+  "use cache";
+  cacheTag("articles");
+  cacheLife("max");
+  const payload = await getPayload({ config });
+  const res = await payload.find({
+    collection: "articles",
+    where: { _status: { equals: "published" } },
+    sort: "-publishedAt",
+    limit: 100,
+    depth: 1,
+  });
+  return res.docs.map((a) => ({
+    slug: a.slug ?? String(a.id),
+    category: a.category,
+    title: a.title,
+    excerpt: a.excerpt,
+    readingTime: a.readingTime ?? "",
+    image: url(a.cover),
+    author: a.author?.name ? { name: a.author.name, role: a.author.role ?? "" } : null,
+    publishedAt: a.publishedAt ?? null,
+    content: a.content ?? null,
+  }));
+}
+
+export async function getArticle(slug: string) {
+  const all = await getArticles();
+  return all.find((a) => a.slug === slug) ?? null;
+}
+
+export type ReportFull = {
+  slug: string;
+  title: string;
+  industry: string;
+  summary: string;
+  image: string;
+  findings: { stat: string; label: string }[];
+  gated: boolean;
+  /** Only set for ungated reports; gated ones are released by the form. */
+  fileUrl: string | null;
+  hasFile: boolean;
+  publishedAt: string | null;
+};
+
+export async function getReports(): Promise<ReportFull[]> {
+  "use cache";
+  cacheTag("reports");
+  cacheLife("max");
+  const payload = await getPayload({ config });
+  const res = await payload.find({ collection: "reports", sort: "-publishedAt", limit: 100, depth: 1 });
+  return res.docs.map((r) => {
+    const f = file(r.file);
+    const gated = r.gated ?? true;
+    return {
+      slug: r.slug ?? String(r.id),
+      title: r.title,
+      industry: r.industry ?? "",
+      summary: r.summary,
+      image: url(r.cover),
+      findings: (r.findings ?? []).map(({ stat, label }) => ({ stat, label })),
+      gated,
+      fileUrl: !gated && f?.url ? f.url : null,
+      hasFile: Boolean(f?.url),
+      publishedAt: r.publishedAt ?? null,
+    };
+  });
+}
+
+export async function getReport(slug: string) {
+  const all = await getReports();
+  return all.find((r) => r.slug === slug) ?? null;
+}
+
+export type Job = {
+  id: number;
+  slug: string;
+  title: string;
+  department: string;
+  location: string;
+  employmentType: string;
+  workMode: string;
+  summary: string;
+  responsibilities: string[];
+  requirements: string[];
+};
+
+export async function getJobs(): Promise<Job[]> {
+  "use cache";
+  cacheTag("jobs");
+  cacheLife("max");
+  const payload = await getPayload({ config });
+  const res = await payload.find({ collection: "jobs", where: { status: { equals: "open" } }, sort: "order", limit: 50 });
+  return res.docs.map((j) => ({
+    id: j.id,
+    slug: j.slug ?? String(j.id),
+    title: j.title,
+    department: j.department,
+    location: j.location ?? "Bandung",
+    employmentType: j.employmentType ?? "full-time",
+    workMode: j.workMode ?? "onsite",
+    summary: j.summary,
+    responsibilities: (j.responsibilities ?? []).map((r) => r.item),
+    requirements: (j.requirements ?? []).map((r) => r.item),
+  }));
+}

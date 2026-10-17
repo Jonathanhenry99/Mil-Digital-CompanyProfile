@@ -47,7 +47,7 @@ function Person({ p, i, active, onPick }: { p: (typeof PEOPLE)[number]; i: numbe
  * or scrolling past a name swaps the photo and caption. Links to Our Team
  * and Career.
  */
-export function Team() {
+export function Team({ variant = "home" }: { variant?: "home" | "page" }) {
   const [active, setActive] = React.useState(0);
   const held = React.useRef(0);
   const pick = React.useCallback((i: number, fromScroll?: boolean) => {
@@ -59,7 +59,11 @@ export function Team() {
   const p = PEOPLE[active];
 
   return (
-    <section data-ground="#101216" className="sec" aria-label="Our team">
+    <section
+      className={cn("sec", variant === "home" && "theme-light")}
+      data-ground={variant === "page" ? "#0c0d0f" : undefined}
+      aria-label="Our team"
+    >
       <div className="container-x grid gap-12 lg:grid-cols-12 lg:items-start">
         <div className="lg:sticky lg:top-28 lg:col-span-5">
           <div className="ticks relative aspect-[4/5] overflow-hidden bg-surface">
@@ -82,8 +86,8 @@ export function Team() {
         </div>
 
         <div className="lg:col-span-6 lg:col-start-7">
-          <p className="t-label">The team</p>
-          <SplitText as="h2" text={"The people behind\nthe numbers."} className="t-h2 mt-4" />
+          <p className="t-label">{variant === "page" ? "Team by function" : "The team"}</p>
+          <SplitText as="h2" text={variant === "page" ? "Who does what." : "The people behind\nthe numbers."} className="t-h2 mt-4" />
           <p className="t-body mt-6 text-fg-2">
             15 certified digital marketing experts with 7 years of combined experience, growing brands across Indonesia from
             Bandung.
@@ -94,9 +98,11 @@ export function Team() {
             ))}
           </ul>
           <div className="mt-10 flex flex-wrap gap-3">
-            <CtaLink href="/our-team" variant="ghost">
-              Meet the team
-            </CtaLink>
+            {variant === "home" ? (
+              <CtaLink href="/our-team" variant="ghost">
+                Meet the team
+              </CtaLink>
+            ) : null}
             <CtaLink href="/career" variant="ghost">
               Join us
             </CtaLink>
