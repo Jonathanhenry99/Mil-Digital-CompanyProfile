@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { AnimatePresence, motion, useInView } from "motion/react";
-import { testimonials } from "@/content/home";
+import type { HomeData } from "@/lib/cms";
 import { cn } from "@/lib/utils";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { SectionEntrance } from "@/components/motion/section-entrance";
@@ -15,13 +15,14 @@ const DURATION = 7; // seconds per quote
  * timer pauses on hover, on keyboard focus and while off-screen.
  * Welcoming: the curtain opens and the first quote resolves out of a blur.
  */
-export function Testimonials() {
+export function Testimonials({ testimonials }: { testimonials: HomeData["testimonials"] }) {
   const ref = React.useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { amount: 0.4 });
   const [active, setActive] = React.useState(0);
   const [hovered, setHovered] = React.useState(false);
   const paused = hovered || !inView;
-  const t = testimonials[active];
+  const t = testimonials[active % Math.max(testimonials.length, 1)];
+  if (!t) return null;
 
   return (
     <SectionEntrance variant="curtain" sheetClassName="bg-background">

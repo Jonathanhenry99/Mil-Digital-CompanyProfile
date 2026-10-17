@@ -12,7 +12,7 @@ import {
   type MotionValue,
 } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
-import { caseStudies, type CaseStudy } from "@/content/home";
+import type { CaseStudy } from "@/content/home";
 import { scrollToY } from "@/lib/lenis";
 import { cn } from "@/lib/utils";
 import { CtaLink } from "@/components/ui/cta-link";
@@ -67,7 +67,7 @@ function WheelCard({ item, index, position }: { item: CaseStudy; index: number; 
   );
 }
 
-export function WorkWheel() {
+export function WorkWheel({ caseStudies }: { caseStudies: CaseStudy[] }) {
   const ref = React.useRef<HTMLElement>(null);
   const n = caseStudies.length;
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });

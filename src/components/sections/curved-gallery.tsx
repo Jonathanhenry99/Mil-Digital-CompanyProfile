@@ -1,4 +1,3 @@
-import { gallery } from "@/content/home";
 import { CtaLink } from "@/components/ui/cta-link";
 import { TiltedGridHero } from "@/components/ui/tilted-grid-hero";
 import { Reveal } from "@/components/motion/reveal";
@@ -9,7 +8,7 @@ import { SplitText } from "@/components/motion/split-text";
  * Portfolio reel on a curved band (components/ui/tilted-grid-hero).
  * Welcoming: the band comes into focus out of a blur while the sheet rises.
  */
-export function CurvedGallery() {
+export function CurvedGallery({ gallery }: { gallery: { src: string; alt: string }[] }) {
   return (
     <SectionEntrance variant="rise" sheetClassName="bg-background">
       <Reveal variant="blur" duration={1.6} amount={0.25}>

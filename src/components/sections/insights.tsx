@@ -1,5 +1,5 @@
 import { ArrowUpRight, FileText } from "lucide-react";
-import { insights } from "@/content/home";
+import type { HomeData } from "@/lib/cms";
 import { CtaLink } from "@/components/ui/cta-link";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { ImageGallery, type GalleryItem } from "@/components/ui/image-gallery";
@@ -13,10 +13,11 @@ const card = "block rounded-xl border border-white/60 bg-white/80 p-5 shadow-[0_
  * hovered panel opens and shows a short card.
  * Welcoming: the sheet rises, then the panels shutter open in sequence.
  */
-export function Insights() {
+export function Insights({ insights }: { insights: HomeData["insights"] }) {
   const { articles, report } = insights;
 
-  const items: GalleryItem[] = [
+  const reportItem: GalleryItem[] = report
+    ? [
     {
       id: report.slug,
       src: report.image,
@@ -41,6 +42,11 @@ export function Insights() {
         </span>
       ),
     },
+      ]
+    : [];
+
+  const items: GalleryItem[] = [
+    ...reportItem,
     ...articles.map((a) => ({
       id: a.slug,
       src: a.image,

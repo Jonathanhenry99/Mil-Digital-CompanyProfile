@@ -4,7 +4,7 @@ import * as React from "react";
 import Image from "next/image";
 import { motion, useInView, useMotionValueEvent, useScroll, useTransform } from "motion/react";
 import { Play } from "lucide-react";
-import { showreel, milestones } from "@/content/home";
+import type { HomeData } from "@/lib/cms";
 import { SplitText } from "@/components/motion/split-text";
 
 /**
@@ -12,7 +12,8 @@ import { SplitText } from "@/components/motion/split-text";
  * fill the screen as you scroll, then steps through the milestones from
  * day one to today. Until the film exists the poster stands in.
  */
-export function Showreel() {
+export function Showreel({ showreel }: { showreel: HomeData["showreel"] }) {
+  const { milestones } = showreel;
   const ref = React.useRef<HTMLElement>(null);
   const videoRef = React.useRef<HTMLVideoElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
@@ -55,10 +56,10 @@ export function Showreel() {
           className="relative h-svh w-full overflow-hidden bg-surface will-change-transform"
         >
           <motion.div style={{ scale: imageScale }} className="absolute inset-0">
-            {showreel.src ? (
+            {showreel.video ? (
               <video
                 ref={videoRef}
-                src={showreel.src}
+                src={showreel.video}
                 poster={showreel.poster}
                 muted
                 loop
@@ -72,7 +73,7 @@ export function Showreel() {
           </motion.div>
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-background/10" />
 
-          {showreel.src ? null : (
+          {showreel.video ? null : (
             <div className="absolute inset-0 flex items-center justify-center">
               <span className="inline-flex items-center gap-3 rounded-full border border-white/20 bg-black/30 py-2 pl-2 pr-5 text-sm backdrop-blur-md">
                 <span className="flex size-9 items-center justify-center rounded-full bg-white text-[#0b2a5b]">

@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { nav, site, type NavItem } from "@/content/site";
-import { caseStudies } from "@/content/home";
+import type { CaseStudy } from "@/content/home";
 import { whatsappHref } from "@/lib/whatsapp";
 import { getLenis } from "@/lib/lenis";
 import { cn } from "@/lib/utils";
@@ -20,7 +20,7 @@ const EASE = [0.16, 1, 0.3, 1] as const;
  * Transparent over the hero, glass bar once scrolled, tucks away while
  * scrolling down and returns on the way up (PROJECT_SPEC §2).
  */
-export function Header() {
+export function Header({ features }: { features: CaseStudy[] }) {
   const pathname = usePathname();
   const { scrollY } = useScroll();
   const [scrolled, setScrolled] = React.useState(false);
@@ -106,7 +106,7 @@ export function Header() {
 
           <AnimatePresence>
             {open !== null && "children" in nav[open] ? (
-              <MegaPanel key={open} item={nav[open] as Extract<NavItem, { children: unknown }>} index={open} />
+              <MegaPanel key={open} item={nav[open] as Extract<NavItem, { children: unknown }>} index={open} features={features} />
             ) : null}
           </AnimatePresence>
         </div>
@@ -160,8 +160,16 @@ function NavEntry({
   );
 }
 
-function MegaPanel({ item, index }: { item: Extract<NavItem, { children: unknown }>; index: number }) {
-  const feature = caseStudies[index % caseStudies.length];
+function MegaPanel({
+  item,
+  index,
+  features,
+}: {
+  item: Extract<NavItem, { children: unknown }>;
+  index: number;
+  features: CaseStudy[];
+}) {
+  const feature = features[index % Math.max(features.length, 1)];
   return (
     <motion.div
       initial={{ opacity: 0, y: -8 }}
@@ -192,6 +200,7 @@ function MegaPanel({ item, index }: { item: Extract<NavItem, { children: unknown
             </motion.li>
           ))}
         </ul>
+        {feature ? (
         <Link
           href={`/our-works-case-study/${feature.slug}`}
           className="group col-span-4 overflow-hidden rounded-xl border border-line bg-surface"
@@ -213,6 +222,7 @@ function MegaPanel({ item, index }: { item: Extract<NavItem, { children: unknown
             <p className="font-mono text-lg text-aqua">{feature.metric.value}</p>
           </div>
         </Link>
+        ) : null}
       </div>
     </motion.div>
   );

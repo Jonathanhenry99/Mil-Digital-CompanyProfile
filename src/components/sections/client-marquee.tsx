@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { clients, type Client } from "@/content/home";
+import type { Client } from "@/content/home";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Reveal } from "@/components/motion/reveal";
 import { SectionEntrance } from "@/components/motion/section-entrance";
@@ -41,7 +41,7 @@ function Row({ items, reverse, duration }: { items: Client[]; reverse?: boolean;
  * logos are white). Welcoming: the sheet rises, the heading lifts in and
  * the two rows slide in from opposite sides, then drift opposite ways.
  */
-export function ClientMarquee() {
+export function ClientMarquee({ clients }: { clients: Client[] }) {
   const half = Math.ceil(clients.length / 2);
   return (
     <SectionEntrance variant="rise" sheetClassName="theme-deep bg-brand-gradient">

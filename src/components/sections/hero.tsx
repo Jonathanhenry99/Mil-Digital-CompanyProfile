@@ -3,7 +3,7 @@
 import * as React from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "motion/react";
-import { hero } from "@/content/home";
+import type { HomeData } from "@/lib/cms";
 import { site } from "@/content/site";
 import { CtaLink } from "@/components/ui/cta-link";
 import { Crosshairs } from "@/components/ui/eyebrow";
@@ -16,7 +16,7 @@ import { SignalField } from "./signal-field";
  * the headline assembles into a rising chart, then the copy lifts away.
  * The headline and copy animate with CSS so they play before hydration.
  */
-export function Hero() {
+export function Hero({ hero }: { hero: HomeData["hero"] }) {
   const ref = React.useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
   const copyY = useTransform(scrollYProgress, [0.7, 1], [0, -80]);
@@ -31,7 +31,8 @@ export function Hero() {
   return (
     <section ref={ref} className="relative h-[170svh]" aria-label="Introduction">
       <div className="sticky top-0 h-svh min-h-[640px] overflow-hidden">
-        {/* Background photo (CMS-editable) with fades so the copy always reads */}
+        {/* Background photo (CMS: Homepage → Hero) with fades so the copy always reads */}
+        {hero.background ? (
         <div aria-hidden className="hero-photo-in pointer-events-none absolute inset-0">
           <motion.div style={{ scale: photoScale, opacity: photoOpacity }} className="absolute inset-0">
             <Image
@@ -52,6 +53,7 @@ export function Hero() {
           <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-background via-background/70 to-transparent" />
           <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_75%_40%,transparent_40%,var(--background)_100%)]" />
         </div>
+        ) : null}
         <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden opacity-70">
           <span className="aurora -right-[10%] -top-[20%] size-[60vw] max-w-[900px] bg-[#7cc8ff]" />
           <span className="aurora -left-[15%] top-[30%] size-[45vw] max-w-[700px] bg-[#c9e6ff] [animation-delay:-6s]" />

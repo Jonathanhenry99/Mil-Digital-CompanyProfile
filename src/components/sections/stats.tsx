@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { stats } from "@/content/home";
+import type { Stat } from "@/content/home";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Odometer } from "@/components/motion/odometer";
 import { Reveal } from "@/components/motion/reveal";
@@ -20,7 +20,7 @@ const SPARKS = [
  * Welcoming: the sheet tips up from below, cells rise in sequence, digits
  * roll like an odometer and each sparkline draws itself.
  */
-export function Stats() {
+export function Stats({ stats }: { stats: Stat[] }) {
   return (
     <SectionEntrance variant="tilt" sheetClassName="bg-background">
       <div className="container-x py-24 md:py-36">

@@ -1,3 +1,4 @@
+import { getHomeData } from "@/lib/cms";
 import { Hero } from "@/components/sections/hero";
 import { ClientMarquee } from "@/components/sections/client-marquee";
 import { Showreel } from "@/components/sections/showreel";
@@ -10,22 +11,24 @@ import { Testimonials } from "@/components/sections/testimonials";
 import { Insights } from "@/components/sections/insights";
 
 /**
- * Homepage (PROJECT_SPEC §6.1). Each section arrives with its own
- * welcoming entrance, so no two consecutive scrolls feel the same.
+ * Homepage (PROJECT_SPEC §6.1). Content comes from the CMS (Homepage
+ * global + collections); services and values are still defined in code.
+ * Each section arrives with its own welcoming entrance.
  */
-export default function HomePage() {
+export default async function HomePage() {
+  const data = await getHomeData();
   return (
     <>
-      <Hero />
-      <ClientMarquee />
-      <Showreel />
-      <Stats />
-      <WorkWheel />
+      <Hero hero={data.hero} />
+      <ClientMarquee clients={data.clients} />
+      <Showreel showreel={data.showreel} />
+      <Stats stats={data.stats} />
+      <WorkWheel caseStudies={data.caseStudies} />
       <Services />
-      <CurvedGallery />
+      <CurvedGallery gallery={data.gallery} />
       <Values />
-      <Testimonials />
-      <Insights />
+      <Testimonials testimonials={data.testimonials} />
+      <Insights insights={data.insights} />
     </>
   );
 }
