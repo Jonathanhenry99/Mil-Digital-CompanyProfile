@@ -1,6 +1,6 @@
 # MIL Digital Website — Project Specification
 
-> Versi 0.1 · Draft awal · 17 Oktober 2026
+> Versi 0.2 · 17 Oktober 2026 · palet putih→biru, welcoming animation per section, homepage v1 dibangun
 > Sumber: brief sitemap & page inventory MIL Digital ([docs/assets/sitemap-brief.png](assets/sitemap-brief.png))
 
 Dokumen ini adalah acuan utama untuk membangun website company profile MIL Digital: arah desain, sistem animasi, struktur halaman, model CMS, fitur tambahan, dan tahapan pengerjaan. Bagian yang masih butuh keputusan tim MIL ditandai **[TBC]** dan dirangkum di [§14 Open Questions](#14-open-questions).
@@ -144,7 +144,8 @@ Bahasa visual:
 - **Blueprint grid** — garis 1px tipis dan tanda crosshair di sudut section, seperti kertas teknik atau terminal.
 - **Label monospace** — eyebrow, angka, tag, dan metadata memakai font mono (`01 — APPROACH`, `ROAS 4.2x`).
 - **Data sebagai ornamen** — sparkline, angka counter, dan chart mini menggantikan ilustrasi dekoratif.
-- **Dark-first** untuk halaman marketing; **mode "paper" terang** untuk konten panjang (artikel, report, legal) agar nyaman dibaca.
+- **Terang (putih → biru)** sebagai dasar, sesuai warna MIL Digital. Ambience cerah dengan aurora biru lembut, bukan korporat yang kaku.
+- **Band biru tua** (`.theme-deep`) sebagai ritme di beberapa section: logo klien, showreel, panel service, footer.
 
 ### Referensi yang diambil
 
@@ -157,23 +158,25 @@ Bahasa visual:
 | basement.studio / instrument.com | Agency yang berani tapi tetap terstruktur |
 | apps.shopify.com/loyaltribe | Format teaser produk untuk ATLAS (screenshot fitur, poin manfaat) |
 
-### Design tokens (draft)
+### Design tokens
 
-> Warna dan font final mengikuti brand guideline MIL Digital. **[TBC]** Nilai di bawah adalah titik awal yang bisa langsung dipakai.
+> Diambil dari logo MIL (Assets/): gradient **#1C4489 → #03A5E6**. Sumber kebenaran ada di `src/app/globals.css`.
 
 **Warna**
 
-| Token | Dark (default) | Paper (konten panjang) | Kegunaan |
+| Token | Terang (default) | `.theme-deep` (band biru) | Kegunaan |
 |---|---|---|---|
-| `--bg` | `#05070A` | `#F5F5F2` | Background halaman |
-| `--surface` | `#0B0F15` | `#FFFFFF` | Kartu, panel |
-| `--surface-raised` | `#121821` | `#EEEEEA` | Hover, dropdown |
-| `--line` | `rgba(255,255,255,.08)` | `rgba(5,7,10,.10)` | Grid, border |
-| `--fg` | `#EDF1F5` | `#0B0F15` | Teks utama |
-| `--fg-muted` | `#8893A0` | `#5B6470` | Teks sekunder |
-| `--accent` | `#3D7BFF` (Signal Blue) | `#1F5EEA` | CTA, link, fokus |
-| `--accent-data` | `#C8FF3D` (Volt) | `#5A7A00` | Highlight angka/hasil, dipakai hemat |
-| `--success` / `--danger` | `#2BD47D` / `#FF5A5A` | sama | Status form |
+| `--brand-gradient` | `#1C4489 → #0A6FC2 → #03A5E6` | sama | CTA utama, band logo, footer |
+| `--bg` | `#F5F8FC` | `#0B2A5B` | Background halaman |
+| `--surface` | `#FFFFFF` | `#0F3470` | Kartu, panel |
+| `--surface-raised` | `#EAF1FA` | `#164183` | Hover, tile kosong |
+| `--line` | `rgb(16 52 110 / .10)` | `rgb(255 255 255 / .14)` | Grid, border |
+| `--fg` | `#0A1F3F` (navy ink) | `#F3F8FF` | Teks utama |
+| `--fg-muted` | `#52647E` | `#B4C6E3` | Teks sekunder |
+| `--signal` | `#0B6BCB` | `#4FB3FF` | Link, fokus, aksen |
+| `--signal-soft` / `--aqua` | `#0A8FD8` / `#0596D6` | `#8FD3FF` / `#7BE6FF` | Highlight angka & data |
+
+Komponen hanya memakai token semantik, jadi otomatis benar di dalam `.theme-deep`.
 
 **Tipografi**
 
@@ -194,11 +197,13 @@ Skala fluid (clamp): Display XL `56→120px`, H1 `40→80px`, H2 `32→56px`, H3
 
 | Library | Dipakai untuk |
 |---|---|
-| **Motion** (motion.dev, React) | Animasi komponen, layout/FLIP (filter case study), gesture, transisi state quiz |
-| **GSAP + ScrollTrigger + SplitText** | Section yang di-pin saat scroll, timeline storytelling, reveal teks per baris |
-| **Lenis** | Smooth scroll yang sinkron dengan ScrollTrigger |
-| **React Three Fiber + drei** | Hero WebGL "Data Constellation" |
-| **View Transitions API** | Transisi antar halaman (kartu case study → hero detail) |
+| **Motion** (motion.dev, React) | Semua animasi scroll & komponen: `useScroll` untuk section yang di-pin, reveal, layout/FLIP, gesture, transisi quiz |
+| **CSS** (keyframes, sticky) | Reveal headline hero sebelum hydration, odometer, marquee, panel service |
+| **Lenis** | Smooth scroll (menggerakkan scroll native, jadi `sticky` & `useScroll` tetap bekerja) |
+| **Canvas 2D** | Hero "Signal from Noise". Tanpa three.js agar first paint ringan; R3F tetap opsi untuk ATLAS |
+| **View Transitions API** | Transisi antar halaman (kartu case study → hero detail), fase berikutnya |
+
+GSAP belum dipakai. Tambahkan hanya jika ada timeline yang tidak praktis dibuat dengan Motion.
 
 ### Motion tokens
 
@@ -212,11 +217,39 @@ Skala fluid (clamp): Display XL `56→120px`, H1 `40→80px`, H2 `32→56px`, H3
 --stagger:  60ms;
 ```
 
+### Welcoming entrance (aturan wajib)
+
+Setiap scroll harus terasa memberi pengalaman baru. Karena itu **setiap section utama di setiap halaman punya animasi masuk sendiri**, dengan dua lapis:
+
+1. **Sheet entrance** (`SectionEntrance`, scroll-linked, bisa maju-mundur mengikuti scroll). Variannya digilir supaya dua section berurutan tidak pernah masuk dengan cara yang sama:
+   - `rise`: kartu membulat yang membesar jadi full-bleed
+   - `curtain`: jendela yang melebar dari tengah
+   - `tilt`: lembaran yang rebah dari bawah
+2. **Koreografi khusus section** di atasnya (`Reveal`: `up` / `left` / `right` / `blur` / `tilt` / `unfold`, `SplitText`, `Odometer`).
+
+Urutan di homepage:
+
+| Section | Sheet | Koreografi |
+|---|---|---|
+| Hero | (di-pin) | headline naik per kata, partikel tersusun jadi grafik saat scroll |
+| Logo klien | rise | dua baris logo meluncur dari sisi berlawanan |
+| Showreel | (di-pin) | kartu video membuka jadi full screen, milestone berganti per tahun |
+| Stats | tilt | sel naik bergantian, digit bergulir, sparkline tergambar |
+| Works | (di-pin) | drum kartu berayun masuk, lalu berputar per case study |
+| Services | curtain | panel terbuka dari bawah bergantian |
+| Galeri | rise | pita lengkung muncul dari blur |
+| Why MIL | tilt | tiap nilai menyala saat lewat tengah layar, rail terisi |
+| Testimonial | curtain | kutipan muncul dari blur, auto-advance |
+| Insights | rise | panel galeri "shutter" terbuka bergantian |
+| Footer CTA | curtain | judul naik per kata, glow melebar |
+
+Halaman lain wajib mengikuti pola ini.
+
 ### Signature interactions
 
 | # | Interaksi | Di mana | Detail |
 |---|---|---|---|
-| 1 | **Data Constellation** | Hero Home | ±10k partikel WebGL bereaksi ke kursor; saat scroll, partikel tersusun menjadi grid lalu menjadi angka stats. Fallback: poster AVIF/video loop. |
+| 1 | **Signal from Noise** | Hero Home | Ratusan titik (canvas 2D) bereaksi ke kursor; saat hero di-pin dan di-scroll, titik tersusun menjadi grafik batang yang naik. Reduced motion: satu frame diam. |
 | 2 | **Line-mask text reveal** | Semua heading besar | Teks muncul per baris dari balik mask, stagger 60ms. |
 | 3 | **Odometer counter** | Stats, hasil case study | Angka bergulir saat masuk viewport, font mono tabular. |
 | 4 | **Pinned approach story** | Halaman service | *Assess → Strategize → Monitor* di-pin, scroll horizontal per tahap dengan diagram yang bergerak. |
@@ -225,7 +258,11 @@ Skala fluid (clamp): Display XL `56→120px`, H1 `40→80px`, H2 `32→56px`, H3
 | 7 | **Infinite logo marquee** | Portofolio klien | Dua baris berlawanan arah, berhenti saat hover, logo grayscale → warna. |
 | 8 | **Scroll text-fill** | Manifesto About | Kalimat "what we believe" terisi warna mengikuti scroll. |
 | 9 | **Hover metric reveal** | Kartu case study | Saat hover, overlay menampilkan metrik utama (mis. `ROAS 5.1x`) dengan counter. |
-| 10 | **Custom cursor halus** | Desktop saja | Titik kecil yang membesar dengan label ("View", "Drag") di elemen interaktif. |
+| 10 | **Custom cursor halus** | Desktop saja | Titik kecil yang membesar dengan label ("View", "Drag") di elemen interaktif. (fase berikutnya) |
+| 11 | **Work wheel** | Works Home | Case study di sisi drum yang berputar saat scroll, berhenti sejenak di tiap kartu; judul kiri, indeks kanan (klik untuk lompat). |
+| 12 | **Curved gallery** | Galeri Home | `components/ui/tilted-grid-hero.tsx`: pita gambar melengkung yang terus mengalir. |
+| 13 | **Expanding gallery** | Insights Home | `components/ui/image-gallery.tsx`: panel yang di-hover melebar dan menampilkan kartu penjelasan; tersusun vertikal di mobile. |
+| 14 | **Journey film** | Showreel Home | Kartu video membuka jadi full screen lalu melangkah dari tahun pertama ke hari ini. Slot video siap untuk film MIL (Higgsfield). |
 
 ### Aturan animasi
 
@@ -468,6 +505,15 @@ Lihat [§6.14](#614-atlas-by-mil-digital--atlasmildigitalid-tbc). Waitlist tersi
 
 ## 8. CMS & Model Data
 
+### Aset yang sudah tersedia
+
+| Aset | Sumber | Dipakai di |
+|---|---|---|
+| Logo MIL | `Assets/images (1).jpeg` → `public/brand/mil-mark.png` (biru) & `mil-mark-white.png`, `src/app/icon.png` | Header, footer, favicon |
+| 52 logo klien | `Assets/Logofolio (1).png`, `(2).png` → `public/clients/*.png` | Marquee "Trusted by 150+ brands" |
+
+Butuh dari tim MIL: logo dalam format SVG, konfirmasi nama brand untuk logo inisial (V, CB), dan film perjalanan MIL.
+
 ### Pilihan CMS: **Payload CMS 3** (rekomendasi)
 
 | Kriteria | Payload 3 | Sanity (alternatif) |
@@ -692,7 +738,7 @@ Dua versi terakhir Chrome, Safari (macOS & iOS), Edge, Firefox; Samsung Internet
 
 | # | Pertanyaan | Usulan default |
 |---|---|---|
-| 1 | Brand guideline (logo, warna, font) final? | Pakai token draft §4 sampai guideline tersedia |
+| 1 | Brand guideline final (logo SVG, font)? | Warna sudah diambil dari logo (§4); font Geist sampai ada guideline |
 | 2 | Website bilingual (ID/EN) atau satu bahasa? | Inggris dulu, struktur siap bilingual |
 | 3 | Pertanyaan & bobot quiz final | Draft §7.1 |
 | 4 | Lead disimpan di mana? | Payload `leads` + email notifikasi, opsional sinkron Sheets/CRM |

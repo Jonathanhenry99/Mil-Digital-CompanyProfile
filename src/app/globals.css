@@ -1,0 +1,377 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "lenis/dist/lenis.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ── Design tokens (docs/PROJECT_SPEC.md §4) ─────────────────────
+ * MIL Digital is white into blue. The brand gradient is sampled from the
+ * logo: deep navy-blue #1C4489 → sky #03A5E6.
+ *
+ * Light by default. `.theme-deep` flips any subtree onto a deep brand-blue
+ * band (showreel, client logos, service panels, footer) so the page has
+ * rhythm without going dark overall. Components only use the semantic
+ * tokens, so they work in either.
+ * ─────────────────────────────────────────────────────────────── */
+:root {
+  --brand-from: #1c4489;
+  --brand-to: #03a5e6;
+  --brand-gradient: linear-gradient(135deg, var(--brand-from), #0a6fc2 55%, var(--brand-to));
+
+  --bg: #f5f8fc;
+  --surface: #ffffff;
+  --surface-raised: #eaf1fa;
+  --line: rgb(16 52 110 / 0.1);
+  --line-strong: rgb(16 52 110 / 0.2);
+  --fg: #0a1f3f;
+  --fg-muted: #52647e;
+  --signal: #0b6bcb;
+  --signal-soft: #0a8fd8;
+  --aqua: #0596d6;
+  --shadow-tint: 16 52 110;
+  color-scheme: light;
+}
+
+.theme-deep {
+  --bg: #0b2a5b;
+  --surface: #0f3470;
+  --surface-raised: #164183;
+  --line: rgb(255 255 255 / 0.14);
+  --line-strong: rgb(255 255 255 / 0.26);
+  --fg: #f3f8ff;
+  --fg-muted: #b4c6e3;
+  --signal: #4fb3ff;
+  --signal-soft: #8fd3ff;
+  --aqua: #7be6ff;
+  --shadow-tint: 2 10 30;
+  color-scheme: dark;
+  color: var(--fg);
+}
+
+/* shadcn semantic tokens, mapped onto the palette above. Declared on both
+ * selectors so they re-resolve inside a .theme-deep subtree. */
+:root,
+.theme-deep {
+  --background: var(--bg);
+  --foreground: var(--fg);
+  --card: var(--surface);
+  --card-foreground: var(--fg);
+  --popover: var(--surface);
+  --popover-foreground: var(--fg);
+  --primary: var(--signal);
+  --primary-foreground: #ffffff;
+  --secondary: var(--surface-raised);
+  --secondary-foreground: var(--fg);
+  --muted: var(--surface-raised);
+  --muted-foreground: var(--fg-muted);
+  --accent: var(--surface-raised);
+  --accent-foreground: var(--fg);
+  --destructive: #ff5a5a;
+  --border: var(--line);
+  --input: var(--line-strong);
+  --ring: var(--signal);
+  --chart-1: var(--signal);
+  --chart-2: var(--aqua);
+  --chart-3: var(--signal-soft);
+  --chart-4: #2bd47d;
+  --chart-5: var(--fg-muted);
+  --radius: 0.75rem;
+  --sidebar: var(--surface);
+  --sidebar-foreground: var(--fg);
+  --sidebar-primary: var(--signal);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--surface-raised);
+  --sidebar-accent-foreground: var(--fg);
+  --sidebar-border: var(--line);
+  --sidebar-ring: var(--signal);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-signal: var(--signal);
+  --color-signal-soft: var(--signal-soft);
+  --color-aqua: var(--aqua);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-geist-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/* Motion tokens (PROJECT_SPEC §5) */
+@theme {
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "ss01", "cv11";
+  }
+  ::selection {
+    background: var(--signal);
+    color: #fff;
+  }
+}
+
+@layer components {
+  .container-x {
+    width: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-inline: 16px;
+  }
+  @media (min-width: 768px) {
+    .container-x {
+      padding-inline: 40px;
+    }
+  }
+
+  /* Blueprint grid: thin lines every 80px, faded toward the edges. */
+  .blueprint {
+    background-image:
+      linear-gradient(to right, var(--line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+  }
+
+  /* Soft brand-light blobs that drift slowly behind hero-type sections. */
+  .aurora {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(90px);
+    opacity: 0.55;
+    animation: aurora-drift 18s ease-in-out infinite alternate;
+  }
+  .text-brand-gradient {
+    background: var(--brand-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .bg-brand-gradient {
+    background: var(--brand-gradient);
+  }
+
+  .eyebrow {
+    font-family: var(--font-geist-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+  }
+}
+
+/* ── Split text reveal ───────────────────────────────────────────
+ * Words rise from behind a mask. data-mode="load" runs on CSS alone so
+ * the hero headline animates before hydration; "inview" waits for the
+ * SplitText component to flip data-shown.
+ * ─────────────────────────────────────────────────────────────── */
+.split-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+.split-inner {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform 1000ms var(--ease-out-expo);
+  transition-delay: calc(var(--d, 0ms) + var(--i, 0) * 45ms);
+}
+[data-shown="true"] > .split-line > .split-word > .split-inner,
+[data-shown="true"] > .split-word > .split-inner {
+  transform: none;
+}
+[data-mode="load"] .split-inner {
+  animation: split-up 1100ms var(--ease-out-expo) both;
+  animation-delay: calc(var(--d, 0ms) + var(--i, 0) * 60ms);
+}
+@keyframes split-up {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* ── Odometer digits ─────────────────────────────────────────── */
+.odo-col {
+  display: inline-block;
+  height: 1em;
+  overflow: hidden;
+  line-height: 1;
+  vertical-align: top;
+}
+.odo-strip {
+  display: flex;
+  flex-direction: column;
+  transition: transform 1800ms var(--ease-out-expo);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+.odo-strip > span {
+  height: 1em;
+  line-height: 1;
+}
+
+/* ── Marquee ─────────────────────────────────────────────────── */
+.marquee {
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee var(--marquee-duration, 40s) linear infinite;
+}
+.marquee[data-reverse="true"] .marquee-track {
+  animation-direction: reverse;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ── Service panels: hovered/focused panel widens (first by default) ── */
+@media (min-width: 768px) {
+  .svc {
+    flex: 1 1 0%;
+    transition: flex-grow 900ms var(--ease-out-expo);
+  }
+  .svc-row:not(:has(.svc:hover, .svc:focus-within)) .svc:first-child,
+  .svc:hover,
+  .svc:focus-within {
+    flex-grow: 2.6;
+  }
+  .svc-detail {
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity 300ms,
+      transform 700ms var(--ease-out-expo);
+  }
+  .svc-row:not(:has(.svc:hover, .svc:focus-within)) .svc:first-child .svc-detail,
+  .svc:hover .svc-detail,
+  .svc:focus-within .svc-detail {
+    opacity: 1;
+    transform: none;
+    transition-delay: 250ms;
+  }
+  .svc:hover .svc-image,
+  .svc:focus-within .svc-image {
+    opacity: 0.6;
+    transform: scale(1.06);
+  }
+}
+
+/* ── Hero entrance pieces that must run before hydration ─────── */
+.fade-in-load {
+  animation: fade-in-load 1200ms var(--ease-out-expo) both;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes fade-in-load {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes aurora-drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(-6%, 4%, 0) scale(1.12);
+  }
+}
+
+@keyframes testimonial-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes scroll-cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  60%,
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .split-inner,
+  .odo-strip,
+  .fade-in-load {
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+  }
+  .marquee-track,
+  .aurora {
+    animation-play-state: paused;
+  }
+}
