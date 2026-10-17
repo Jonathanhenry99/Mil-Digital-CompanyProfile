@@ -5,28 +5,47 @@ import { usePathname } from "next/navigation";
 import { whatsappHref } from "@/lib/whatsapp";
 import { CtaLink } from "@/components/ui/cta-link";
 
-/**
- * Small client-only details for the footer. Time-dependent values are set
- * after mount so the prerendered HTML never bakes in a stale clock.
- */
-export function JakartaClock() {
-  const [time, setTime] = React.useState<string | null>(null);
+const noSubscribe = () => () => {};
+
+function useWibTime() {
+  const [t, setT] = React.useState<{ h: number; m: number } | null>(null);
   React.useEffect(() => {
-    const fmt = new Intl.DateTimeFormat("en-GB", {
-      timeZone: "Asia/Jakarta",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    });
-    const tick = () => setTime(fmt.format(new Date()));
-    tick();
-    const id = window.setInterval(tick, 1000);
-    return () => window.clearInterval(id);
+    const fmt = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Jakarta", hour: "2-digit", minute: "2-digit", hour12: false });
+    const tick = () => {
+      const [h, m] = fmt.format(new Date()).split(":").map(Number);
+      setT({ h, m });
+    };
+    const id = window.setInterval(tick, 15000);
+    const first = window.setTimeout(tick, 0);
+    return () => {
+      window.clearInterval(id);
+      window.clearTimeout(first);
+    };
   }, []);
-  return <span className="tabular-nums">{time ?? "--:--:--"} WIB</span>;
+  return t;
 }
 
-const noSubscribe = () => () => {};
+/**
+ * Studio clock: "Bandung 22.44" with a tiny analog face whose hands follow
+ * the real time (WIB). Empty until mounted so prerendered HTML has no clock.
+ */
+export function StudioClock({ city, className }: { city: string; className?: string }) {
+  const t = useWibTime();
+  const mDeg = (t?.m ?? 0) * 6;
+  const hDeg = ((t?.h ?? 0) % 12) * 30 + (t?.m ?? 0) * 0.5;
+  return (
+    <span className={className}>
+      <svg viewBox="0 0 14 14" className="size-3.5" aria-hidden>
+        <circle cx="7" cy="7" r="6.25" fill="none" stroke="currentColor" strokeWidth="1" />
+        <line x1="7" y1="7" x2="7" y2="3.6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" style={{ transformOrigin: "7px 7px", transform: `rotate(${hDeg}deg)` }} />
+        <line x1="7" y1="7" x2="7" y2="2" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round" style={{ transformOrigin: "7px 7px", transform: `rotate(${mDeg}deg)` }} />
+      </svg>
+      <span className="tabular-nums">
+        {city} {t ? `${String(t.h).padStart(2, "0")}.${String(t.m).padStart(2, "0")}` : "--.--"}
+      </span>
+    </span>
+  );
+}
 
 /** Empty in the prerendered HTML, filled in on the client. */
 export function CurrentYear() {
@@ -39,10 +58,10 @@ export function CurrentYear() {
 }
 
 /** WhatsApp CTA whose message names the current page. */
-export function WhatsAppCta({ variant = "ghost", size = "lg" }: { variant?: "ghost" | "light"; size?: "md" | "lg" }) {
+export function WhatsAppCta({ variant = "ghost" }: { variant?: "ghost" | "primary" }) {
   const pathname = usePathname();
   return (
-    <CtaLink href={whatsappHref(pathname)} variant={variant} size={size}>
+    <CtaLink href={whatsappHref(pathname)} variant={variant}>
       Chat on WhatsApp
     </CtaLink>
   );

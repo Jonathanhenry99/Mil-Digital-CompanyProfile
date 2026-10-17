@@ -1,82 +1,73 @@
 "use client";
 
 import * as React from "react";
-import { motion, useInView, useScroll, useSpring } from "motion/react";
-import { values } from "@/content/home";
+import Image from "next/image";
+import { useInView } from "motion/react";
+import { certifications, values } from "@/content/home";
 import { cn } from "@/lib/utils";
-import { CtaLink } from "@/components/ui/cta-link";
-import { Eyebrow } from "@/components/ui/eyebrow";
-import { SectionEntrance } from "@/components/motion/section-entrance";
+import { TextLink } from "@/components/ui/cta-link";
+import { Hairline } from "@/components/motion/hairline";
 import { SplitText } from "@/components/motion/split-text";
 
 function ValueRow({ value, index }: { value: (typeof values)[number]; index: number }) {
   const ref = React.useRef<HTMLLIElement>(null);
-  // Lit while the row crosses the middle band of the screen.
-  const active = useInView(ref, { margin: "-42% 0px -42% 0px" });
-
+  const on = useInView(ref, { margin: "-44% 0px -44% 0px" });
   return (
-    <li
-      ref={ref}
-      className={cn(
-        "grid grid-cols-[3rem_1fr] gap-4 border-b border-line py-10 transition-[opacity,translate] duration-700 ease-out-expo md:grid-cols-[4rem_1fr_auto] md:py-14",
-        active ? "opacity-100" : "opacity-35 md:translate-x-2",
-      )}
-    >
-      <span className={cn("font-mono text-sm transition-colors duration-500", active ? "text-signal" : "text-muted-foreground")}>
-        {String(index + 1).padStart(2, "0")}
-      </span>
-      <div>
-        <h3 className="text-[clamp(1.75rem,3vw,2.75rem)] font-medium leading-tight tracking-[-0.03em]">{value.title}</h3>
-        <p className="mt-3 max-w-lg text-muted-foreground">{value.body}</p>
+    <li ref={ref}>
+      <Hairline delay={index * 60} />
+      <div className={cn("grid grid-cols-[3rem_1fr] gap-x-4 py-8 transition-opacity duration-500 md:grid-cols-[4rem_1fr_auto] md:py-10", on ? "opacity-100" : "opacity-40")}>
+        <span className={cn("pt-2 text-[13px] tabular-nums transition-colors duration-500", on ? "text-signal" : "text-fg-3")}>
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        <div>
+          <h3 className={cn("t-display text-[clamp(1.9rem,3.4vw,3.1rem)] transition-transform duration-700 ease-out-expo", on && "md:translate-x-3")}>
+            {value.title}
+          </h3>
+          <p className="mt-3 max-w-lg text-[15px] leading-relaxed text-fg-2">{value.body}</p>
+        </div>
+        <span className="col-start-2 mt-4 self-start justify-self-start border border-line px-2.5 py-1 text-[11px] uppercase tracking-[0.1em] text-fg-3 md:col-start-3 md:mt-2">
+          {value.tag}
+        </span>
       </div>
-      <span className="col-start-2 self-start justify-self-start rounded-full border border-line-strong px-3 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground md:col-start-3">
-        {value.tag}
-      </span>
     </li>
   );
 }
 
 /**
- * Why MIL. Heading pinned on the left; on the right each value lights up
- * as it crosses the centre of the screen while a rail fills alongside.
- * Welcoming: the sheet tips up, then the first value lights as it arrives.
+ * Chapter 7 (inventory: why MIL Digital & values). The heading holds on
+ * the left; MIL's five core values light up one by one as they cross the
+ * middle of the screen.
  */
 export function Values() {
-  const listRef = React.useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: listRef, offset: ["start 0.6", "end 0.5"] });
-  const fill = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
-
   return (
-    <SectionEntrance variant="tilt" sheetClassName="bg-surface">
-      <div className="container-x grid gap-12 py-24 md:grid-cols-12 md:py-36">
-        <div className="md:col-span-5">
-          <div className="md:sticky md:top-32">
-            <Eyebrow index="05">Why MIL Digital</Eyebrow>
-            <SplitText
-              as="h2"
-              text={"We're the data\nnerds in the room."}
-              className="mt-6 text-[clamp(2.25rem,4.6vw,4.25rem)] font-medium leading-[0.95] tracking-[-0.04em]"
-            />
-            <p className="mt-6 max-w-sm text-muted-foreground">
-              Strategy, media and creative under one roof, held together by numbers you can see every week.
+    <section data-ground="#0c0d0f" className="sec" aria-label="Why MIL Digital">
+      <div className="container-x grid gap-12 lg:grid-cols-12">
+        <div className="lg:col-span-5">
+          <div className="lg:sticky lg:top-32">
+            <p className="t-label">Why MIL Digital</p>
+            <SplitText as="h2" text={"We're the data\nnerds in the room."} className="t-h2 mt-4" />
+            <p className="t-body mt-6 text-fg-2">
+              Strategy, media and creative under one roof, held together by numbers you can see. These are the values we
+              work by, campaign after campaign.
             </p>
-            <CtaLink href="/about-mil-digital" variant="ghost" className="mt-8">
-              About MIL Digital
-            </CtaLink>
+            <div className="mt-8 flex items-center gap-3">
+              {certifications.map((c) => (
+                <Image key={c.name} src={c.image} alt={c.name} width={48} height={48} className="size-12" />
+              ))}
+              <span className="t-label max-w-[14em]">Meta certified media buying &amp; digital marketing</span>
+            </div>
+            <div className="mt-8">
+              <TextLink href="/about-mil-digital">More about MIL</TextLink>
+            </div>
           </div>
         </div>
-
-        <div ref={listRef} className="relative md:col-span-7">
-          <span className="absolute -left-6 top-0 hidden h-full w-px bg-line md:block" aria-hidden>
-            <motion.span style={{ scaleY: fill }} className="block h-full w-px origin-top bg-signal" />
-          </span>
-          <ul className="border-t border-line">
-            {values.map((v, i) => (
-              <ValueRow key={v.title} value={v} index={i} />
-            ))}
-          </ul>
-        </div>
+        <ul className="lg:col-span-7">
+          {values.map((v, i) => (
+            <ValueRow key={v.title} value={v} index={i} />
+          ))}
+          <Hairline />
+        </ul>
       </div>
-    </SectionEntrance>
+    </section>
   );
 }

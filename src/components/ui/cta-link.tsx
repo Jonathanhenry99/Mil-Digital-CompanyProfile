@@ -1,48 +1,75 @@
 import * as React from "react";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const styles = {
-  primary:
-    "bg-brand-gradient text-white shadow-[0_0_0_1px_rgb(255_255_255/0.12)_inset,0_12px_32px_-12px_rgb(11_107_203/0.65)] hover:brightness-110",
-  ghost: "border border-line-strong bg-surface/40 text-foreground backdrop-blur hover:border-foreground/40 hover:bg-foreground/[0.04]",
-  light: "bg-white text-[#0a1f3f] hover:bg-white/90",
+/*
+ * Square call-to-action: 52px, label left, arrow right. On hover the arrow
+ * slides out and a fresh one slides in; pressing shrinks it a touch.
+ * `primary` is paper on dark with a blue arrow tile (the MIL accent).
+ */
+const variants = {
+  primary: "bg-paper text-paper-ink hover:bg-white pr-1.5",
+  blue: "bg-signal text-white hover:bg-[#5a9eff]",
+  ghost: "border border-line-strong text-foreground hover:border-foreground/70 hover:bg-foreground/[0.06]",
+  ink: "bg-paper-ink text-paper hover:bg-[#2b2e33]",
 } as const;
 
+export type CtaVariant = keyof typeof variants;
+
+export function ctaClass(variant: CtaVariant = "primary", size: "md" | "lg" = "lg", className?: string) {
+  return cn(
+    "group/cta inline-flex shrink-0 items-center justify-between font-semibold tracking-tight whitespace-nowrap transition-[background-color,border-color,color,transform] duration-200 active:scale-[0.98]",
+    size === "lg" ? "h-[52px] gap-6 pl-6 text-sm" : "h-11 gap-4 pl-4 text-[13px]",
+    variant === "primary" ? (size === "lg" ? "pr-1.5" : "pr-1") : size === "lg" ? "pr-[18px]" : "pr-3",
+    variants[variant],
+    className,
+  );
+}
+
+/** The sliding arrow; `tile` puts it on a blue square (primary buttons). */
+export function CtaArrow({ tile }: { tile?: boolean }) {
+  return (
+    <span
+      aria-hidden
+      className={cn("relative grid shrink-0 place-items-center overflow-hidden", tile ? "size-10 bg-signal text-white" : "size-5")}
+    >
+      <ArrowRight className="size-[18px] transition-transform duration-500 ease-out-expo group-hover/cta:translate-x-[180%]" />
+      <ArrowRight className="absolute size-[18px] -translate-x-[180%] transition-transform duration-500 ease-out-expo group-hover/cta:translate-x-0" />
+    </span>
+  );
+}
+
 type CtaLinkProps = Omit<React.ComponentProps<typeof Link>, "className"> & {
-  variant?: keyof typeof styles;
+  variant?: CtaVariant;
   size?: "md" | "lg";
   className?: string;
-  /** Hide the arrow, e.g. in dense UI. */
-  plain?: boolean;
 };
 
-/**
- * Primary call-to-action. The arrow slides out and a fresh one slides in on
- * hover. External links (wa.me) open in a new tab.
- */
-export function CtaLink({ variant = "primary", size = "md", plain, className, children, href, ...props }: CtaLinkProps) {
+export function CtaLink({ variant = "primary", size = "lg", className, children, href, ...props }: CtaLinkProps) {
   const external = typeof href === "string" && href.startsWith("http");
   return (
     <Link
       href={href}
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      className={cn(
-        "group/cta inline-flex items-center gap-2 rounded-full font-medium tracking-tight whitespace-nowrap transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal",
-        size === "md" ? "h-10 px-4 text-sm" : "h-12 pl-6 pr-5 text-[15px]",
-        styles[variant],
-        className,
-      )}
+      className={ctaClass(variant, size, className)}
       {...props}
     >
       {children}
-      {plain ? null : (
-        <span className="relative size-4 overflow-hidden" aria-hidden>
-          <ArrowUpRight className="absolute inset-0 size-4 transition-transform duration-500 ease-out-expo group-hover/cta:translate-x-full group-hover/cta:-translate-y-full" />
-          <ArrowUpRight className="absolute inset-0 size-4 -translate-x-full translate-y-full transition-transform duration-500 ease-out-expo group-hover/cta:translate-x-0 group-hover/cta:translate-y-0" />
-        </span>
-      )}
+      <CtaArrow tile={variant === "primary"} />
+    </Link>
+  );
+}
+
+/** Text link with an underline that draws in, for low-emphasis actions. */
+export function TextLink({ href, children, className }: { href: string; children: React.ReactNode; className?: string }) {
+  return (
+    <Link href={href} className={cn("group/tl inline-flex items-center gap-2 text-sm font-medium", className)}>
+      <span className="relative">
+        {children}
+        <span className="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-current transition-transform duration-500 ease-out-expo group-hover/tl:scale-x-100" />
+      </span>
+      <ArrowRight className="size-4 transition-transform duration-300 group-hover/tl:translate-x-0.5" />
     </Link>
   );
 }

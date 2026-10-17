@@ -1,102 +1,88 @@
 import Link from "next/link";
 import { footerLinks, site, tagline } from "@/content/site";
-import { CtaLink } from "@/components/ui/cta-link";
+import { whatsappHref } from "@/lib/whatsapp";
 import { Logo } from "@/components/ui/logo";
+import { BriefTrigger } from "@/components/brief/brief-provider";
+import { Hairline } from "@/components/motion/hairline";
 import { SplitText } from "@/components/motion/split-text";
-import { Reveal } from "@/components/motion/reveal";
-import { SectionEntrance } from "@/components/motion/section-entrance";
-import { CurrentYear, JakartaClock, WhatsAppCta } from "./live-details";
+import { CurrentYear, StudioClock, WhatsAppCta } from "./live-details";
 
-/** Footer CTA band + site links. Every page ends here (brief: footer CTA). */
+/** Closing statement, the brief CTA, and an index of the site. */
 export function Footer() {
   return (
-    <footer>
-      <SectionEntrance variant="curtain" sheetClassName="theme-deep bg-background">
-        {/* Glow that swells as the band opens */}
-        <div aria-hidden className="bg-brand-gradient pointer-events-none absolute inset-x-0 top-0 h-[720px] opacity-90 [mask-image:linear-gradient(to_bottom,#000_40%,transparent)]" />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 -top-40 mx-auto h-[520px] max-w-4xl rounded-full bg-[#7cc8ff]/40 blur-[140px]"
-        />
-        <div className="blueprint pointer-events-none absolute inset-0 opacity-60" aria-hidden />
-
-        <div className="container-x relative py-28 md:py-40">
-          <p className="eyebrow mb-8 text-center">Free 30-minute consultation</p>
-          <SplitText
-            as="h2"
-            text={tagline.replace("grow ", "grow\n") + "."}
-            className="text-center text-[clamp(2.75rem,8vw,7.5rem)] font-medium leading-[0.95] tracking-[-0.04em]"
-          />
-          <Reveal delay={0.3} className="mt-12 flex flex-wrap items-center justify-center gap-3">
-            <CtaLink href={site.bookingHref} size="lg" variant="light">
-              Book a Consultation
-            </CtaLink>
-            <WhatsAppCta />
-          </Reveal>
+    <footer data-ground="#07080a" className="relative overflow-hidden">
+      <div aria-hidden className="pointer-events-none absolute -top-48 left-1/2 h-[420px] w-[70vw] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgb(59_140_255/0.22),transparent)]" />
+      <div className="container-x relative pb-10 pt-[var(--sec)]">
+        <SplitText as="p" text={tagline.replace("grow ", "grow\n") + "."} className="t-display text-[clamp(3rem,9vw,9rem)]" />
+        <div className="mt-12 flex flex-wrap gap-3">
+          <BriefTrigger>Book a free consultation</BriefTrigger>
+          <WhatsAppCta />
         </div>
 
-        <div className="container-x relative border-t border-line py-14">
-          <div className="grid gap-12 md:grid-cols-12">
-            <div className="md:col-span-4">
-              <Logo tone="white" />
-              <p className="mt-5 max-w-xs text-sm leading-relaxed text-muted-foreground">
-                Data-driven digital marketing partner for brands across Indonesia.
-              </p>
-              <div className="mt-6 space-y-1 text-sm">
-                <a href={site.mapsUrl} target="_blank" rel="noopener noreferrer" className="block max-w-xs hover:underline">
-                  {site.address}
-                </a>
-                {site.email ? (
-                  <a href={`mailto:${site.email}`} className="block text-muted-foreground hover:text-foreground">
-                    {site.email}
-                  </a>
-                ) : null}
-                <p className="text-muted-foreground">WhatsApp {site.whatsappDisplay}</p>
-              </div>
-            </div>
-            {footerLinks.map((group, i) => (
-              <div key={group.title} className={i === 1 ? "md:col-span-4" : "md:col-span-2"}>
-                <p className="eyebrow mb-4">{group.title}</p>
-                <ul className="space-y-2.5 text-sm">
-                  {group.links.map((link) => (
-                    <li key={link.href}>
-                      <Link href={link.href} className="text-foreground/80 transition-colors hover:text-foreground">
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+        <Hairline className="mt-20" />
+        <div className="grid gap-10 py-12 md:grid-cols-12">
+          <div className="md:col-span-4">
+            <Logo />
+            <p className="mt-5 max-w-xs text-sm text-fg-2">Digital marketing consultant &amp; agency, helping brands across Indonesia grow online.</p>
           </div>
-
-          <div className="mt-16 flex flex-col gap-4 border-t border-line pt-6 font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground md:flex-row md:items-center md:justify-between">
-            <p className="flex items-center gap-2">
-              <span className="relative flex size-2">
-                <span className="absolute inline-flex size-full animate-ping rounded-full bg-[#2bd47d] opacity-60" />
-                <span className="relative inline-flex size-2 rounded-full bg-[#2bd47d]" />
-              </span>
-              Accepting new projects · {site.city} <JakartaClock />
-            </p>
-            <div className="flex flex-wrap gap-5">
+          {footerLinks.map((group, i) => (
+            <div key={group.title} className={i === 1 ? "md:col-span-3" : "md:col-span-2"}>
+              <h3 className="t-label mb-4">{group.title}</h3>
+              <ul className="space-y-2.5 text-sm">
+                {group.links.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href} className="text-foreground/80 transition-colors hover:text-foreground">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+          <div className="md:col-span-1">
+            <h3 className="t-label mb-4">Follow</h3>
+            <ul className="space-y-2.5 text-sm">
               {site.socials.map((s) => (
-                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="hover:text-foreground">
-                  {s.label}
-                </a>
+                <li key={s.label}>
+                  <a href={s.href} target="_blank" rel="noopener noreferrer" className="text-foreground/80 hover:text-foreground">
+                    {s.label}
+                  </a>
+                </li>
               ))}
-              <Link href="/privacy" className="hover:text-foreground">
-                Privacy
-              </Link>
-              <Link href="/terms" className="hover:text-foreground">
-                Terms
-              </Link>
-            </div>
-            <p>
-              © <CurrentYear /> MIL Digital
-            </p>
+              <li>
+                <a href={whatsappHref()} target="_blank" rel="noopener noreferrer" className="text-foreground/80 hover:text-foreground">
+                  WhatsApp
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
-      </SectionEntrance>
+
+        <div className="flex flex-col gap-3 border-t border-line pt-6 text-[13px] text-fg-3 md:flex-row md:items-center md:justify-between">
+          <a href={site.mapsUrl} target="_blank" rel="noopener noreferrer" className="hover:text-foreground">
+            {site.address}
+          </a>
+          <span className="flex items-center gap-2">
+            <span className="relative flex size-2">
+              <span className="absolute inline-flex size-full animate-ping bg-[#2bd47d] opacity-60" />
+              <span className="relative inline-flex size-2 bg-[#2bd47d]" />
+            </span>
+            Accepting new projects ·
+            <StudioClock city={site.city} className="inline-flex items-center gap-1.5" />
+          </span>
+          <span className="flex gap-5">
+            <Link href="/privacy" className="hover:text-foreground">
+              Privacy
+            </Link>
+            <Link href="/terms" className="hover:text-foreground">
+              Terms
+            </Link>
+            <span>
+              © <CurrentYear /> MIL Digital
+            </span>
+          </span>
+        </div>
+      </div>
     </footer>
   );
 }

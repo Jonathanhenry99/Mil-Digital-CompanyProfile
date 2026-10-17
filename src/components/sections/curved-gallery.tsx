@@ -15,7 +15,7 @@ export function CurvedGallery({ gallery }: { gallery: { src: string; alt: string
         <TiltedGridHero images={gallery} speed={3.5} tileHeight={30} curve={72} fade={10} className="h-[620px] w-full md:h-[760px]">
           <div className="relative z-10 flex h-full flex-col items-center justify-between py-16 text-center md:py-20">
             <div className="px-6">
-              <p className="eyebrow mb-5">03 — Creative in motion</p>
+              <p className="t-label mb-5">Creative in motion</p>
               <SplitText
                 as="h2"
                 text={"Every campaign,\nbrought into focus."}

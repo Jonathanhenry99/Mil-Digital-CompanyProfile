@@ -326,6 +326,7 @@ export interface Lead {
   brandName: string;
   industry?: string | null;
   location?: string | null;
+  services?: ('Consultation' | 'Advertising' | 'Creative' | 'Not sure yet')[] | null;
   budget?: string | null;
   activities?: ('Advertising' | 'Social Media' | 'Branding' | 'Influencer' | 'Others')[] | null;
   message: string;
@@ -568,6 +569,7 @@ export interface LeadsSelect<T extends boolean = true> {
   brandName?: T;
   industry?: T;
   location?: T;
+  services?: T;
   budget?: T;
   activities?: T;
   message?: T;

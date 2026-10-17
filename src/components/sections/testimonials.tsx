@@ -1,114 +1,80 @@
 "use client";
 
 import * as React from "react";
-import { AnimatePresence, motion, useInView } from "motion/react";
+import Image from "next/image";
+import { AnimatePresence, motion } from "motion/react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { HomeData } from "@/lib/cms";
-import { cn } from "@/lib/utils";
-import { Eyebrow } from "@/components/ui/eyebrow";
-import { SectionEntrance } from "@/components/motion/section-entrance";
+import { Reveal } from "@/components/motion/reveal";
 
-const EASE = [0.16, 1, 0.3, 1] as const;
-const DURATION = 7; // seconds per quote
+const EASE = [0.22, 1, 0.36, 1] as const;
+// Client logos by company name, for the quote card (from the marquee set).
+const LOGOS: Record<string, string> = { LYLA: "/clients/lyla.png" };
 
 /**
- * One quote at a time, advancing on a timer shown as progress bars. The
- * timer pauses on hover, on keyboard focus and while off-screen.
- * Welcoming: the sheet tips up and the first quote resolves out of a blur.
+ * Chapter 9 (inventory: testimonials). One large quote at a time; arrows
+ * appear once the CMS holds more than one testimonial.
  */
 export function Testimonials({ testimonials }: { testimonials: HomeData["testimonials"] }) {
-  const ref = React.useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { amount: 0.4 });
-  const [active, setActive] = React.useState(0);
-  const [hovered, setHovered] = React.useState(false);
-  const paused = hovered || !inView;
-  const t = testimonials[active % Math.max(testimonials.length, 1)];
+  const [i, setI] = React.useState(0);
+  const t = testimonials[i % Math.max(testimonials.length, 1)];
   if (!t) return null;
+  const many = testimonials.length > 1;
+  const logo = LOGOS[t.company];
 
   return (
-    <SectionEntrance variant="tilt" sheetClassName="bg-background">
-      <div
-        ref={ref}
-        className="container-x py-24 md:py-36"
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        onFocus={() => setHovered(true)}
-        onBlur={() => setHovered(false)}
-      >
-        <Eyebrow index="09">Client voices</Eyebrow>
+    <section data-ground="#0c0d0f" className="sec" aria-label="Client stories">
+      <div className="container-x">
+        <div className="flex items-end justify-between gap-6">
+          <p className="t-label">What clients say</p>
+          {many ? (
+            <div className="flex gap-2">
+              {[-1, 1].map((d) => (
+                <button
+                  key={d}
+                  type="button"
+                  aria-label={d < 0 ? "Previous testimonial" : "Next testimonial"}
+                  onClick={() => setI((v) => (v + d + testimonials.length) % testimonials.length)}
+                  className="grid size-12 place-items-center border border-line-strong transition-colors hover:bg-foreground hover:text-background"
+                >
+                  {d < 0 ? <ArrowLeft className="size-5" /> : <ArrowRight className="size-5" />}
+                </button>
+              ))}
+            </div>
+          ) : null}
+        </div>
 
-        <div className="relative mt-12 min-h-[22rem] md:min-h-[20rem]" aria-live="polite">
-          <span aria-hidden className="absolute -left-2 -top-10 font-serif text-[10rem] leading-none text-signal/30 md:-left-10">
-            “
-          </span>
+        <Reveal variant="blur" duration={1.2} className="mt-10 grid gap-10 border-t border-line pt-12 lg:grid-cols-12" aria-live="polite">
           <AnimatePresence mode="wait">
             <motion.figure
-              key={active}
-              initial={{ opacity: 0, filter: "blur(14px)", y: 24 }}
-              animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-              exit={{ opacity: 0, filter: "blur(10px)", y: -16 }}
-              transition={{ duration: 0.8, ease: EASE }}
-              className="relative"
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.6, ease: EASE }}
+              className="contents"
             >
-              <blockquote className="max-w-5xl text-[clamp(1.75rem,3.6vw,3.25rem)] font-medium leading-[1.12] tracking-[-0.03em]">
+              <blockquote className="t-statement lg:col-span-9">
+                <span aria-hidden className="mr-1 text-signal">“</span>
                 {t.quote}
+                <span aria-hidden className="text-signal">”</span>
               </blockquote>
-              <figcaption className="mt-10 flex items-center gap-4">
-                <span className="flex size-12 items-center justify-center rounded-full bg-surface-raised font-mono text-sm text-signal-soft">
-                  {t.name
-                    .split(" ")
-                    .map((w) => w[0])
-                    .join("")}
-                </span>
+              <figcaption className="flex items-center gap-4 lg:col-span-3 lg:flex-col lg:items-start lg:justify-end">
+                {logo ? (
+                  <Image src={logo} alt={t.company} width={480} height={160} className="h-10 w-auto opacity-90" />
+                ) : null}
                 <span>
-                  <span className="block font-medium">{t.name}</span>
-                  <span className="block text-sm text-muted-foreground">
-                    {t.role}, {t.company}
+                  <span className="block font-semibold">{t.name === t.company ? `Team ${t.name}` : t.name}</span>
+                  <span className="block text-[13px] text-fg-2">
+                    {t.role}
+                    {t.name === t.company ? "" : `, ${t.company}`}
                   </span>
                 </span>
               </figcaption>
             </motion.figure>
           </AnimatePresence>
-        </div>
-
-        {testimonials.length > 1 ? (
-        <div className="mt-14 grid grid-cols-3 gap-3 md:gap-6" role="tablist" aria-label="Testimonials">
-          {testimonials.map((item, i) => (
-            <button
-              key={item.company}
-              type="button"
-              role="tab"
-              aria-selected={i === active}
-              onClick={() => setActive(i)}
-              className="group text-left"
-            >
-              <span className="block h-0.5 overflow-hidden bg-line-strong">
-                {i === active ? (
-                  <span
-                    key={active}
-                    className="block h-full origin-left bg-foreground"
-                    style={{
-                      animation: `testimonial-progress ${DURATION}s linear forwards`,
-                      animationPlayState: paused ? "paused" : "running",
-                    }}
-                    onAnimationEnd={() => setActive((a) => (a + 1) % testimonials.length)}
-                  />
-                ) : (
-                  <span className={cn("block h-full bg-foreground/30", i < active ? "w-full" : "w-0")} />
-                )}
-              </span>
-              <span
-                className={cn(
-                  "mt-3 block font-mono text-[11px] uppercase tracking-[0.12em] transition-colors",
-                  i === active ? "text-foreground" : "text-muted-foreground group-hover:text-foreground",
-                )}
-              >
-                {item.company}
-              </span>
-            </button>
-          ))}
-        </div>
-        ) : null}
+        </Reveal>
       </div>
-    </SectionEntrance>
+    </section>
   );
 }

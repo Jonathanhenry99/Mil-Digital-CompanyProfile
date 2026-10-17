@@ -1,94 +1,98 @@
+"use client";
+
+import * as React from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { services } from "@/content/home";
+import { motion, useScroll, useTransform } from "motion/react";
+import { services, type Service } from "@/content/home";
 import { site } from "@/content/site";
-import { Eyebrow } from "@/components/ui/eyebrow";
+import { TextLink } from "@/components/ui/cta-link";
+import { BriefTrigger } from "@/components/brief/brief-provider";
 import { Reveal } from "@/components/motion/reveal";
-import { SectionEntrance } from "@/components/motion/section-entrance";
 import { SplitText } from "@/components/motion/split-text";
 
-/**
- * Three services as panels. On desktop the hovered (or focused) panel
- * widens and reveals its detail; the first is open by default. Pure CSS,
- * see `.svc-*` in globals.css.
- * Welcoming: the curtain opens, then each panel is wiped up in turn.
- */
-export function Services() {
+// Which Brief chip each service ticks.
+const BRIEF_SERVICE = ["Consultation", "Advertising", "Creative"];
+const EXTRA = ["Web SEO", "Web Development", "User Research"];
+
+function Panel({ s, i, next }: { s: Service; i: number; next: React.RefObject<HTMLElement | null> | null }) {
+  // As the next panel slides over this one, it dims and sinks back.
+  const { scrollYProgress } = useScroll({ target: next ?? undefined, offset: ["start end", "start start"] });
+  const dim = useTransform(scrollYProgress, [0, 1], [0, next ? 0.7 : 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, next ? 0.955 : 1]);
+  const y = useTransform(scrollYProgress, [0, 1], ["0vh", next ? "-3vh" : "0vh"]);
+
   return (
-    <SectionEntrance variant="curtain" sheetClassName="bg-surface">
-      <div className="container-x py-24 md:py-36">
-        <div className="mb-14 grid gap-8 md:grid-cols-12">
-          <Eyebrow index="08" className="md:col-span-4">
-            What we do
-          </Eyebrow>
-          <div className="md:col-span-8">
-            <SplitText
-              as="h2"
-              text={"Three disciplines,\none growth team."}
-              className="text-[clamp(2.25rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.04em]"
-            />
+    <>
+      <motion.div style={{ scale, y }} className="container-x grid min-h-[88svh] content-center gap-10 py-14 lg:grid-cols-12 lg:gap-6">
+        <div className="lg:col-span-5">
+          <p className="t-label tabular-nums">
+            <span className="text-signal">{s.index}</span> / 0{services.length}
+          </p>
+          <h3 className="t-display mt-5 text-[clamp(2.5rem,5.2vw,5rem)]">{s.title}</h3>
+          <ul className="mt-8 flex flex-wrap gap-2">
+            {s.points.map((p) => (
+              <li key={p} className="border border-line-strong px-3 py-1.5 text-[13px] text-fg-2">
+                {p}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="grid content-end gap-8 lg:col-span-3 lg:col-start-6">
+          <p className="t-body">{s.summary}</p>
+          <div className="grid justify-items-start gap-4">
+            <BriefTrigger service={BRIEF_SERVICE[i]} size="md">
+              Discuss this service
+            </BriefTrigger>
+            <TextLink href={s.href}>Learn more</TextLink>
           </div>
         </div>
-
-        <div className="svc-row flex flex-col gap-3 md:h-[600px] md:flex-row">
-          {services.map((s, i) => (
-            <Reveal key={s.href} variant="unfold" delay={0.15 * i} duration={1.2} className="svc relative h-[440px] md:h-auto">
-              <Link
-                href={s.href}
-                className="theme-deep group absolute inset-0 flex flex-col justify-between overflow-hidden rounded-2xl border border-line bg-background p-6 md:p-8"
-              >
-                <Image
-                  src={s.image}
-                  alt=""
-                  fill
-                  sizes="(min-width: 768px) 60vw, 100vw"
-                  className="svc-image object-cover opacity-45 mix-blend-luminosity transition duration-1000 ease-out-expo"
-                />
-                <span className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/30" />
-
-                <span className="relative flex items-start justify-between">
-                  <span className="font-mono text-sm text-signal">{s.index}</span>
-                  <span className="flex size-10 items-center justify-center rounded-full border border-line-strong transition-colors duration-300 group-hover:border-signal group-hover:bg-signal">
-                    <ArrowUpRight className="size-4" />
-                  </span>
-                </span>
-
-                <span className="relative block md:w-[min(440px,100%)]">
-                  <span className="block text-2xl font-medium leading-tight tracking-tight md:text-[2rem]">{s.title}</span>
-                  <span className="svc-detail mt-4 block">
-                    <span className="block text-muted-foreground">{s.summary}</span>
-                    <span className="mt-6 flex flex-wrap gap-2">
-                      {s.points.map((point) => (
-                        <span key={point} className="rounded-full border border-line-strong px-3 py-1 text-xs text-foreground/80">
-                          {point}
-                        </span>
-                      ))}
-                    </span>
-                  </span>
-                </span>
-              </Link>
-            </Reveal>
-          ))}
+        <div className="ticks relative aspect-[4/5] overflow-hidden lg:col-span-4 lg:col-start-9">
+          <Image src={s.image} alt="" fill sizes="(min-width: 1024px) 30vw, 100vw" className="object-cover" />
         </div>
+      </motion.div>
+      <motion.div aria-hidden style={{ opacity: dim }} className="pointer-events-none absolute inset-0 bg-black" />
+    </>
+  );
+}
 
-        <Reveal className="mt-6">
-          <Link
-            href={site.quizHref}
-            className="group flex flex-col items-start justify-between gap-4 rounded-2xl border border-dashed border-line-strong p-6 transition-colors hover:border-signal md:flex-row md:items-center"
-          >
-            <span>
-              <span className="eyebrow block text-signal">Not sure which one fits?</span>
-              <span className="mt-2 block text-xl font-medium tracking-tight">
-                Answer six questions, get a recommendation in 60 seconds.
-              </span>
-            </span>
-            <span className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors group-hover:text-foreground">
-              Take the brand quiz <ArrowUpRight className="size-4" />
-            </span>
-          </Link>
+/**
+ * Chapter 5 (inventory: our services). Each service is a full panel that
+ * slides over the one before; the covered panel dims and sinks back.
+ * Every panel opens the Brief with that service already ticked.
+ */
+export function Services() {
+  const refs = [React.useRef<HTMLElement>(null), React.useRef<HTMLElement>(null), React.useRef<HTMLElement>(null)];
+
+  return (
+    <section data-ground="#101216" aria-label="Our services">
+      <div className="container-x grid gap-8 pb-14 pt-[var(--sec)] md:grid-cols-12">
+        <SplitText as="h2" text={"Three disciplines,\none growth team."} className="t-h2 md:col-span-6" />
+        <Reveal className="md:col-span-5 md:col-start-8 md:self-end">
+          <p className="t-body text-fg-2">
+            Start anywhere: a strategy audit, a campaign that needs to perform, or content that needs to stand out. The same
+            team carries it from first plan to the numbers.
+          </p>
         </Reveal>
       </div>
-    </SectionEntrance>
+
+      <div>
+        {services.map((s, i) => (
+          <article
+            key={s.href}
+            ref={refs[i] as React.RefObject<HTMLElement>}
+            className="relative overflow-hidden border-t border-line bg-[#101216] lg:sticky lg:top-0"
+          >
+            <Panel s={s} i={i} next={refs[i + 1] ?? null} />
+          </article>
+        ))}
+      </div>
+
+      <div className="container-x flex flex-col gap-6 border-t border-line py-10 md:flex-row md:items-center md:justify-between">
+        <p className="t-label">
+          Also: {EXTRA.join(" · ")}
+        </p>
+        <TextLink href={site.quizHref}>Not sure which fits? Take the 60-second brand quiz</TextLink>
+      </div>
+    </section>
   );
 }

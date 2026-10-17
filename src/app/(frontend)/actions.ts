@@ -2,11 +2,11 @@
 
 import { getPayload } from "payload";
 import config from "@payload-config";
-import { ACTIVITIES } from "@/collections/Leads";
+import { ACTIVITIES, SERVICES } from "@/collections/Leads";
 
 export type LeadState =
   | { status: "idle" }
-  | { status: "success"; name: string }
+  | { status: "success"; name: string; whatsapp: string }
   | { status: "error"; message: string; fields?: Record<string, string> };
 
 const REQUIRED = { name: "Name", email: "Email", phone: "Phone / WhatsApp", brandName: "Brand name", message: "Message" };
@@ -22,7 +22,7 @@ export async function submitLead(_prev: LeadState, form: FormData): Promise<Lead
   // Honeypot filled, or submitted faster than a person could: pretend it worked.
   const startedAt = Number(get("startedAt"));
   if (get("website") || !startedAt || Date.now() - startedAt < 1500) {
-    return { status: "success", name: "" };
+    return { status: "success", name: "", whatsapp: "" };
   }
 
   const fields: Record<string, string> = {};
@@ -37,6 +37,11 @@ export async function submitLead(_prev: LeadState, form: FormData): Promise<Lead
     .getAll("activities")
     .map(String)
     .filter((a): a is (typeof ACTIVITIES)[number] => (ACTIVITIES as readonly string[]).includes(a));
+
+  const services = form
+    .getAll("services")
+    .map(String)
+    .filter((s): s is (typeof SERVICES)[number] => (SERVICES as readonly string[]).includes(s));
 
   try {
     const payload = await getPayload({ config });
@@ -53,6 +58,7 @@ export async function submitLead(_prev: LeadState, form: FormData): Promise<Lead
         location: get("location").slice(0, 120) || undefined,
         budget: get("budget").slice(0, 60) || undefined,
         activities,
+        services,
         message: get("message").slice(0, 4000),
         pageOrigin: get("pageOrigin").slice(0, 200) || undefined,
       },
@@ -62,5 +68,16 @@ export async function submitLead(_prev: LeadState, form: FormData): Promise<Lead
     return { status: "error", message: "Something went wrong on our side. Please try again or chat with us on WhatsApp." };
   }
 
-  return { status: "success", name: get("name").split(" ")[0] };
+  // A ready-made WhatsApp message, so the visitor can continue the chat.
+  const whatsapp = [
+    `Halo MIL Digital, saya ${get("name")} dari ${get("brandName")}.`,
+    services.length ? `Butuh: ${services.join(", ")}` : "",
+    get("budget") ? `Budget iklan: ${get("budget")}` : "",
+    "",
+    get("message"),
+  ]
+    .filter((l, i) => l || i === 3)
+    .join("\n");
+
+  return { status: "success", name: get("name").split(" ")[0], whatsapp };
 }

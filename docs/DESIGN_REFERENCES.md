@@ -112,7 +112,14 @@ Panjang total hampir sama (MIL 19,7 layar, TT 19,3 layar). Yang perlu dipangkas 
 
 ---
 
-## 5. Usulan homepage v2 (kurasi)
+## 5. Homepage v2 (dibangun 17 Okt 2026)
+
+Status: **sudah diimplementasikan.** Tabel di bawah adalah rencana awalnya; perbedaan dari implementasi:
+- Journey film tidak lagi berupa section terpisah. Video dari CMS (Homepage → Journey film → Video) diputar di **hero** setelah halaman selesai dimuat.
+- Welcoming animation sekarang per bab, tanpa "lembaran" bertepi keras: garis yang tergambar, judul naik per kata, dan koreografi khas tiap bab. Warna latar bergeser halus antar bab (`data-ground`).
+- **Brief MIL** mengikuti detail kertas TT: tanpa garis pemisah baris, garis tinta di bawah isian, kotak centang kecil, textarea bergaris, penjepit kertas, dan kaki kertas "MIL / BDG".
+
+### Rencana awal
 
 Mengikuti inventory, dengan cara penyajian ala TT. Latar **gelap hangat dulu**; aksen tetap biru MIL. Token sudah terpisah, jadi pindah ke biru nanti cukup ganti di satu tempat.
 

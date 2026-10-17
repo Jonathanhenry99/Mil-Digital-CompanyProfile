@@ -5,6 +5,7 @@ const salesTeam: Access = ({ req }) =>
   Boolean((req.user as { roles?: string[] } | null)?.roles?.some((r) => r === "admin" || r === "sales"));
 
 export const ACTIVITIES = ["Advertising", "Social Media", "Branding", "Influencer", "Others"] as const;
+export const SERVICES = ["Consultation", "Advertising", "Creative", "Not sure yet"] as const;
 
 /**
  * Enquiries from the site's forms. The contact form writes here through a
@@ -63,6 +64,13 @@ export const Leads: CollectionConfig = {
         { name: "industry", type: "text" },
         { name: "location", type: "text" },
       ],
+    },
+    {
+      name: "services",
+      type: "select",
+      hasMany: true,
+      label: "Services needed",
+      options: SERVICES.map((s) => ({ label: s, value: s })),
     },
     { name: "budget", type: "text", label: "Advertising budget" },
     {

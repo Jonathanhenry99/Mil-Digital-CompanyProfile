@@ -16,7 +16,6 @@ import type { CaseStudy } from "@/content/home";
 import { scrollToY } from "@/lib/lenis";
 import { cn } from "@/lib/utils";
 import { CtaLink } from "@/components/ui/cta-link";
-import { Eyebrow } from "@/components/ui/eyebrow";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -46,7 +45,7 @@ function WheelCard({ item, index, position }: { item: CaseStudy; index: number; 
     >
       <Link
         href={`/our-works-case-study/${item.slug}`}
-        className="group relative block aspect-[16/10] overflow-hidden rounded-xl bg-surface shadow-[0_40px_80px_-30px_rgb(var(--shadow-tint)/0.45)] ring-1 ring-line"
+        className="group relative block aspect-[16/10] overflow-hidden bg-surface shadow-[0_40px_80px_-30px_rgb(0_0_0/0.8)] ring-1 ring-line"
       >
         <Image
           src={item.image}
@@ -58,7 +57,7 @@ function WheelCard({ item, index, position }: { item: CaseStudy; index: number; 
         <motion.span style={{ opacity: dim }} className="absolute inset-0 bg-background" />
         <motion.span
           style={{ opacity: pillOpacity }}
-          className="absolute bottom-4 right-4 inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 text-xs font-medium text-[#0a1f3f] backdrop-blur"
+          className="absolute bottom-4 right-4 inline-flex items-center gap-1.5 bg-paper px-3 py-2 text-xs font-semibold text-paper-ink"
         >
           <ArrowUpRight className="size-3.5" /> View case study
         </motion.span>
@@ -93,12 +92,12 @@ export function WorkWheel({ caseStudies }: { caseStudies: CaseStudy[] }) {
   const item = caseStudies[active];
 
   return (
-    <section ref={ref} className="relative" style={{ height: `${100 + (n - 1) * 60}svh` }} aria-label="Selected works">
+    <section ref={ref} id="work" data-ground="#0c0d0f" className="relative" style={{ height: `${100 + (n - 1) * 60}svh` }} aria-label="Selected works">
       <div className="sticky top-0 h-svh overflow-hidden">
         <div className="container-x grid h-full grid-rows-[auto_1fr] gap-6 pt-24 md:grid-cols-12 md:grid-rows-1 md:pt-0">
           {/* Active title */}
           <div className="flex flex-col justify-center md:col-span-3">
-            <Eyebrow index="04">Selected works</Eyebrow>
+            <p className="t-label">Selected works</p>
             <div className="relative mt-6 min-h-[9.5rem] md:min-h-[14rem]">
               <AnimatePresence mode="popLayout" initial={false}>
                 <motion.div
@@ -108,15 +107,15 @@ export function WorkWheel({ caseStudies }: { caseStudies: CaseStudy[] }) {
                   exit={{ opacity: 0, y: -40, filter: "blur(6px)" }}
                   transition={{ duration: 0.6, ease: EASE }}
                 >
-                  <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+                  <p className="text-[13px] text-fg-2">
                     {item.industry} · {item.services.join(" + ")}
                   </p>
-                  <h3 className="mt-3 text-[clamp(2rem,3.4vw,3.25rem)] font-medium leading-[0.95] tracking-[-0.04em]">
+                  <h3 className="t-display mt-3 text-[clamp(2.2rem,3.6vw,3.5rem)]">
                     {item.client}
                   </h3>
                   <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">{item.title}</p>
                   <p className="mt-5 flex items-baseline gap-2">
-                    <span className="font-mono text-2xl text-aqua">{item.metric.value}</span>
+                    <span className="t-display text-3xl text-signal-soft">{item.metric.value}</span>
                     <span className="text-xs text-muted-foreground">{item.metric.label}</span>
                   </p>
                 </motion.div>
@@ -168,7 +167,7 @@ export function WorkWheel({ caseStudies }: { caseStudies: CaseStudy[] }) {
                       )}
                     />
                     {cs.client}
-                    <span className="font-mono text-[10px] text-muted-foreground">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="text-[11px] tabular-nums text-fg-3">{String(i + 1).padStart(2, "0")}</span>
                   </button>
                 </motion.li>
               ))}

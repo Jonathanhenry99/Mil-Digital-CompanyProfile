@@ -3,8 +3,8 @@ import { cn } from "@/lib/utils";
 /** Mono section label: `01 — Selected works`. */
 export function Eyebrow({ index, children, className }: { index?: string; children: React.ReactNode; className?: string }) {
   return (
-    <p className={cn("eyebrow flex items-center gap-3", className)}>
-      {index ? <span className="text-signal">{index}</span> : null}
+    <p className={cn("t-label flex items-center gap-3", className)}>
+      {index ? <span className="tabular-nums text-signal">{index}</span> : null}
       {index ? <span className="h-px w-8 bg-line-strong" aria-hidden /> : null}
       <span>{children}</span>
     </p>

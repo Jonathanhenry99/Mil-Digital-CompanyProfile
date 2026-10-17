@@ -59,8 +59,8 @@ export function ImageGallery({
           <motion.div
             key={item.id}
             variants={{
-              hidden: { clipPath: "inset(100% 0% 0% 0% round 16px)" },
-              shown: { clipPath: "inset(0% 0% 0% 0% round 16px)" },
+              hidden: { clipPath: "inset(100% 0% 0% 0%)" },
+              shown: { clipPath: "inset(0% 0% 0% 0%)" },
             }}
             transition={{ duration: 1.1, ease: EASE }}
             className="relative min-h-0 min-w-0 basis-0 transition-[flex-grow] duration-700 ease-out-expo"
@@ -71,7 +71,7 @@ export function ImageGallery({
             <Panel
               href={item.href ?? ""}
               className={cn(
-                "group absolute inset-0 block overflow-hidden rounded-2xl border border-line bg-surface focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal",
+                "group absolute inset-0 block overflow-hidden border border-line bg-surface focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal",
                 item.className,
               )}
             >
@@ -87,7 +87,7 @@ export function ImageGallery({
               />
               <span
                 className={cn(
-                  "absolute inset-0 bg-gradient-to-t from-[#0a1f3f]/70 via-[#0a1f3f]/10 to-transparent transition-opacity duration-700",
+                  "absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent transition-opacity duration-700",
                   open ? "opacity-80" : "opacity-100",
                 )}
               />

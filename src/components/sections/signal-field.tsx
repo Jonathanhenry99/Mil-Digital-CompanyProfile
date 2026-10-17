@@ -4,7 +4,7 @@ import * as React from "react";
 import type { MotionValue } from "motion/react";
 
 /* ── Signal from Noise ───────────────────────────────────────────
- * The hero's background (PROJECT_SPEC §4). Points drift as a loose
+ * The process chapter's visual. Points drift as a loose
  * constellation; as `progress` goes 0 → 1 they fly into a dot-matrix bar
  * chart that rises left to right. Each point has its own delay so the
  * chart assembles in a wave rather than all at once, and the cursor pushes
@@ -33,11 +33,11 @@ type Point = {
   peak: boolean;
 };
 
-// Brand blues (globals.css): bars in signal blue, bar tops in sky, loose
-// points in navy ink.
-const SIGNAL = [11, 107, 203];
-const SKY = [3, 165, 230];
-const FG = [28, 68, 137];
+// Brand blues on a dark ground: bars in signal blue, bar tops in sky,
+// loose points in a pale ink.
+const SIGNAL = [59, 140, 255];
+const SKY = [56, 198, 244];
+const FG = [190, 200, 214];
 
 function lowPower() {
   const nav = navigator as Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } };
@@ -77,7 +77,20 @@ function chartSlots(box: { x: number; y: number; w: number; h: number }, bars: n
   return { slots, pitch: s };
 }
 
-export function SignalField({ progress, className }: { progress: MotionValue<number>; className?: string }) {
+type Box = { x: number; y: number; w: number; h: number };
+
+/** Default layout: the chart fills most of the canvas, baseline near the bottom. */
+const frameLayout = (w: number, h: number): Box => ({ x: w * 0.08, y: h * 0.14, w: w * 0.84, h: h * 0.66 });
+
+export function SignalField({
+  progress,
+  className,
+  layout = frameLayout,
+}: {
+  progress: MotionValue<number>;
+  className?: string;
+  layout?: (w: number, h: number) => Box;
+}) {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
   React.useEffect(() => {
@@ -104,16 +117,9 @@ export function SignalField({ progress, className }: { progress: MotionValue<num
       canvas.height = Math.round(h * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      const desktop = w >= 768;
-      const count = Math.round(Math.min(340, Math.max(110, (w * h) / 5200)) * scale);
-      // Desktop: upper right, ending above the headline, which is pinned
-      // to the bottom of the hero (~560px tall). Mobile: the top band.
-      const top = h * 0.12;
-      const baseline = Math.max(top + 160, Math.min(h * 0.44, h - 560));
-      const box = desktop
-        ? { x: w * 0.52, y: top, w: w * 0.42, h: baseline - top }
-        : { x: w * 0.08, y: h * 0.12, w: w * 0.84, h: h * 0.24 };
-      const chart = chartSlots(box, desktop ? 10 : 8, count * 0.85);
+      const count = Math.round(Math.min(300, Math.max(110, (w * h) / 3200)) * scale);
+      const box = layout(w, h);
+      const chart = chartSlots(box, w >= 520 ? 10 : 8, count * 0.85);
       pitch = chart.pitch;
 
       points = Array.from({ length: count }, (_, i) => {
@@ -260,7 +266,7 @@ export function SignalField({ progress, className }: { progress: MotionValue<num
       window.removeEventListener("pointermove", onMove);
       document.removeEventListener("pointerleave", onLeave);
     };
-  }, [progress]);
+  }, [progress, layout]);
 
   return <canvas ref={canvasRef} aria-hidden className={className} />;
 }

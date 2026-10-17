@@ -1,52 +1,48 @@
-import { ArrowUpRight, FileText } from "lucide-react";
+import { ArrowRight, FileText } from "lucide-react";
 import type { HomeData } from "@/lib/cms";
-import { CtaLink } from "@/components/ui/cta-link";
-import { Eyebrow } from "@/components/ui/eyebrow";
+import { TextLink } from "@/components/ui/cta-link";
 import { ImageGallery, type GalleryItem } from "@/components/ui/image-gallery";
-import { SectionEntrance } from "@/components/motion/section-entrance";
 import { SplitText } from "@/components/motion/split-text";
 
-const card = "block rounded-xl border border-white/60 bg-white/80 p-5 shadow-[0_20px_40px_-24px_rgb(var(--shadow-tint)/0.5)] backdrop-blur-xl";
+const card = "block border border-white/10 bg-[#0c0d0f]/80 p-5 backdrop-blur-xl";
 
 /**
- * Latest report and articles as an expanding gallery (CMS later): the
- * hovered panel opens and shows a short card.
- * Welcoming: the sheet rises, then the panels shutter open in sequence.
+ * Chapter 10 (inventory: articles & reports). The featured report and the
+ * latest articles as an expanding gallery; the hovered panel opens with a
+ * short card. Panels shutter open in sequence on arrival.
  */
 export function Insights({ insights }: { insights: HomeData["insights"] }) {
   const { articles, report } = insights;
 
-  const reportItem: GalleryItem[] = report
-    ? [
-    {
-      id: report.slug,
-      src: report.image,
-      label: "New report",
-      href: `/reports/${report.slug}`,
-      className: "border-signal/40",
-      content: (
-        <span className={card}>
-          <span className="inline-flex items-center gap-2 rounded-full bg-brand-gradient px-2.5 py-1 font-mono text-[10px] font-medium uppercase tracking-[0.14em] text-white">
-            <FileText className="size-3" /> New report
-          </span>
-          <span className="mt-4 block text-2xl font-medium leading-tight tracking-tight">{report.title}</span>
-          <span className="mt-2 block text-sm text-muted-foreground">{report.summary}</span>
-          <span className="mt-5 grid grid-cols-2 gap-4 border-t border-line pt-4">
-            {report.findings.map((f) => (
-              <span key={f.label}>
-                <span className="block font-mono text-2xl text-aqua">{f.stat}</span>
-                <span className="mt-1 block text-xs text-muted-foreground">{f.label}</span>
-              </span>
-            ))}
-          </span>
-        </span>
-      ),
-    },
-      ]
-    : [];
-
   const items: GalleryItem[] = [
-    ...reportItem,
+    ...(report
+      ? [
+          {
+            id: report.slug,
+            src: report.image,
+            label: "New report",
+            href: `/reports/${report.slug}`,
+            className: "border-signal/50",
+            content: (
+              <span className={card}>
+                <span className="inline-flex items-center gap-2 bg-signal px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.1em] text-white">
+                  <FileText className="size-3" /> New report
+                </span>
+                <span className="t-display mt-4 block text-3xl">{report.title}</span>
+                <span className="mt-2 block text-sm text-fg-2">{report.summary}</span>
+                <span className="mt-5 grid grid-cols-2 gap-4 border-t border-line pt-4">
+                  {report.findings.map((f) => (
+                    <span key={f.label}>
+                      <span className="t-display block text-3xl text-signal-soft">{f.stat}</span>
+                      <span className="mt-1 block text-xs text-fg-2">{f.label}</span>
+                    </span>
+                  ))}
+                </span>
+              </span>
+            ),
+          },
+        ]
+      : []),
     ...articles.map((a) => ({
       id: a.slug,
       src: a.image,
@@ -54,13 +50,13 @@ export function Insights({ insights }: { insights: HomeData["insights"] }) {
       href: `/insights/${a.slug}`,
       content: (
         <span className={card}>
-          <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-signal-soft">{a.category}</span>
-          <span className="mt-3 block text-xl font-medium leading-snug tracking-tight md:text-2xl">{a.title}</span>
-          <span className="mt-2 block text-sm text-muted-foreground">{a.excerpt}</span>
-          <span className="mt-5 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
+          <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-signal-soft">{a.category}</span>
+          <span className="t-display mt-3 block text-2xl md:text-3xl">{a.title}</span>
+          <span className="mt-2 block text-sm text-fg-2">{a.excerpt}</span>
+          <span className="mt-5 flex items-center justify-between text-[13px] text-fg-2">
             {a.readingTime}
-            <span className="inline-flex items-center gap-1 text-foreground">
-              Read <ArrowUpRight className="size-3.5" />
+            <span className="inline-flex items-center gap-1.5 font-semibold text-foreground">
+              Read <ArrowRight className="size-3.5" />
             </span>
           </span>
         </span>
@@ -69,29 +65,20 @@ export function Insights({ insights }: { insights: HomeData["insights"] }) {
   ];
 
   return (
-    <SectionEntrance variant="rise" sheetClassName="bg-surface">
-      <div className="container-x py-24 md:py-36">
-        <div className="mb-14 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-          <div>
-            <Eyebrow index="10">Insights &amp; reports</Eyebrow>
-            <SplitText
-              as="h2"
-              text={"Thinking out loud,\nwith receipts."}
-              className="mt-6 text-[clamp(2.25rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.04em]"
-            />
+    <section data-ground="#101216" className="sec" aria-label="Insights and reports">
+      <div className="container-x">
+        <div className="mb-12 grid gap-6 md:grid-cols-12 md:items-end">
+          <div className="md:col-span-7">
+            <p className="t-label">Insights &amp; reports</p>
+            <SplitText as="h2" text={"Thinking out loud,\nwith receipts."} className="t-h2 mt-4" />
           </div>
-          <div className="flex flex-col items-start gap-5 md:items-end">
-            <p className="max-w-sm text-muted-foreground md:text-right">
-              Playbooks, points of view and industry research from the MIL team.
-            </p>
-            <CtaLink href="/insights" variant="ghost">
-              All insights
-            </CtaLink>
+          <div className="grid justify-items-start gap-5 md:col-span-4 md:col-start-9 md:justify-items-end md:text-right">
+            <p className="t-body text-fg-2">Playbooks, points of view and industry research from the MIL team.</p>
+            <TextLink href="/insights">All insights</TextLink>
           </div>
         </div>
-
         <ImageGallery items={items} />
       </div>
-    </SectionEntrance>
+    </section>
   );
 }

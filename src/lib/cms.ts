@@ -19,6 +19,8 @@ export type HomeData = {
     title: string;
     body: string;
     background: { image: string; focal: string } | null;
+    /** The journey film, if uploaded: plays over the hero photo. */
+    video: string | null;
   };
   showreel: { title: string; caption: string; video: string | null; poster: string; milestones: { year: string; label: string }[] };
   stats: Stat[];
@@ -83,6 +85,7 @@ export async function getHomeData(): Promise<HomeData> {
       title: home.hero?.title || fallback.hero.title,
       body: home.hero?.body || fallback.hero.body,
       background: bg?.url ? { image: bg.url, focal: focal(bg) } : null,
+      video: file(home.showreel?.video)?.url ?? null,
     },
     showreel: {
       title: home.showreel?.title || fallback.showreel.title,
