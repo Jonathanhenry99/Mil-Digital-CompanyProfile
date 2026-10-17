@@ -6,6 +6,7 @@ Website company profile MIL Digital: tampilan high-end dengan animasi futuristik
 
 - [Project Specification](docs/PROJECT_SPEC.md) — arah desain, sistem animasi, spesifikasi halaman, model CMS, tech stack, dan tahapan pengerjaan.
 - [Brief sitemap & page inventory](docs/assets/sitemap-brief.png)
+- [Design References](docs/DESIGN_REFERENCES.md) — referensi yang disukai/dihindari, cara memberi masukan style, usulan homepage v2.
 
 ## Tech stack
 
