@@ -45,6 +45,16 @@ export const hero = {
   eyebrow: "Data-driven marketing partner · Jakarta",
   title: "Turning brand noise\ninto measurable growth.",
   body: "Consulting, advertising and creative for brands across Indonesia, with every decision backed by data.",
+  /**
+   * Background photo behind the hero. Becomes an upload field on the Home
+   * global in the CMS (Payload uploads carry a focal point, which maps to
+   * `focal` here). Placeholder until the MIL photo is supplied.
+   */
+  background: {
+    image: "/placeholders/work-04.jpg",
+    /** CSS object-position: which part of the photo stays in frame. */
+    focal: "60% 35%",
+  },
 };
 
 export const showreel = {

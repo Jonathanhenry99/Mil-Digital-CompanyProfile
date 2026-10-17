@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import { motion, useScroll, useTransform } from "motion/react";
 import { hero } from "@/content/home";
 import { site } from "@/content/site";
@@ -23,11 +24,35 @@ export function Hero() {
   const hudOpacity = useTransform(scrollYProgress, [0.35, 0.6], [0, 1]);
   const hudValue = useTransform(scrollYProgress, (p) => `+${Math.round(Math.min(1, p / 0.7) * 212)}%`);
   const cueOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
+  // The photo settles in as you scroll and steps back while the chart forms.
+  const photoScale = useTransform(scrollYProgress, [0, 1], [1.12, 1]);
+  const photoOpacity = useTransform(scrollYProgress, [0.15, 0.6], [1, 0.3]);
 
   return (
     <section ref={ref} className="relative h-[170svh]" aria-label="Introduction">
       <div className="sticky top-0 h-svh min-h-[640px] overflow-hidden">
-        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+        {/* Background photo (CMS-editable) with fades so the copy always reads */}
+        <div aria-hidden className="hero-photo-in pointer-events-none absolute inset-0">
+          <motion.div style={{ scale: photoScale, opacity: photoOpacity }} className="absolute inset-0">
+            <Image
+              src={hero.background.image}
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover"
+              style={{ objectPosition: hero.background.focal }}
+            />
+          </motion.div>
+          {/* Brand tint, then fades: under the headline, under the header, into the next section */}
+          <div className="absolute inset-0 bg-[#0b6bcb] opacity-20 mix-blend-color" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/90 to-background/30 md:hidden" />
+          <div className="absolute inset-0 hidden bg-gradient-to-r from-background from-25% via-background/80 via-50% to-background/5 md:block" />
+          <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-background/90 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-background via-background/70 to-transparent" />
+          <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_75%_40%,transparent_40%,var(--background)_100%)]" />
+        </div>
+        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden opacity-70">
           <span className="aurora -right-[10%] -top-[20%] size-[60vw] max-w-[900px] bg-[#7cc8ff]" />
           <span className="aurora -left-[15%] top-[30%] size-[45vw] max-w-[700px] bg-[#c9e6ff] [animation-delay:-6s]" />
           <span className="aurora bottom-[-30%] right-[20%] size-[40vw] max-w-[640px] bg-[#9ad8f5] opacity-40 [animation-delay:-12s]" />

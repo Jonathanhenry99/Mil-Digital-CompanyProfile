@@ -555,7 +555,7 @@ Payload dipilih karena lead (quiz, contact, report, waitlist, lamaran kerja) dan
 | Global | Isi |
 |---|---|
 | `site-settings` | Kontak (email, WA, alamat, koordinat peta), sosial media, SEO default, status "accepting projects" |
-| `home` | Stats (array: value, suffix, label), featured case studies, featured articles/report |
+| `home` | Hero (headline, subcopy, **foto background** upload + focal point), stats (array: value, suffix, label), featured case studies, featured articles/report, film journey (video + milestones) |
 | `navigation` | Kartu preview mega menu, link footer |
 
 ### Role & hak akses
