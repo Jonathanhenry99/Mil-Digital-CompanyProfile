@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -5,7 +6,7 @@ import { notFound } from "next/navigation";
 import { getCaseStudies, getCaseStudy } from "@/lib/cms";
 import { BriefTrigger } from "@/components/brief/brief-provider";
 import { PageHero } from "@/components/page/page-hero";
-import { Placeholder, RichText } from "@/components/page/blocks";
+import { Placeholder, RichText, PageSkeleton } from "@/components/page/blocks";
 import { Odometer } from "@/components/motion/odometer";
 import { Reveal } from "@/components/motion/reveal";
 
@@ -23,7 +24,7 @@ export async function generateMetadata({ params }: PageProps<"/our-works-case-st
 }
 
 /** Inventory: one dedicated page per case study (CMS). */
-export default async function CaseStudyPage({ params }: PageProps<"/our-works-case-study/[slug]">) {
+async function CaseStudyPageContent({ params }: { params: PageProps<"/our-works-case-study/[slug]">["params"] }) {
   const { slug } = await params;
   const [c, all] = await Promise.all([getCaseStudy(slug), getCaseStudies()]);
   if (!c) notFound();
@@ -102,5 +103,14 @@ export default async function CaseStudyPage({ params }: PageProps<"/our-works-ca
         </Link>
       ) : null}
     </>
+  );
+}
+
+/** URL data is read inside Suspense, so navigation to this route can be instant. */
+export default function CaseStudyPage({ params }: PageProps<"/our-works-case-study/[slug]">) {
+  return (
+    <Suspense fallback={<PageSkeleton />}>
+      <CaseStudyPageContent params={params} />
+    </Suspense>
   );
 }

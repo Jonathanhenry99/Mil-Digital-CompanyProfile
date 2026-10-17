@@ -110,3 +110,20 @@ export function Placeholder({ title, body }: { title: string; body: string }) {
     </div>
   );
 }
+
+/**
+ * Fallback for the dynamic detail pages while their URL-specific content
+ * streams in on a client-side navigation (Next 16 instant navigation):
+ * the dark title band, without the words.
+ */
+export function PageSkeleton() {
+  return (
+    <section data-ground="#0c0d0f" className="min-h-[70svh] pt-40" aria-busy="true" aria-label="Loading">
+      <div className="container-x">
+        <span className="block h-3 w-40 animate-pulse bg-surface-raised" />
+        <span className="mt-8 block h-16 w-[min(720px,80%)] animate-pulse bg-surface" />
+        <span className="mt-4 block h-16 w-[min(520px,60%)] animate-pulse bg-surface" />
+      </div>
+    </section>
+  );
+}

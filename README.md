@@ -19,6 +19,7 @@ npm install
 cp .env.example .env.local   # isi DATABASE_URL (Neon) dan PAYLOAD_SECRET
 npm run dev                  # website: http://localhost:3000
                              # CMS:     http://localhost:3000/admin
+                             # restarts itself when the Payload schema changes
 npm run build                # build produksi
 ```
 
@@ -32,6 +33,7 @@ npm run build                # build produksi
 - Koleksi baru: **Jobs** & **Applications** (menu Careers, role HR). Lead kini juga datang dari quiz, download report dan waitlist ATLAS.
 - `npm run seed` mengisi CMS kosong dengan konten awal dari `src/content/home.ts`; `npm run payload run src/seed/company-data.ts` menerapkan data asli MIL (foto tim, stats, testimoni, artikel) ke CMS yang sudah di-seed.
 - `npm run generate:types` setelah mengubah skema di `src/collections` / `src/globals`.
+- `npm run dev` otomatis me-restart server saat `payload.config.ts`, `src/collections`, `src/globals` atau `src/payload` berubah. Hot reload Turbopack pada file-file itu membuat referensi editor Lexical basi (error "module factory is not available"); `npm run dev:raw` menjalankan next dev biasa.
 
 > File upload saat ini disimpan di folder lokal `media/` (tidak ikut Git). Database ada di Neon, jadi data teks terlihat di semua mesin, tapi file gambarnya hanya ada di mesin yang mengunggah. Sebelum deploy, pindahkan ke cloud storage (mis. Vercel Blob).
 

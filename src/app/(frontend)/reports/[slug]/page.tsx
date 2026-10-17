@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+import { PageSkeleton } from "@/components/page/blocks";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getReport, getReports } from "@/lib/cms";
@@ -17,7 +19,7 @@ export async function generateMetadata({ params }: PageProps<"/reports/[slug]">)
 }
 
 /** Inventory: industry and report detail (CMS); download is gated by a short form. */
-export default async function ReportPage({ params }: PageProps<"/reports/[slug]">) {
+async function ReportPageContent({ params }: { params: PageProps<"/reports/[slug]">["params"] }) {
   const { slug } = await params;
   const r = await getReport(slug);
   if (!r) notFound();
@@ -55,5 +57,14 @@ export default async function ReportPage({ params }: PageProps<"/reports/[slug]"
         </div>
       </section>
     </>
+  );
+}
+
+/** URL data is read inside Suspense, so navigation to this route can be instant. */
+export default function ReportPage({ params }: PageProps<"/reports/[slug]">) {
+  return (
+    <Suspense fallback={<PageSkeleton />}>
+      <ReportPageContent params={params} />
+    </Suspense>
   );
 }

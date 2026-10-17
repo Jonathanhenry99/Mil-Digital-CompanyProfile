@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -5,7 +6,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { getArticle, getArticles } from "@/lib/cms";
 import { BriefTrigger } from "@/components/brief/brief-provider";
-import { ArticleCard, RichText } from "@/components/page/blocks";
+import { ArticleCard, RichText, PageSkeleton } from "@/components/page/blocks";
 import { SplitText } from "@/components/motion/split-text";
 
 const date = (iso: string | null) =>
@@ -23,7 +24,7 @@ export async function generateMetadata({ params }: PageProps<"/insights/[slug]">
 }
 
 /** Inventory: article, author, related posts, consultation CTA (CMS). */
-export default async function ArticlePage({ params }: PageProps<"/insights/[slug]">) {
+async function ArticlePageContent({ params }: { params: PageProps<"/insights/[slug]">["params"] }) {
   const { slug } = await params;
   const [a, all] = await Promise.all([getArticle(slug), getArticles()]);
   if (!a) notFound();
@@ -94,5 +95,14 @@ export default async function ArticlePage({ params }: PageProps<"/insights/[slug
         </section>
       ) : null}
     </article>
+  );
+}
+
+/** URL data is read inside Suspense, so navigation to this route can be instant. */
+export default function ArticlePage({ params }: PageProps<"/insights/[slug]">) {
+  return (
+    <Suspense fallback={<PageSkeleton />}>
+      <ArticlePageContent params={params} />
+    </Suspense>
   );
 }

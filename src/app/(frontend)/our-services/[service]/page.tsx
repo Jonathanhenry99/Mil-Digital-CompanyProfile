@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { creativeIndustries, platforms, servicePages } from "@/content/service-pages";
@@ -6,7 +7,7 @@ import { whatsappHref } from "@/lib/whatsapp";
 import { CtaLink, TextLink } from "@/components/ui/cta-link";
 import { BriefTrigger } from "@/components/brief/brief-provider";
 import { PageHero } from "@/components/page/page-hero";
-import { SectionHead } from "@/components/page/blocks";
+import { SectionHead, PageSkeleton } from "@/components/page/blocks";
 import { CaseCarousel } from "@/components/page/case-carousel";
 import { ClientMarquee } from "@/components/sections/client-marquee";
 import { Process } from "@/components/sections/process";
@@ -31,7 +32,7 @@ export async function generateMetadata({ params }: PageProps<"/our-services/[ser
  * frameworks, case studies. Unique per service: the approach (consultation),
  * platforms + ROAS (advertising), industries, works and values (creative).
  */
-export default async function ServicePage({ params }: PageProps<"/our-services/[service]">) {
+async function ServicePageContent({ params }: { params: PageProps<"/our-services/[service]">["params"] }) {
   const { service } = await params;
   const s = servicePages.find((p) => p.slug === service);
   if (!s) notFound();
@@ -150,5 +151,14 @@ export default async function ServicePage({ params }: PageProps<"/our-services/[
         <CaseCarousel cases={related} label="Case studies" title={`${s.name.split(" ")[0]} work,\nin numbers.`} filters={false} theme="light" />
       ) : null}
     </>
+  );
+}
+
+/** URL data is read inside Suspense, so navigation to this route can be instant. */
+export default function ServicePage({ params }: PageProps<"/our-services/[service]">) {
+  return (
+    <Suspense fallback={<PageSkeleton />}>
+      <ServicePageContent params={params} />
+    </Suspense>
   );
 }
