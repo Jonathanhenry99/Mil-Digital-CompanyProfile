@@ -2,9 +2,9 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 /**
- * MIL Digital logo: the "mil" mark (from Assets/, extracted to
+ * MIL Digital logo: the "mil" mark (high-res PNGs from the old site, in
  * public/brand) plus the "Digital" wordmark. `tone="white"` for deep-blue
- * bands. Replace with the official SVG when it is available.
+ * bands. Swap for the official SVG when it is available.
  */
 export function Logo({ className, tone = "brand" }: { className?: string; tone?: "brand" | "white" }) {
   return (
@@ -12,8 +12,8 @@ export function Logo({ className, tone = "brand" }: { className?: string; tone?:
       <Image
         src={tone === "white" ? "/brand/mil-mark-white.png" : "/brand/mil-mark.png"}
         alt="MIL"
-        width={253}
-        height={154}
+        width={1200}
+        height={733}
         priority
         className="h-6 w-auto"
       />

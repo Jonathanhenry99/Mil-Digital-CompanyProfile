@@ -9,18 +9,28 @@ export const site = {
   url: "https://mildigital.id",
   whatsapp: "6282124242194",
   whatsappDisplay: "+62 821-2424-2194",
-  email: "hello@mildigital.id", // TBC
-  address: "Jakarta, Indonesia", // TBC: full office address
-  foundedYear: 2019, // TBC
+  /** Not listed on the old site; shown only once set. */
+  email: null as string | null,
+  city: "Bandung",
+  address: "Ruko B6 Paskal Hyper Square, Ciroyom, Bandung 40181",
+  mapsUrl: "https://maps.google.com/?q=Paskal+Hyper+Square+Bandung",
   bookingHref: "/contact-us",
   quizHref: "/get-to-know-your-brand",
   socials: [
-    // TBC: real handles
-    { label: "Instagram", href: "https://instagram.com/" },
-    { label: "LinkedIn", href: "https://linkedin.com/" },
-    { label: "TikTok", href: "https://tiktok.com/" },
+    { label: "Instagram", href: "https://instagram.com/mildigital.id" },
+    // TBC: LinkedIn / TikTok if MIL has them
   ],
 } as const;
+
+/** Founder, from the old About page. */
+export const ceo = {
+  name: "Indra Pratama",
+  role: "Founder & CEO",
+  photo: "/photos/indra-pratama-ceo.jpg",
+  bio: "Experienced senior digital marketing consultant with a demonstrated history in the marketing and advertising industry. Skilled in negotiation, sales, communication, management and teamwork, with a Bachelor of Economics in Marketing Management from Universitas Katolik Parahyangan.",
+};
+
+export const tagline = "Let's grow miles away together";
 
 export type NavLink = {
   label: string;

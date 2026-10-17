@@ -28,7 +28,7 @@ npm run build                # build produksi
 - **Portfolio**: Case studies, Clients (logo marquee), Testimonials. **Insights**: Articles, Reports. **Library**: Media.
 - Foto hero: upload di Homepage → Hero → Background image. Atur titik fokus foto di Media (klik bagian yang harus tetap terlihat).
 - Setiap kali disimpan, halaman terkait langsung diperbarui (cache di-expire otomatis).
-- `npm run seed` mengisi CMS kosong dengan konten awal dari `src/content/home.ts`.
+- `npm run seed` mengisi CMS kosong dengan konten awal dari `src/content/home.ts`; `npm run payload run src/seed/company-data.ts` menerapkan data asli MIL (foto tim, stats, testimoni, artikel) ke CMS yang sudah di-seed.
 - `npm run generate:types` setelah mengubah skema di `src/collections` / `src/globals`.
 
 > File upload saat ini disimpan di folder lokal `media/` (tidak ikut Git). Database ada di Neon, jadi data teks terlihat di semua mesin, tapi file gambarnya hanya ada di mesin yang mengunggah. Sebelum deploy, pindahkan ke cloud storage (mis. Vercel Blob).

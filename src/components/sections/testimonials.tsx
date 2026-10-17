@@ -70,6 +70,7 @@ export function Testimonials({ testimonials }: { testimonials: HomeData["testimo
           </AnimatePresence>
         </div>
 
+        {testimonials.length > 1 ? (
         <div className="mt-14 grid grid-cols-3 gap-3 md:gap-6" role="tablist" aria-label="Testimonials">
           {testimonials.map((item, i) => (
             <button
@@ -106,6 +107,7 @@ export function Testimonials({ testimonials }: { testimonials: HomeData["testimo
             </button>
           ))}
         </div>
+        ) : null}
       </div>
     </SectionEntrance>
   );

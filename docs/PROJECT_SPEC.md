@@ -47,6 +47,31 @@ Dokumen ini adalah acuan utama untuk membangun website company profile MIL Digit
 
 ---
 
+### Data perusahaan (dari website lama mildigital.id)
+
+Diambil Oktober 2026 sebagai sumber fakta; struktur dan animasi situs lama (Wix) tidak dipakai.
+
+| Data | Isi |
+|---|---|
+| Positioning | Digital Marketing Consultant & Advertising Agency. "We help brands grow their presence online." |
+| Tagline | **"Let's grow miles away together"** |
+| Tim | Sekelompok digital marketing expert, **7 tahun pengalaman gabungan** |
+| Angka | **15** certified digital marketing expert · **10+** industri · **80+** klien ditangani (situs lama) / **150+** brand (Logofolio, lebih baru) · **100+** milestone klien |
+| Sertifikasi | Meta Certified Media Buying Professional, Meta Certified Digital Marketing Associate |
+| Core values | Integrity · Transparency · Tailored to Your Goals · Reliable · Knowledge Sharing |
+| Layanan (situs lama) | Digital Marketing Strategy & Advertising (funnel awareness → consideration → conversion) · Optimizing Your Asset & Infrastructure · Measure & Achieve KPI · Content Creation |
+| Founder & CEO | **Indra Pratama**, senior digital marketing consultant; S.E. Manajemen Pemasaran, Universitas Katolik Parahyangan |
+| Sub-brand | Studio Imajin (muncul di bagian Content Creation) **[TBC: hubungannya dengan MIL]** |
+| Testimoni | LYLA: "Kerjasama dengan MIL sebagai konsultan menyenangkan…" |
+| Blog | "Aha! Moment", 1 artikel: *7 Cara Untuk Menentukan Harga Produk* (Derian Indra Bramantio, 21 Agu 2024) |
+| Alamat | **Ruko B6 Paskal Hyper Square, Ciroyom, Bandung 40181** |
+| Kontak | WhatsApp +62 821-2424-2194 · Instagram @mildigital.id · email belum tercantum **[TBC]** |
+| Penawaran | Free consultation (1x) via form + booking session |
+
+Aset asli yang diambil ada di `Assets/from-old-site/` (logo MIL putih & biru 4500px, foto tim, foto CEO, badge Meta, logo Studio Imajin).
+
+---
+
 ## 2. Sitemap & Navigasi
 
 ### Sitemap
@@ -94,7 +119,7 @@ Homepage (/)
 1. **CTA band besar** — headline ajakan + tombol *Book a Consultation* + *Chat on WhatsApp*.
 2. Kolom link: Company, Services, Insights, Contact.
 3. Alamat kantor, email, nomor WA, sosial media.
-4. Detail kecil yang menguatkan kesan tech: jam lokal Jakarta (live), status "Accepting new projects", tahun berjalan.
+4. Detail kecil yang menguatkan kesan tech: jam lokal Bandung (WIB, live), status "Accepting new projects", tahun berjalan.
 5. Link legal: Privacy · Terms.
 
 ---
@@ -389,7 +414,7 @@ Ketiga halaman service memakai satu template dengan konfigurasi berbeda.
 
 Layout dua kolom (desktop):
 
-- **Kiri**: form inquiry — nama, perusahaan, email, WA, minat service (pilihan), kisaran budget **[TBC]**, pesan.
+- **Kiri**: form inquiry, mengikuti form free consultation di situs lama: nama, email, nomor telepon/WA, nama brand, industri brand, budget iklan, lokasi, aktivitas digital marketing yang pernah dicoba (Advertising / Social Media / Branding / Influencer / Others, multi), dan apa yang ingin didiskusikan.
 - **Kanan**: tab **"Book a call"** (embed Cal.com inline) / **"Chat on WhatsApp"**.
 - Di bawah: alamat kantor, jam operasional, peta (dimuat lazy, styling gelap).
 

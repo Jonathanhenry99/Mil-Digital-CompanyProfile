@@ -1,7 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "motion/react";
-import type { Stat } from "@/content/home";
+import { certifications, type Stat } from "@/content/home";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Odometer } from "@/components/motion/odometer";
 import { Reveal } from "@/components/motion/reveal";
@@ -70,6 +71,18 @@ export function Stats({ stats }: { stats: Stat[] }) {
             </Reveal>
           ))}
         </dl>
+
+        <Reveal className="mt-10 flex flex-col gap-5 sm:flex-row sm:items-center">
+          <p className="eyebrow shrink-0">Certified by</p>
+          <ul className="flex flex-wrap items-center gap-4">
+            {certifications.map((c) => (
+              <li key={c.name} className="flex items-center gap-3 rounded-full border border-line bg-surface py-1.5 pl-1.5 pr-4">
+                <Image src={c.image} alt="" width={40} height={40} className="size-10" />
+                <span className="text-sm">{c.name}</span>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
       </div>
     </SectionEntrance>
   );

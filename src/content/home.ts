@@ -2,9 +2,10 @@
  * Homepage content. Shapes mirror the Payload collections in
  * PROJECT_SPEC §8 so swapping this file for CMS queries is mechanical.
  *
- * Client logos are real (from Assets/). Everything else is still
- * placeholder: case studies, testimonials and numbers are examples and
- * photos are Unsplash stand-ins. Replace before launch.
+ * Real MIL data (from Assets/ and the old site, mildigital.id): client
+ * logos, team photos, stats, core values, the LYLA testimonial, the
+ * pricing article. Still placeholder: case studies, the industry report,
+ * extra articles and their Unsplash photos. Replace before launch.
  */
 
 export type Stat = {
@@ -42,43 +43,52 @@ export type Service = {
 };
 
 export const hero = {
-  eyebrow: "Data-driven marketing partner · Jakarta",
+  eyebrow: "Digital marketing consultant & agency · Bandung",
   title: "Turning brand noise\ninto measurable growth.",
-  body: "Consulting, advertising and creative for brands across Indonesia, with every decision backed by data.",
+  body: "A team of certified digital marketing experts helping brands across Indonesia plan, advertise and create, with every decision backed by data.",
   /**
    * Background photo behind the hero. Becomes an upload field on the Home
    * global in the CMS (Payload uploads carry a focal point, which maps to
-   * `focal` here). Placeholder until the MIL photo is supplied.
+   * `focal` here).
    */
   background: {
-    image: "/placeholders/work-04.jpg",
+    image: "/photos/mil-team-working.jpg",
     /** CSS object-position: which part of the photo stays in frame. */
-    focal: "60% 35%",
+    focal: "62% 35%",
   },
 };
 
 export const showreel = {
   /** Set to the MIL journey film (e.g. from Higgsfield) when it is ready. */
   src: null as string | null,
-  poster: "/placeholders/work-03.jpg",
+  poster: "/photos/mil-team-group.jpg",
   title: "From day one to today.",
   caption: "The MIL journey film",
 };
 
-/** Steps shown over the journey film. TBC: real years and milestones. */
+/**
+ * Steps shown over the journey film, from the old site's facts. The first
+ * field is a short marker rather than a year until the real dates are in.
+ */
 export const milestones = [
-  { year: "2019", label: "MIL Digital opens its doors in Jakarta" },
-  { year: "2021", label: "First 50 brands, first retained ad accounts" },
-  { year: "2023", label: "MIL Research publishes its first industry report" },
-  { year: "2025", label: "ATLAS, our brand analytics dashboard, goes into build" },
-  { year: "Today", label: "150+ brands grown across Indonesia" },
+  { year: "Day 1", label: "MIL Digital starts in Bandung, helping brands grow their presence online" },
+  { year: "7 yrs", label: "Of combined digital marketing experience across the team" },
+  { year: "15", label: "Certified digital marketing experts, Meta certified in media buying" },
+  { year: "100+", label: "Client milestones achieved across 10+ industries" },
+  { year: "Today", label: "150+ brands have trusted MIL with their growth" },
 ];
 
 export const stats: Stat[] = [
-  { value: 150, suffix: "+", label: "Brands grown", note: "Retail, F&B, B2B and lifestyle" },
-  { value: 85, prefix: "Rp", suffix: "B+", label: "Ad spend managed", note: "Across Meta, Google, TikTok and marketplaces" },
-  { value: 4.2, decimals: 1, suffix: "x", label: "Average ROAS", note: "Across retained ad accounts, 2025" },
-  { value: 92, suffix: "%", label: "Client retention", note: "Clients who renew after year one" },
+  { value: 150, suffix: "+", label: "Brands partnered", note: "Retail, F&B, beauty, property, B2B and more" },
+  { value: 15, label: "Certified experts", note: "Meta certified media buying and digital marketing" },
+  { value: 10, suffix: "+", label: "Industries handled", note: "Strategy tuned to each market" },
+  { value: 100, suffix: "+", label: "Client milestones", note: "Goals reached with the brands we work with" },
+];
+
+/** Shown under the stats. Badges from the old site. */
+export const certifications = [
+  { name: "Meta Certified Media Buying Professional", image: "/brand/certs/meta-media-buying-professional.png" },
+  { name: "Meta Certified Digital Marketing Associate", image: "/brand/certs/meta-digital-marketing-associate.png" },
 ];
 
 /** TBC: confirm names marked as initials (V, CB) with the MIL team. */
@@ -199,25 +209,27 @@ export const services: Service[] = [
     index: "01",
     title: "Digital Marketing Consultation",
     href: "/our-services/digital-marketing-consultation",
-    summary: "A partner that audits, plans and monitors your growth, so every rupiah has a reason.",
-    points: ["Brand & channel assessment", "Growth strategy & roadmap", "Monthly performance monitoring"],
-    image: "/placeholders/work-15.jpg",
+    summary:
+      "Custom consultation that helps your brand navigate a fast-changing digital landscape, and stand out instead of just surviving.",
+    points: ["Digital marketing strategy", "Asset & infrastructure optimisation", "KPI setting & measurement"],
+    image: "/photos/mil-team-working.jpg",
   },
   {
     index: "02",
     title: "Advertising Strategy & Optimization",
     href: "/our-services/advertising-strategy-optimization",
-    summary: "Full-funnel paid media across Meta, Google, TikTok and marketplaces, tuned for ROAS.",
-    points: ["Media planning & buying", "Creative testing frameworks", "ROAS & CPA optimisation"],
+    summary:
+      "The right strategy for every step of the funnel, from awareness and consideration to conversion, kept performing through advertising.",
+    points: ["Full-funnel media planning", "Meta certified media buying", "Campaign maintenance & optimisation"],
     image: "/placeholders/work-01.jpg",
   },
   {
     index: "03",
     title: "Creative Solution",
     href: "/our-services/creative-social-media-solution",
-    summary: "Social media management and branding built on an authority-first framework.",
-    points: ["Social media management", "Brand identity & guidelines", "Content production"],
-    image: "/placeholders/work-04.jpg",
+    summary: "We create experiences, weave stories and turn ideas into content your audience actually stops for.",
+    points: ["Content creation", "Social media management", "Branding"],
+    image: "/photos/mil-team-group.jpg",
   },
 ];
 
@@ -234,55 +246,56 @@ export const gallery = [
   { src: "/placeholders/work-16.jpg", alt: "MIL Digital studio" },
 ];
 
+/** MIL's core values (old site). Descriptions are new copy for review. */
 export const values = [
   {
-    title: "Data before opinion",
-    body: "We start from your numbers, not our taste. Every recommendation comes with the data that earned it.",
-    tag: "Assess",
+    title: "Integrity",
+    body: "We say what we'll do and do what we say, even when the honest answer isn't the easy one.",
+    tag: "Honest",
   },
   {
-    title: "Authority-first creative",
-    body: "Content that makes your brand the reference in its category, not just another post in the feed.",
-    tag: "Create",
+    title: "Transparency",
+    body: "Clear numbers and clear reporting. You always see what's working, what isn't and where your budget goes.",
+    tag: "Open books",
   },
   {
-    title: "Partners, not vendors",
-    body: "We sit at your table, learn your margins and own the outcome with you.",
-    tag: "Collaborate",
+    title: "Tailored to your goals",
+    body: "No templates. Every strategy starts from your business objectives and the metrics that matter to them.",
+    tag: "Your KPIs",
   },
   {
-    title: "Measured every week",
-    body: "Live dashboards and weekly reviews, so nothing waits for the end-of-month report.",
-    tag: "Monitor",
+    title: "Reliable",
+    body: "Consistent execution and a team you can count on, campaign after campaign.",
+    tag: "Dependable",
+  },
+  {
+    title: "Knowledge sharing",
+    body: "We explain the why behind every move, so your team grows sharper with every campaign.",
+    tag: "Grow together",
   },
 ];
 
 export const testimonials = [
   {
     quote:
-      "MIL didn't just run our ads. They rebuilt how we think about growth, and the numbers followed within one quarter.",
-    name: "Dimas Prakoso",
-    role: "Head of Marketing",
-    company: "Nusa Retail",
-  },
-  {
-    quote:
-      "The weekly reviews changed everything. We always know what's working, what isn't, and what we're doing about it.",
-    name: "Sarah Wijaya",
-    role: "Founder",
-    company: "Kopi Senja",
-  },
-  {
-    quote:
-      "Their creative team finally made our brand look like the category leader we wanted to be.",
-    name: "Raka Mahendra",
-    role: "Brand Director",
-    company: "Teduh Watch Co.",
+      "Kerjasama dengan MIL sebagai konsultan menyenangkan. Kami rasa seluruh tim sangat passionate dalam hal digital marketing dan hal itu membuat tim kami jadi lebih bersemangat & mencoba hal baru. So, a huge thanks to you guys.",
+    name: "LYLA",
+    role: "Client",
+    company: "LYLA",
   },
 ];
 
 export const insights = {
   articles: [
+    {
+      slug: "7-cara-untuk-menentukan-harga-produk",
+      category: "Playbook",
+      title: "7 Cara Untuk Menentukan Harga Produk",
+      excerpt:
+        "Baru mulai bisnis dan bingung menentukan harga jual? Tujuh strategi pricing, dari cost plus sampai value based.",
+      readingTime: "2 min read",
+      image: "/placeholders/work-02.jpg",
+    },
     {
       slug: "roas-is-lying-to-you",
       category: "Advertising",

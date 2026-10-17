@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { footerLinks, site } from "@/content/site";
+import { footerLinks, site, tagline } from "@/content/site";
 import { CtaLink } from "@/components/ui/cta-link";
 import { Logo } from "@/components/ui/logo";
 import { SplitText } from "@/components/motion/split-text";
@@ -24,7 +24,7 @@ export function Footer() {
           <p className="eyebrow mb-8 text-center">Free 30-minute consultation</p>
           <SplitText
             as="h2"
-            text={"Ready to turn noise\ninto growth?"}
+            text={tagline.replace("grow ", "grow\n") + "."}
             className="text-center text-[clamp(2.75rem,8vw,7.5rem)] font-medium leading-[0.95] tracking-[-0.04em]"
           />
           <Reveal delay={0.3} className="mt-12 flex flex-wrap items-center justify-center gap-3">
@@ -43,11 +43,15 @@ export function Footer() {
                 Data-driven digital marketing partner for brands across Indonesia.
               </p>
               <div className="mt-6 space-y-1 text-sm">
-                <p>{site.address}</p>
-                <a href={`mailto:${site.email}`} className="block text-muted-foreground hover:text-foreground">
-                  {site.email}
+                <a href={site.mapsUrl} target="_blank" rel="noopener noreferrer" className="block max-w-xs hover:underline">
+                  {site.address}
                 </a>
-                <p className="text-muted-foreground">{site.whatsappDisplay}</p>
+                {site.email ? (
+                  <a href={`mailto:${site.email}`} className="block text-muted-foreground hover:text-foreground">
+                    {site.email}
+                  </a>
+                ) : null}
+                <p className="text-muted-foreground">WhatsApp {site.whatsappDisplay}</p>
               </div>
             </div>
             {footerLinks.map((group, i) => (
@@ -72,7 +76,7 @@ export function Footer() {
                 <span className="absolute inline-flex size-full animate-ping rounded-full bg-[#2bd47d] opacity-60" />
                 <span className="relative inline-flex size-2 rounded-full bg-[#2bd47d]" />
               </span>
-              Accepting new projects · Jakarta <JakartaClock />
+              Accepting new projects · {site.city} <JakartaClock />
             </p>
             <div className="flex flex-wrap gap-5">
               {site.socials.map((s) => (
