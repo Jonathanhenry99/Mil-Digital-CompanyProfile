@@ -49,7 +49,7 @@ export function ClientMarquee({ clients }: { clients: Client[] }) {
       <div className="relative py-24 md:py-32">
         <div className="container-x mb-14 grid gap-6 md:grid-cols-12 md:items-end">
           <div className="md:col-span-7">
-            <Eyebrow index="01" className="text-foreground/70">
+            <Eyebrow index="02" className="text-foreground/70">
               Brands we&apos;ve grown with
             </Eyebrow>
             <SplitText

@@ -72,6 +72,7 @@ export interface Config {
     testimonials: Testimonial;
     articles: Article;
     reports: Report;
+    leads: Lead;
     media: Media;
     users: User;
     'payload-kv': PayloadKv;
@@ -86,6 +87,7 @@ export interface Config {
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     articles: ArticlesSelect<false> | ArticlesSelect<true>;
     reports: ReportsSelect<false> | ReportsSelect<true>;
+    leads: LeadsSelect<false> | LeadsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -309,6 +311,33 @@ export interface Report {
   createdAt: string;
 }
 /**
+ * Free consultation requests. Update the status as you follow up.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leads".
+ */
+export interface Lead {
+  id: number;
+  status?: ('new' | 'contacted' | 'qualified' | 'won' | 'lost') | null;
+  source?: ('contact-form' | 'quiz' | 'booking' | 'report' | 'atlas-waitlist') | null;
+  name: string;
+  email: string;
+  phone: string;
+  brandName: string;
+  industry?: string | null;
+  location?: string | null;
+  budget?: string | null;
+  activities?: ('Advertising' | 'Social Media' | 'Branding' | 'Influencer' | 'Others')[] | null;
+  message: string;
+  pageOrigin?: string | null;
+  /**
+   * Internal follow-up notes.
+   */
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
@@ -382,6 +411,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'reports';
         value: number | Report;
+      } | null)
+    | ({
+        relationTo: 'leads';
+        value: number | Lead;
       } | null)
     | ({
         relationTo: 'media';
@@ -519,6 +552,27 @@ export interface ReportsSelect<T extends boolean = true> {
   file?: T;
   gated?: T;
   publishedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leads_select".
+ */
+export interface LeadsSelect<T extends boolean = true> {
+  status?: T;
+  source?: T;
+  name?: T;
+  email?: T;
+  phone?: T;
+  brandName?: T;
+  industry?: T;
+  location?: T;
+  budget?: T;
+  activities?: T;
+  message?: T;
+  pageOrigin?: T;
+  notes?: T;
   updatedAt?: T;
   createdAt?: T;
 }

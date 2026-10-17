@@ -19,7 +19,7 @@ export function Services() {
     <SectionEntrance variant="curtain" sheetClassName="bg-surface">
       <div className="container-x py-24 md:py-36">
         <div className="mb-14 grid gap-8 md:grid-cols-12">
-          <Eyebrow index="05" className="md:col-span-4">
+          <Eyebrow index="08" className="md:col-span-4">
             What we do
           </Eyebrow>
           <div className="md:col-span-8">

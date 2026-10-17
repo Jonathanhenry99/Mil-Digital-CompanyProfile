@@ -43,7 +43,7 @@ export function Showreel({ showreel }: { showreel: HomeData["showreel"] }) {
     <section ref={ref} className="theme-deep relative h-[320svh] bg-background" aria-label="Our journey">
       <div className="sticky top-0 flex h-svh items-center justify-center overflow-hidden">
         <motion.div style={{ opacity: titleOpacity }} className="pointer-events-none absolute inset-x-0 top-[7%] z-10 text-center">
-          <p className="eyebrow mb-4">02 — {showreel.caption}</p>
+          <p className="eyebrow mb-4">06 — {showreel.caption}</p>
           <SplitText
             as="h2"
             text={showreel.title}

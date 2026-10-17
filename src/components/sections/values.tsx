@@ -51,7 +51,7 @@ export function Values() {
       <div className="container-x grid gap-12 py-24 md:grid-cols-12 md:py-36">
         <div className="md:col-span-5">
           <div className="md:sticky md:top-32">
-            <Eyebrow index="07">Why MIL Digital</Eyebrow>
+            <Eyebrow index="05">Why MIL Digital</Eyebrow>
             <SplitText
               as="h2"
               text={"We're the data\nnerds in the room."}

@@ -6,16 +6,16 @@ import { SplitText } from "@/components/motion/split-text";
 
 /**
  * Portfolio reel on a curved band (components/ui/tilted-grid-hero).
- * Welcoming: the band comes into focus out of a blur while the sheet rises.
+ * Welcoming: the curtain opens and the band comes into focus out of a blur.
  */
 export function CurvedGallery({ gallery }: { gallery: { src: string; alt: string }[] }) {
   return (
-    <SectionEntrance variant="rise" sheetClassName="bg-background">
+    <SectionEntrance variant="curtain" sheetClassName="bg-background">
       <Reveal variant="blur" duration={1.6} amount={0.25}>
         <TiltedGridHero images={gallery} speed={3.5} tileHeight={30} curve={72} fade={10} className="h-[620px] w-full md:h-[760px]">
           <div className="relative z-10 flex h-full flex-col items-center justify-between py-16 text-center md:py-20">
             <div className="px-6">
-              <p className="eyebrow mb-5">06 — Creative in motion</p>
+              <p className="eyebrow mb-5">03 — Creative in motion</p>
               <SplitText
                 as="h2"
                 text={"Every campaign,\nbrought into focus."}

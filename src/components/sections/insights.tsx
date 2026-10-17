@@ -73,7 +73,7 @@ export function Insights({ insights }: { insights: HomeData["insights"] }) {
       <div className="container-x py-24 md:py-36">
         <div className="mb-14 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div>
-            <Eyebrow index="09">Insights &amp; reports</Eyebrow>
+            <Eyebrow index="10">Insights &amp; reports</Eyebrow>
             <SplitText
               as="h2"
               text={"Thinking out loud,\nwith receipts."}

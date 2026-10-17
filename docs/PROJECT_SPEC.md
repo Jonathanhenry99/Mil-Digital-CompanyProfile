@@ -104,7 +104,7 @@ Homepage (/)
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────────┐
-│ [MIL logo]   About MIL Digital ▾   Team & Career ▾   Insights ▾   Contact Us   ATLAS◦soon │  [⌘K]  [Book a Consultation →] │
+│ [MIL logo]   About MIL Digital ▾   Team & Career ▾   Insights ▾   Contact Us   ATLAS◦soon │  [Book a Consultation →] │
 └──────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -154,7 +154,7 @@ Homepage (/)
 - **Nama vs URL Creative:** sitemap menulis "Creative Solution", URL memakai `creative-social-media-solution`. Usulan: label menu "Creative Solution", URL tetap seperti di inventory.
 - **URL Our Works cukup panjang** (`/our-works-case-study`). Usulan opsional: `/our-works` dengan redirect 301 dari URL panjang. **[TBC]**
 - **Reports** berada di bawah menu Insights tetapi URL-nya di root (`/reports`). Tidak masalah; breadcrumb tetap menampilkan `Insights / Reports`.
-- **Kategori Insights & Case Study** diusulkan memakai URL path untuk SEO (`/insights/category/[slug]`) selain filter cepat di halaman.
+- **Kategori Insights & filter Case Study** cukup sebagai filter di halaman listing (`?category=`, `?industry=`), tanpa halaman kategori terpisah, sesuai inventory.
 
 ---
 
@@ -283,7 +283,6 @@ Halaman lain wajib mengikuti pola ini.
 | 7 | **Infinite logo marquee** | Portofolio klien | Dua baris berlawanan arah, berhenti saat hover, logo grayscale → warna. |
 | 8 | **Scroll text-fill** | Manifesto About | Kalimat "what we believe" terisi warna mengikuti scroll. |
 | 9 | **Hover metric reveal** | Kartu case study | Saat hover, overlay menampilkan metrik utama (mis. `ROAS 5.1x`) dengan counter. |
-| 10 | **Custom cursor halus** | Desktop saja | Titik kecil yang membesar dengan label ("View", "Drag") di elemen interaktif. (fase berikutnya) |
 | 11 | **Work wheel** | Works Home | Case study di sisi drum yang berputar saat scroll, berhenti sejenak di tiap kartu; judul kiri, indeks kanan (klik untuk lompat). |
 | 12 | **Curved gallery** | Galeri Home | `components/ui/tilted-grid-hero.tsx`: pita gambar melengkung yang terus mengalir. |
 | 13 | **Expanding gallery** | Insights Home | `components/ui/image-gallery.tsx`: panel yang di-hover melebar dan menampilkan kartu penjelasan; tersusun vertikal di mobile. |
@@ -304,20 +303,28 @@ Halaman lain wajib mengikuti pola ini.
 
 > Urutan section dari atas ke bawah. **CMS** = konten dari CMS; tanpa tanda = konten di kode (copy bisa dipindah ke CMS belakangan).
 
+## Prinsip struktur
+
+**Struktur utama mengikuti page inventory (§3).** Section atau halaman yang tidak ada di inventory tidak dibuat, kecuali diminta langsung oleh tim MIL (contoh: journey film).
+
 ### 6.1 Home — `/`
 
-| # | Section | Konten | Animasi | Sumber |
+Urutan mengikuti inventory.
+
+| # | Section (inventory) | Implementasi | Welcoming | Sumber |
 |---|---|---|---|---|
-| 1 | Hero | Headline positioning, subcopy, CTA *Book a Consultation* + *Find Your Service* (→ quiz) | Data Constellation, line-mask reveal | Kode |
-| 2 | Stats | 4 angka (mis. brand ditangani, ad spend dikelola, rata-rata ROAS, kampanye) | Partikel hero tersusun jadi angka, odometer | **CMS** (Global) |
-| 3 | Portfolio | Logo klien | Marquee 2 baris | **CMS** |
-| 4 | Featured case study | 3 case study unggulan dengan metrik utama | Pinned stack cards | **CMS** |
-| 5 | Why MIL Digital & values | Alasan memilih MIL + nilai perusahaan | Heading sticky kiri, list reveal kanan | Kode |
-| 6 | Our services | 3 service sebagai panel interaktif + CTA quiz | Panel horizontal yang melebar saat hover | Kode |
-| 7 | Team | Teaser tim + link ke Our Team | Grid foto, hover reveal nama & peran | Kode |
-| 8 | Testimonials | Kutipan klien | Carousel draggable | **CMS** (usulan) |
-| 9 | Articles & reports | 3 artikel terbaru + 1 report unggulan | Kartu fade-up stagger | **CMS** |
-| 10 | Contact form | Form singkat + link booking & WA | — | Kode → Leads |
+| — | Hero | Headline, subcopy, foto tim + partikel "Signal from Noise", CTA booking & quiz | headline per kata, grafik terbentuk saat scroll | **CMS** (Homepage → Hero) |
+| 01 | Stats (numbers) | 150+ brand, 15 certified experts, 10+ industri, 100+ milestone + badge Meta | tilt, odometer, sparkline | **CMS** (Homepage → Stats) |
+| 02 | Portofolio | Marquee 52 logo klien | rise, dua baris dari sisi berlawanan | **CMS** (Clients) |
+| 03 | Portofolio (karya) | Pita galeri melengkung | curtain, fokus dari blur | **CMS** (Homepage → Featured → Gallery) |
+| 04 | Case study | Work wheel | drum berayun masuk | **CMS** (Case studies) |
+| 05 | Why MIL Digital & values | 5 core values MIL | tilt, nilai menyala bergantian | Kode |
+| 06 | *(diminta)* Journey film | Video perjalanan MIL + milestone | kartu membuka jadi full screen | **CMS** (Homepage → Journey film) |
+| 07 | Team | Foto tim, founder, CTA Our Team & Career | rise, foto di-wipe, kartu founder masuk | Kode |
+| 08 | Our services | 3 panel service + CTA quiz | curtain, panel terbuka bergantian | Kode |
+| 09 | Testimonials | Testimoni klien (LYLA) | tilt, kutipan dari blur | **CMS** (Testimonials) |
+| 10 | Articles & reports | Galeri yang melebar saat hover | rise, panel "shutter" | **CMS** (Articles, Reports) |
+| 11 | Contact-us form | Form free consultation → CMS Leads + WA + alamat | tilt, copy & form masuk dari dua sisi | Kode → **Leads** |
 
 ### 6.2 About Us — `/about-mil-digital`
 
@@ -381,12 +388,12 @@ Ketiga halaman service memakai satu template dengan konfigurasi berbeda.
 
 1. **Culture & benefits**.
 2. **Open roles** (**CMS**) — filter departemen, tiap baris: posisi, tim, lokasi, tipe kerja.
-3. **Detail lowongan** — usulan halaman `/career/[slug]` agar bisa muncul di Google Jobs (JSON-LD `JobPosting`). Alternatif: accordion di halaman yang sama. **[TBC]**
+3. **Detail lowongan**: accordion di halaman `/career` (tanpa halaman detail terpisah, sesuai inventory).
 4. **Form lamaran** — nama, email, WA, link portofolio/LinkedIn, upload CV (PDF ≤ 5MB), pesan. Masuk ke koleksi `JobApplications` + notifikasi email ke HR.
 
 ### 6.9 Insights — `/insights`
 
-- Artikel unggulan (hero card), filter kategori, pencarian, grid artikel, "Load more", blok subscribe newsletter **[TBC]**.
+- Artikel unggulan (hero card), filter kategori, grid artikel, "Load more".
 
 ### 6.10 Article Detail — `/insights/[slug]`
 
@@ -514,17 +521,12 @@ Skor tertinggi = rekomendasi utama; skor kedua ditampilkan sebagai "juga cocok".
 
 Lihat [§6.14](#614-atlas-by-mil-digital--atlasmildigitalid-tbc). Waitlist tersimpan sebagai lead `source: atlas-waitlist`, dengan email konfirmasi otomatis.
 
-### 7.4 Fitur advance pendukung (usulan)
+### 7.4 Di luar inventory (tidak dibuat kecuali diminta)
 
-| Fitur | Nilai | Prioritas |
-|---|---|---|
-| **Command palette (⌘K)** — cari case study, artikel, report, halaman | Terasa seperti produk tech, navigasi cepat | Tinggi |
-| **Live Preview di CMS** — editor melihat perubahan langsung sebelum publish | Tim konten mandiri | Tinggi |
-| **Scheduled publishing** artikel & report | Kalender konten | Sedang |
-| **Dynamic OG image** per artikel/case study/report | Tampilan share rapi otomatis | Sedang |
-| **Redirect manager** di CMS | SEO aman saat URL berubah | Sedang |
-| **Bilingual ID / EN** | Menjangkau klien regional | **[TBC]** |
-| **Cookie consent** (sesuai UU PDP No. 27/2022) | Kepatuhan sebelum tracking dimuat | Tinggi |
+Command palette (⌘K), newsletter, halaman kategori terpisah, halaman detail lowongan, custom cursor, bilingual, dynamic OG image, scheduled publishing.
+
+Cookie consent baru diperlukan jika analytics/pixel dipasang (UU PDP No. 27/2022).
+
 
 ---
 
@@ -605,7 +607,7 @@ File privat (CV, PDF report gated) tidak bisa diakses publik dan hanya dikirim l
 | Database | **PostgreSQL** (Neon / Supabase) | Dipakai Payload |
 | Media storage | **Cloudflare R2** atau Vercel Blob | Murah, cepat via CDN |
 | Styling | **Tailwind CSS v4** + CSS variables (design tokens) | Konsisten dengan token di §4 |
-| UI primitives | Radix UI | Aksesibel (dialog, tabs, dropdown, ⌘K) |
+| UI primitives | Radix UI | Aksesibel (dialog, tabs, dropdown) |
 | Animasi | Motion, GSAP (ScrollTrigger, SplitText), Lenis | Lihat §5 |
 | 3D | React Three Fiber + drei | Hero WebGL |
 | Form | React Hook Form + Zod + Server Actions | Validasi di klien & server dengan skema yang sama |
@@ -666,7 +668,6 @@ REVALIDATE_SECRET=
 | `form_submit` | Contact, report, waitlist, lamaran | `form`, `page` |
 | `case_study_filter` | Ubah filter Works | `industry`, `scale`, `service` |
 | `report_download` | Unduh report | `report` |
-| `search_open` / `search_select` | Command palette | `query`, `result_type` |
 
 UTM dari kunjungan pertama disimpan di cookie first-party dan ikut ke setiap lead.
 
@@ -717,7 +718,7 @@ Dua versi terakhir Chrome, Safari (macOS & iOS), Edge, Firefox; Samsung Internet
 │   │   │   ├── our-services/[service]/
 │   │   │   ├── our-works-case-study/[slug]/
 │   │   │   ├── our-team/
-│   │   │   ├── career/[slug]/
+│   │   │   ├── career/
 │   │   │   ├── insights/[slug]/
 │   │   │   ├── reports/[slug]/
 │   │   │   ├── contact-us/
@@ -731,7 +732,7 @@ Dua versi terakhir Chrome, Safari (macOS & iOS), Edge, Firefox; Samsung Internet
 │   ├── globals/
 │   ├── components/
 │   │   ├── ui/                    # Button, Input, Badge, Card…
-│   │   ├── layout/                # Header, MegaMenu, Footer, CommandPalette
+│   │   ├── layout/                # Header, MegaMenu, Footer
 │   │   ├── sections/              # Hero, Stats, LogoMarquee, CaseStudyGrid, CTABand…
 │   │   ├── motion/                # Reveal, SplitText, Counter, Magnetic, PinnedSection
 │   │   └── three/                 # DataConstellation + fallback
@@ -750,9 +751,9 @@ Dua versi terakhir Chrome, Safari (macOS & iOS), Edge, Firefox; Samsung Internet
 |---|---|---|
 | **0. Fondasi** | Setup Next.js + Payload + DB, design tokens, font, motion primitives, Header/Mega menu/Footer, CTA band, WA helper | Kerangka situs yang bisa di-deploy ke preview |
 | **1. Halaman inti** | Home (dengan fallback hero), About, Our Service, template 3 service | Halaman marketing utama |
-| **2. Konten CMS** | Koleksi & globals, Works + detail, Insights + detail, Reports + detail, Career + form lamaran, Live Preview, revalidation | Tim MIL bisa mengisi konten |
+| **2. Konten CMS** | Koleksi & globals, Works + detail, Insights + detail, Reports + detail, Career + form lamaran, revalidation | Tim MIL bisa mengisi konten |
 | **3. Konversi** | Quiz, Cal.com (modal & inline + webhook), Contact form, koleksi Leads, email notifikasi, report gating | Alur lead lengkap |
-| **4. Signature & ATLAS** | Hero WebGL Data Constellation, page transitions, ⌘K, ATLAS teaser + waitlist | Lapisan "high-end" |
+| **4. Signature & ATLAS** | Page transitions, ATLAS teaser + waitlist | Lapisan "high-end" |
 | **5. Launch** | SEO (JSON-LD, sitemap, OG), analytics & consent, aksesibilitas, uji performa, QA lintas perangkat, redirect, domain | Go-live |
 
 **Definition of done per halaman:** sesuai spesifikasi §6, responsif 360px–1920px, lolos budget §11, keyboard-accessible, metadata SEO terisi, event analytics terpasang, mode reduced-motion dicek.

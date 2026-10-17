@@ -26,7 +26,7 @@ export function Stats({ stats }: { stats: Stat[] }) {
     <SectionEntrance variant="tilt" sheetClassName="bg-background">
       <div className="container-x py-24 md:py-36">
         <div className="mb-16 grid gap-8 md:grid-cols-12">
-          <Eyebrow index="03" className="md:col-span-4">
+          <Eyebrow index="01" className="md:col-span-4">
             By the numbers
           </Eyebrow>
           <SplitText

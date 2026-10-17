@@ -13,7 +13,7 @@ const DURATION = 7; // seconds per quote
 /**
  * One quote at a time, advancing on a timer shown as progress bars. The
  * timer pauses on hover, on keyboard focus and while off-screen.
- * Welcoming: the curtain opens and the first quote resolves out of a blur.
+ * Welcoming: the sheet tips up and the first quote resolves out of a blur.
  */
 export function Testimonials({ testimonials }: { testimonials: HomeData["testimonials"] }) {
   const ref = React.useRef<HTMLDivElement>(null);
@@ -25,7 +25,7 @@ export function Testimonials({ testimonials }: { testimonials: HomeData["testimo
   if (!t) return null;
 
   return (
-    <SectionEntrance variant="curtain" sheetClassName="bg-background">
+    <SectionEntrance variant="tilt" sheetClassName="bg-background">
       <div
         ref={ref}
         className="container-x py-24 md:py-36"
@@ -34,7 +34,7 @@ export function Testimonials({ testimonials }: { testimonials: HomeData["testimo
         onFocus={() => setHovered(true)}
         onBlur={() => setHovered(false)}
       >
-        <Eyebrow index="08">Client voices</Eyebrow>
+        <Eyebrow index="09">Client voices</Eyebrow>
 
         <div className="relative mt-12 min-h-[22rem] md:min-h-[20rem]" aria-live="polite">
           <span aria-hidden className="absolute -left-2 -top-10 font-serif text-[10rem] leading-none text-signal/30 md:-left-10">
