@@ -1,6 +1,6 @@
 import { getHomeData } from "@/lib/cms";
 import { Hero } from "@/components/sections/hero";
-import { Studio } from "@/components/sections/studio";
+import { Studio, StudioNumbers } from "@/components/sections/studio";
 import { ClientMarquee } from "@/components/sections/client-marquee";
 import { Services } from "@/components/sections/services";
 import { Values } from "@/components/sections/values";
@@ -26,12 +26,13 @@ export default async function HomePage() {
   return (
     <>
       <Hero hero={data.hero} video={data.hero.video} />
-      <Studio stats={data.stats} wheel={wheel} photo="/photos/mil-team-working.jpg" />
+      <Studio photo="/photos/mil-team-working.jpg" />
       <ClientMarquee clients={data.clients} />
       <TextBand />
       <CaseCarousel cases={data.caseStudies} />
       <Services />
       <Values />
+      <StudioNumbers stats={data.stats} wheel={wheel} />
       <Team />
       <Testimonials testimonials={data.testimonials} />
       <Insights insights={data.insights} />

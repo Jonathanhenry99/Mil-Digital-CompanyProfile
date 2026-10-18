@@ -3,7 +3,7 @@
 import * as React from "react";
 import Image from "next/image";
 import { motion, useInView, useScroll, useTransform, type MotionValue } from "motion/react";
-import { certifications, type Stat } from "@/content/home";
+import type { Stat } from "@/content/home";
 import { TextLink } from "@/components/ui/cta-link";
 import { Odometer } from "@/components/motion/odometer";
 import { SplitText } from "@/components/motion/split-text";
@@ -72,19 +72,13 @@ function StatRow({ stat }: { stat: Stat }) {
   );
 }
 
-/**
- * Chapter 2 (inventory: stats + who MIL is). A statement over the team at
- * work, then the photo wheel turns while MIL's figures light up one by one.
- */
-export function Studio({ stats, wheel, photo }: { stats: Stat[]; wheel: string[]; photo: string }) {
+/** Chapter 2: who MIL is, a statement over the team at work. */
+export function Studio({ photo }: { photo: string }) {
   const introRef = React.useRef<HTMLDivElement>(null);
-  const flowRef = React.useRef<HTMLDivElement>(null);
   const { scrollYProgress: intro } = useScroll({ target: introRef, offset: ["start end", "end start"] });
   const photoY = useTransform(intro, [0, 1], ["-8%", "8%"]);
-  const { scrollYProgress: flow } = useScroll({ target: flowRef, offset: ["start end", "end end"] });
 
   return (
-    <>
     <section data-ground="#0e1f45" aria-label="About MIL Digital">
       <div ref={introRef} className="grain relative flex min-h-svh items-center overflow-hidden">
         <motion.div style={{ y: photoY }} className="absolute -inset-y-[10%] inset-x-0">
@@ -103,9 +97,16 @@ export function Studio({ stats, wheel, photo }: { stats: Stat[]; wheel: string[]
           </div>
         </div>
       </div>
-
     </section>
+  );
+}
 
+/** MIL in numbers, after Why MIL: the photo wheel turns while the figures light up one by one. */
+export function StudioNumbers({ stats, wheel }: { stats: Stat[]; wheel: string[] }) {
+  const flowRef = React.useRef<HTMLDivElement>(null);
+  const { scrollYProgress: flow } = useScroll({ target: flowRef, offset: ["start end", "end end"] });
+
+  return (
     <section className="theme-light" aria-label="MIL in numbers">
       <div ref={flowRef} className="relative">
         {/* A layer as tall as the chapter, with the wheel stuck to the viewport
@@ -116,22 +117,12 @@ export function Studio({ stats, wheel, photo }: { stats: Stat[]; wheel: string[]
           </div>
         </div>
         <div className="container-x relative pb-[10svh]">
+          {/* Certifications sit in Why MIL, right above this chapter. */}
           {stats.map((s) => (
             <StatRow key={s.label} stat={s} />
           ))}
-          <div className="grid grid-cols-12 gap-5">
-            <ul className="col-span-12 flex flex-wrap gap-3 md:col-span-7 md:col-start-6">
-              {certifications.map((c) => (
-                <li key={c.name} className="flex items-center gap-3 border border-line py-2 pl-2 pr-4">
-                  <Image src={c.image} alt="" width={36} height={36} className="size-9" />
-                  <span className="text-[13px] text-fg-2">{c.name}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
       </div>
     </section>
-    </>
   );
 }
