@@ -11,8 +11,8 @@
  * Dark chapters sit on the MIL navy family, light chapters on soft grey
  * and white. Every component reads these semantic tokens.
  *
- * Grounds drift between dark chapters (see <GroundDrift />): each sets
- * data-ground with a colour from the --g-* family.
+ * Dark chapters set data-ground with a colour from the --g-* family; it
+ * becomes the card's background (see "Frame" below).
  * ─────────────────────────────────────────────────────────────── */
 :root {
   --mil-blue: #1b3c7f;
@@ -26,6 +26,11 @@
   --g-lift: #12285a;
   --g-blue: #0b1b3d;
   --g-deep: #0a1733;
+
+  /* Frame: every chapter is a rounded card inset in a light frame. */
+  --frame: clamp(8px, 0.9vw, 14px);
+  --frame-bg: #d7dde7;
+  --card-radius: clamp(20px, 2.2vw, 34px);
 
   --bg: var(--g-base);
   --surface: #16295a;
@@ -497,4 +502,40 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .growth-scroll .conf { animation: none; }
+}
+
+/* ── Frame ────────────────────────────────────────────────────────
+ * Each chapter is a rounded card in a light frame, so the corners mark
+ * where one chapter ends and the next begins. Dark chapters paint the
+ * colour they name in data-ground; light ones paint their own ground.
+ * overflow: clip (not hidden) keeps sticky children sticking.
+ * ─────────────────────────────────────────────────────────────── */
+body {
+  background: var(--frame-bg);
+}
+main {
+  padding: var(--frame) var(--frame) 0;
+}
+main > :is(section, article, a) {
+  display: block;
+  border-radius: var(--card-radius);
+  overflow: clip;
+  background: var(--g-base);
+}
+main > :is(section, article, a) + :is(section, article, a) {
+  margin-top: var(--frame);
+}
+main > [data-ground="#0a1733"] {
+  background: var(--g-deep);
+}
+main > [data-ground="#0b1b3d"] {
+  background: var(--g-blue);
+}
+main > .theme-light {
+  background: var(--bg);
+}
+body > footer {
+  margin: var(--frame);
+  border-radius: var(--card-radius);
+  background: var(--g-deep);
 }

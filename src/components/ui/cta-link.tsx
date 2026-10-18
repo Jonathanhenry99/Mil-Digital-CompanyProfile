@@ -4,7 +4,8 @@ import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /*
- * Square call-to-action: 52px, label left, arrow right. On hover the arrow
+ * Pill call-to-action: 52px, label left, arrow right, rounded like the
+ * header and the chapter cards. On hover the arrow
  * slides out and a fresh one slides in; pressing shrinks it a touch.
  * `primary` is solid MIL blue with a white label and arrow.
  */
@@ -19,9 +20,9 @@ export type CtaVariant = keyof typeof variants;
 
 export function ctaClass(variant: CtaVariant = "primary", size: "md" | "lg" = "lg", className?: string) {
   return cn(
-    "group/cta inline-flex shrink-0 items-center justify-between font-semibold tracking-tight whitespace-nowrap transition-[background-color,border-color,color,transform] duration-200 active:scale-[0.98]",
-    size === "lg" ? "h-[52px] gap-6 pl-6 text-sm" : "h-11 gap-4 pl-4 text-[13px]",
-    size === "lg" ? "pr-[18px]" : "pr-3",
+    "group/cta inline-flex shrink-0 items-center justify-between rounded-full font-semibold tracking-tight whitespace-nowrap transition-[background-color,border-color,color,transform] duration-200 active:scale-[0.98]",
+    size === "lg" ? "h-[52px] gap-6 pl-7 text-sm" : "h-11 gap-4 pl-5 text-[13px]",
+    size === "lg" ? "pr-5" : "pr-4",
     variants[variant],
     className,
   );
@@ -32,7 +33,7 @@ export function CtaArrow({ tile }: { tile?: boolean }) {
   return (
     <span
       aria-hidden
-      className={cn("relative grid shrink-0 place-items-center overflow-hidden", tile ? "size-10 bg-signal text-white" : "size-5")}
+      className={cn("relative grid shrink-0 place-items-center overflow-hidden", tile ? "size-10 rounded-full bg-signal text-white" : "size-5")}
     >
       <ArrowRight className="size-[18px] transition-transform duration-500 ease-out-expo group-hover/cta:translate-x-[180%]" />
       <ArrowRight className="absolute size-[18px] -translate-x-[180%] transition-transform duration-500 ease-out-expo group-hover/cta:translate-x-0" />

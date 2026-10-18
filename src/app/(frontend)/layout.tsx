@@ -5,7 +5,6 @@ import { getHomeData } from "@/lib/cms";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { SmoothScroll } from "@/components/motion/smooth-scroll";
-import { GroundDrift } from "@/components/motion/ground-drift";
 import { MotionPrefs } from "@/components/motion/motion-prefs";
 import { BriefProvider } from "@/components/brief/brief-provider";
 import "./globals.css";
@@ -54,7 +53,6 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           Skip to content
         </a>
         <SmoothScroll />
-        <GroundDrift />
         <MotionPrefs>
           <BriefProvider>
             <Header features={caseStudies} />

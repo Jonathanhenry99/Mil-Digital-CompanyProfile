@@ -58,7 +58,7 @@ export function Hero({ hero, video }: { hero: HomeData["hero"]; video: string | 
   }, [video]);
 
   return (
-    <section ref={ref} data-ground="#0e1f45" className="grain relative h-svh min-h-[680px] overflow-hidden" aria-label="Introduction">
+    <section ref={ref} data-ground="#0e1f45" className="grain relative h-[calc(100svh-var(--frame)*2)] min-h-[660px] overflow-hidden" aria-label="Introduction">
       <div className="hero-photo-in absolute inset-0">
         <motion.div style={{ x: photoX, y: photoY, scale: photoScale }} className="absolute -inset-[4%] will-change-transform">
           {hero.background ? (
