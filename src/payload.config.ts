@@ -1,5 +1,6 @@
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import path from "path";
 import { buildConfig } from "payload";
 import sharp from "sharp";
@@ -34,5 +35,17 @@ export default buildConfig({
     // keep its deprecation warning out of the logs.
     pool: { connectionString: (process.env.DATABASE_URL || "").replace("sslmode=require", "sslmode=verify-full") },
   }),
+  plugins: [
+    // Vercel's disk is ephemeral, so uploads go to Vercel Blob once its token
+    // is set (Vercel → Storage → Blob). Without it, files stay in ./media.
+    // clientUploads sends files straight from the browser, past Vercel's
+    // 4.5 MB request limit, so the journey film can be uploaded too.
+    vercelBlobStorage({
+      enabled: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
+      collections: { media: true },
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+      clientUploads: true,
+    }),
+  ],
   sharp,
 });

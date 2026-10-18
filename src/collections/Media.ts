@@ -7,8 +7,8 @@ import { revalidateCollection } from "@/payload/revalidate";
  * Images carry a focal point (click the spot that must stay in frame),
  * which the site uses when it crops, e.g. the hero background.
  *
- * Files are stored on local disk (./media) for now. Before deploying,
- * switch to cloud storage (e.g. @payloadcms/storage-vercel-blob).
+ * Files go to Vercel Blob when BLOB_READ_WRITE_TOKEN is set (see
+ * payload.config.ts), otherwise to local disk (./media) in development.
  */
 export const Media: CollectionConfig = {
   slug: "media",
