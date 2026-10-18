@@ -134,11 +134,31 @@ Belum dipakai (relevan untuk media sosial, bukan website): pilar konten Instagra
 
 - **Selang-seling gelap/terang** ala MGD (`.theme-light` per section) supaya halaman tidak terasa monoton. Logo klien tetap di section gelap karena PNG-nya putih.
 - **Work wheel diganti carousel case study** (adaptasi carousel MGD): satu layar, bisa di-drag, filter industri, panah, counter dan progress. Setiap kartu menuju detail case study.
-- **Pita teks besar** ala MGD sebagai pemisah, bergerak mengikuti scroll.
+- **Pita teks besar** ala MGD sebagai pemisah, bergerak mengikuti scroll (dihapus lagi di §8).
 - **Homepage hanya berisi item inventory**; bab Proses pindah ke halaman Digital Marketing Consultation.
 - **Header**: menu dikelompokkan di kanan bersama jam dan CTA, teks lebih tegas dengan gradasi gelap di atas foto, dan container dilebarkan ke 1760px.
 - **Tombol utama**: biru MIL solid (tidak lagi kotak putih dengan aksen biru).
 - **Semua URL di page inventory sudah dibangun.**
+
+## 8. Audit & revisi lanjutan (18 Okt 2026, sore)
+
+**Audit penyampaian & animasi homepage** (18 → 16,9 layar):
+- **About MIL** tidak lagi memakai foto tim yang sama dengan hero. Isinya kini pernyataan yang terisi kata demi kata, plus tiga bentuk logo (Graph · People · Scaling) yang menyatu menjadi logomark: *MIL comes from MILestone*.
+- **Pita teks besar dihapus**: dua pita bergerak berturut-turut bersaing dengan marquee logo klien, dan kata yang terpotong terlihat rusak.
+- **MIL in numbers** dipindah ke bawah *Why MIL* dan dipadatkan (2,6 → 1,9 layar). Badge Meta cukup tampil di *Why MIL*.
+- **Services**: panel yang tertutup diberi tint navy 28%, menggantikan lapisan hitam 70%.
+- **Reduced motion** dihormati untuk semua animasi Motion (`MotionConfig reducedMotion="user"`).
+
+**Halaman Consultation**: bab Proses (dashboard) diganti **Growth scroll**, ilustrasi kantor yang terbangun dari ruang kosong hingga perayaan milestone, dalam 4 step mengikuti Trinity.
+
+**Header & pemisah (referensi HMH)**:
+- Header berupa **bar putih melengkung** di dalam bingkai halaman. Animasinya: turun saat load, menyempit menjadi "pulau" saat di-scroll, dengan pil sorotan yang meluncur mengikuti menu.
+- **Setiap bab berupa kartu membulat** dalam bingkai abu-abu terang (`--frame`, `--card-radius` di `globals.css`). Sudut kartu menjadi penanda pergantian bab dan menggantikan efek *ground drift*.
+- Semua CTA kini berbentuk **pil**.
+
+**Deploy**: Vercel (`mildigital-company-profile`, region Singapore), media di Vercel Blob (`npm run media:push` untuk menyalin `./media`). Project duplikat `mil-digital-company-profile` perlu dihapus.
+
+**Belum (menunggu materi/keputusan)**: foto tim/kantor asli tambahan, foto case study asli, ilustrasi `Assets/Homepage .png` akan dipakai di mana, CTA ganda kontak + footer di homepage.
 
 ## 5. Homepage v2 (dibangun 17 Okt 2026)
 
