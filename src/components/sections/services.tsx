@@ -17,7 +17,7 @@ const EXTRA = ["Web SEO", "Web Development", "User Research"];
 function Panel({ s, i, next }: { s: Service; i: number; next: React.RefObject<HTMLElement | null> | null }) {
   // As the next panel slides over this one, it dims and sinks back.
   const { scrollYProgress } = useScroll({ target: next ?? undefined, offset: ["start end", "start start"] });
-  const dim = useTransform(scrollYProgress, [0, 1], [0, next ? 0.7 : 0]);
+  const dim = useTransform(scrollYProgress, [0, 1], [0, next ? 0.28 : 0]);
   const scale = useTransform(scrollYProgress, [0, 1], [1, next ? 0.955 : 1]);
   const y = useTransform(scrollYProgress, [0, 1], ["0vh", next ? "-3vh" : "0vh"]);
 
@@ -50,7 +50,7 @@ function Panel({ s, i, next }: { s: Service; i: number; next: React.RefObject<HT
           <Image src={s.image} alt="" fill sizes="(min-width: 1024px) 30vw, 100vw" className="object-cover" />
         </div>
       </motion.div>
-      <motion.div aria-hidden style={{ opacity: dim }} className="pointer-events-none absolute inset-0 bg-black" />
+      <motion.div aria-hidden style={{ opacity: dim }} className="pointer-events-none absolute inset-0 bg-mil-blue" />
     </>
   );
 }

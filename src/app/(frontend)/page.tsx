@@ -8,7 +8,6 @@ import { Team } from "@/components/sections/team";
 import { Testimonials } from "@/components/sections/testimonials";
 import { Insights } from "@/components/sections/insights";
 import { Contact } from "@/components/sections/contact";
-import { TextBand } from "@/components/page/text-band";
 import { CaseCarousel } from "@/components/page/case-carousel";
 
 const TEAM_PHOTOS = ["/photos/mil-team-working.jpg", "/photos/mil-team-group.jpg", "/photos/indra-pratama-ceo.jpg"];
@@ -26,9 +25,8 @@ export default async function HomePage() {
   return (
     <>
       <Hero hero={data.hero} video={data.hero.video} />
-      <Studio photo="/photos/mil-team-working.jpg" />
+      <Studio />
       <ClientMarquee clients={data.clients} />
-      <TextBand />
       <CaseCarousel cases={data.caseStudies} />
       <Services />
       <Values />

@@ -15,6 +15,9 @@ const I_DOT = { cx: 66, cy: 9, r: 8.5 };
 const I_STEM = "M58 30Q58 24 64 24H68Q74 24 74 30V72H58Z";
 const L = "M82 6Q82 0 88 0H92Q98 0 98 6V50Q98 72 82 72Z";
 
+/** The logomark's three shapes, for components that animate them apart. */
+export const MARK_SHAPES = { graph: M, peopleDot: I_DOT, peopleStem: I_STEM, scaling: L };
+
 /** The logomark, enlarged and cropped, as a background element. */
 export function BrandShapes({ className, variant = "mark" }: { className?: string; variant?: "mark" | "m" }) {
   const id = variant === "m" ? "bs-m" : "bs-mark";

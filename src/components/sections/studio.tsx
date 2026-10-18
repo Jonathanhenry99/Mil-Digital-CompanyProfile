@@ -3,10 +3,11 @@
 import * as React from "react";
 import Image from "next/image";
 import { motion, useInView, useScroll, useTransform, type MotionValue } from "motion/react";
-import type { Stat } from "@/content/home";
+import { brand, type Stat } from "@/content/home";
+import { MARK_SHAPES } from "@/components/ui/brand-graphics";
+import { ScrollFill } from "@/components/page/scroll-fill";
 import { TextLink } from "@/components/ui/cta-link";
 import { Odometer } from "@/components/motion/odometer";
-import { SplitText } from "@/components/motion/split-text";
 import { cn } from "@/lib/utils";
 
 const N = 16;
@@ -54,7 +55,7 @@ function StatRow({ stat }: { stat: Stat }) {
   const ref = React.useRef<HTMLDivElement>(null);
   const on = useInView(ref, { margin: "-45% 0px -45% 0px" });
   return (
-    <div ref={ref} className="grid min-h-[62svh] grid-cols-12 content-center gap-5">
+    <div ref={ref} className="grid min-h-[46svh] grid-cols-12 content-center gap-5">
       <div className="col-span-12 pl-[30%] md:col-span-7 md:col-start-6 md:pl-0">
         <p className={cn("t-display flex items-baseline text-[clamp(3.4rem,9vw,8.5rem)] transition-colors duration-500", on ? "text-foreground" : "text-dim")}>
           {stat.prefix ? <span className="mr-2 text-[0.35em]">{stat.prefix}</span> : null}
@@ -72,29 +73,60 @@ function StatRow({ stat }: { stat: Stat }) {
   );
 }
 
-/** Chapter 2: who MIL is, a statement over the team at work. */
-export function Studio({ photo }: { photo: string }) {
-  const introRef = React.useRef<HTMLDivElement>(null);
-  const { scrollYProgress: intro } = useScroll({ target: introRef, offset: ["start end", "end start"] });
-  const photoY = useTransform(intro, [0, 1], ["-8%", "8%"]);
+/**
+ * Chapter 2: who MIL is. The statement fills in as it is read, while the
+ * three shapes the logo is built from (graph, people, scaling; Brand Book
+ * 2025) slide together into the MIL mark.
+ */
+export function Studio() {
+  const markRef = React.useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: markRef, offset: ["start end", "center 0.55"] });
+  const graphX = useTransform(scrollYProgress, [0.2, 1], [-30, 0]);
+  const scalingX = useTransform(scrollYProgress, [0.2, 1], [30, 0]);
+  const peopleY = useTransform(scrollYProgress, [0.2, 1], [-14, 0]);
 
   return (
-    <section data-ground="#0e1f45" aria-label="About MIL Digital">
-      <div ref={introRef} className="grain relative flex min-h-svh items-center overflow-hidden">
-        <motion.div style={{ y: photoY }} className="absolute -inset-y-[10%] inset-x-0">
-          <Image src={photo} alt="" fill sizes="100vw" className="object-cover brightness-[.42] saturate-[.85]" />
-        </motion.div>
-        <div aria-hidden className="absolute inset-0 bg-[linear-gradient(0deg,#0e1f45_0%,rgb(14_31_69/0)_40%,rgb(14_31_69/0)_70%,#0e1f45_100%)]" />
-        <div className="container-x relative py-[18svh]">
-          <p className="t-label mb-8">About MIL Digital</p>
-          <SplitText
-            as="p"
-            text={"We're not just an agency.\nWe're your partner in growth, combining strategy and execution so your brand reaches its next milestone."}
-            className="t-statement max-w-[24ch]"
+    <section className="theme-light sec" aria-label="About MIL Digital">
+      <div className="container-x grid gap-16 lg:grid-cols-12 lg:items-center">
+        <div className="lg:col-span-7">
+          <p className="t-label">About MIL Digital</p>
+          <ScrollFill
+            className="t-statement mt-8 max-w-[22ch]"
+            text="We're not just an agency. We're your partner in growth, combining strategy and execution so your brand reaches its next milestone."
           />
           <div className="mt-10">
             <TextLink href="/about-mil-digital">About MIL Digital</TextLink>
           </div>
+        </div>
+
+        <div ref={markRef} className="lg:col-span-4 lg:col-start-9">
+          <svg viewBox="-34 -6 168 84" className="mx-auto w-[min(100%,380px)]" role="img" aria-label="The MIL logomark, built from a graph, people and a scaling line">
+            <defs>
+              <linearGradient id="about-mark" x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0" stopColor="#1b3c7f" />
+                <stop offset="1" stopColor="#00adee" />
+              </linearGradient>
+            </defs>
+            <g fill="url(#about-mark)">
+              <motion.path style={{ x: graphX }} d={MARK_SHAPES.graph} />
+              <motion.g style={{ y: peopleY }}>
+                <circle {...MARK_SHAPES.peopleDot} />
+                <path d={MARK_SHAPES.peopleStem} />
+              </motion.g>
+              <motion.path style={{ x: scalingX }} d={MARK_SHAPES.scaling} />
+            </g>
+          </svg>
+          <p className="t-label mt-10">
+            MIL comes from <span className="text-signal">MIL</span>estone
+          </p>
+          <dl className="mt-4 grid grid-cols-3 gap-4 border-t border-line pt-5">
+            {brand.logoMeaning.map((m) => (
+              <div key={m.title}>
+                <dt className="font-display text-lg font-semibold text-heading">{m.title}</dt>
+                <dd className="mt-1 text-[13px] leading-snug text-fg-2">{m.body}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </div>
     </section>

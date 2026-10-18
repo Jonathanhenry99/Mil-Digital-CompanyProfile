@@ -6,6 +6,7 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { GroundDrift } from "@/components/motion/ground-drift";
+import { MotionPrefs } from "@/components/motion/motion-prefs";
 import { BriefProvider } from "@/components/brief/brief-provider";
 import "./globals.css";
 
@@ -54,11 +55,13 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         </a>
         <SmoothScroll />
         <GroundDrift />
-        <BriefProvider>
-          <Header features={caseStudies} />
-          <main id="main">{children}</main>
-          <Footer />
-        </BriefProvider>
+        <MotionPrefs>
+          <BriefProvider>
+            <Header features={caseStudies} />
+            <main id="main">{children}</main>
+            <Footer />
+          </BriefProvider>
+        </MotionPrefs>
       </body>
     </html>
   );
