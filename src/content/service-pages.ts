@@ -33,12 +33,12 @@ export const servicePages: ServicePage[] = [
     image: "/photos/mil-team-working.jpg",
     focal: "40% 40%",
     feature: "approach",
-    frameworksTitle: "Frameworks we\nwork with.",
+    frameworksTitle: "The Trinity\nframeworks.",
     frameworks: [
-      { title: "Brand & channel audit", body: "Where you stand today: assets, channels, data and the gaps between them." },
-      { title: "Full-funnel plan", body: "Awareness, consideration and conversion, each with its own job, channel and budget." },
-      { title: "KPI tree", body: "One business goal broken into the few numbers that actually move it." },
-      { title: "Monthly growth review", body: "What worked, what didn't, and what we change next month." },
+      { title: "Product", body: "Trinity Principle 1. A product people want, priced and packaged to sell." },
+      { title: "Branding", body: "Trinity Principle 2. A brand that's clear, consistent and worth remembering." },
+      { title: "Marketing", body: "Trinity Principle 3. Getting it in front of the right people, measurably." },
+      { title: "Organic · Advertising · Influencer", body: "The Trinity Pillars: the three digital channels we balance to build a sustainable brand." },
     ],
   },
   {

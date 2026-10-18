@@ -42,7 +42,7 @@ async function ReportPageContent({ params }: { params: PageProps<"/reports/[slug
         </div>
       </section>
 
-      <section data-ground="#0c0d0f" className="sec" aria-label="Get the report">
+      <section data-ground="#0e1f45" className="sec" aria-label="Get the report">
         <div className="container-x grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <p className="t-label">The full report</p>

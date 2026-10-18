@@ -61,7 +61,7 @@ export function Team({ variant = "home" }: { variant?: "home" | "page" }) {
   return (
     <section
       className={cn("sec", variant === "home" && "theme-light")}
-      data-ground={variant === "page" ? "#0c0d0f" : undefined}
+      data-ground={variant === "page" ? "#0e1f45" : undefined}
       aria-label="Our team"
     >
       <div className="container-x grid gap-12 lg:grid-cols-12 lg:items-start">

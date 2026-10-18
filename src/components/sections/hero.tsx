@@ -58,7 +58,7 @@ export function Hero({ hero, video }: { hero: HomeData["hero"]; video: string | 
   }, [video]);
 
   return (
-    <section ref={ref} data-ground="#0c0d0f" className="grain relative h-svh min-h-[680px] overflow-hidden" aria-label="Introduction">
+    <section ref={ref} data-ground="#0e1f45" className="grain relative h-svh min-h-[680px] overflow-hidden" aria-label="Introduction">
       <div className="hero-photo-in absolute inset-0">
         <motion.div style={{ x: photoX, y: photoY, scale: photoScale }} className="absolute -inset-[4%] will-change-transform">
           {hero.background ? (
@@ -93,7 +93,7 @@ export function Hero({ hero, video }: { hero: HomeData["hero"]; video: string | 
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(180deg, rgb(8 9 11 / .6) 0%, rgb(8 9 11 / 0) 22%), linear-gradient(0deg, #0c0d0f 0%, rgb(12 13 15 / .82) 18%, rgb(12 13 15 / .35) 45%, rgb(12 13 15 / 0) 65%), linear-gradient(90deg, rgb(12 13 15 / .55) 0%, rgb(12 13 15 / 0) 55%)",
+            "linear-gradient(180deg, rgb(10 23 51 / .6) 0%, rgb(10 23 51 / 0) 22%), linear-gradient(0deg, #0e1f45 0%, rgb(14 31 69 / .82) 18%, rgb(14 31 69 / .35) 45%, rgb(14 31 69 / 0) 65%), linear-gradient(90deg, rgb(14 31 69 / .55) 0%, rgb(14 31 69 / 0) 55%)",
         }}
       />
 
@@ -105,7 +105,7 @@ export function Hero({ hero, video }: { hero: HomeData["hero"]; video: string | 
         <div className="grid items-end gap-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:gap-12">
           <SplitText as="h1" mode="load" delay={250} text={hero.title} className="t-display text-[clamp(3rem,7.4vw,7.6rem)]" />
           <div className="fade-in-load grid justify-items-start gap-6 pb-1.5" style={{ "--d": "650ms" } as React.CSSProperties}>
-            <p className="max-w-[30em] text-[clamp(1rem,1.2vw,1.125rem)] leading-relaxed text-[#d4d7dc]">{hero.body}</p>
+            <p className="max-w-[30em] text-[clamp(1rem,1.2vw,1.125rem)] leading-relaxed text-fg-body">{hero.body}</p>
             <div className="flex flex-wrap gap-3">
               <BriefTrigger>Book a free consultation</BriefTrigger>
               <CtaLink href="#work" variant="ghost">

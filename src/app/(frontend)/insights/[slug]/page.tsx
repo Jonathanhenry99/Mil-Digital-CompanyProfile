@@ -33,7 +33,7 @@ async function ArticlePageContent({ params }: { params: PageProps<"/insights/[sl
 
   return (
     <article>
-      <header data-ground="#0c0d0f" className="container-x pb-12 pt-36 md:pt-44">
+      <header data-ground="#0e1f45" className="container-x pb-12 pt-36 md:pt-44">
         <Link href="/insights" className="t-label inline-flex items-center gap-2 hover:text-foreground">
           <ArrowLeft className="size-4" /> All insights
         </Link>

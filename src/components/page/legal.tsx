@@ -5,7 +5,7 @@
 export function LegalPage({ title, updated, sections }: { title: string; updated: string; sections: { h: string; p: string[] }[] }) {
   return (
     <article>
-      <header data-ground="#0c0d0f" className="container-x pb-14 pt-36 md:pt-44">
+      <header data-ground="#0e1f45" className="container-x pb-14 pt-36 md:pt-44">
         <p className="t-label">Legal</p>
         <h1 className="t-display mt-4 text-[clamp(3rem,7vw,6.5rem)]">{title}</h1>
         <p className="t-label mt-6">Last updated {updated} · Draft pending legal review</p>

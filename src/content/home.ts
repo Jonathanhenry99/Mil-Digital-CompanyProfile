@@ -2,7 +2,7 @@
  * Homepage content. Shapes mirror the Payload collections in
  * PROJECT_SPEC §8 so swapping this file for CMS queries is mechanical.
  *
- * Real MIL data (from Assets/ and the old site, mildigital.id): client
+ * Real MIL data (Assets/, the old site mildigital.id and the Brand Book 2025): client
  * logos, team photos, stats, core values, the LYLA testimonial, the
  * pricing article. Still placeholder: case studies, the industry report,
  * extra articles and their Unsplash photos. Replace before launch.
@@ -43,9 +43,9 @@ export type Service = {
 };
 
 export const hero = {
-  eyebrow: "Digital marketing consultant & agency · Bandung",
+  eyebrow: "Digital Marketing Consultant · Bandung",
   title: "Turning brand noise\ninto measurable growth.",
-  body: "A team of certified digital marketing experts helping brands across Indonesia plan, advertise and create, with every decision backed by data.",
+  body: "Your partner in growth, with a holistic and caring approach. Certified experts helping brands across Indonesia reach their next milestone, every decision backed by data.",
   /**
    * Background photo behind the hero. Becomes an upload field on the Home
    * global in the CMS (Payload uploads carry a focal point, which maps to
@@ -71,7 +71,7 @@ export const showreel = {
  * field is a short marker rather than a year until the real dates are in.
  */
 export const milestones = [
-  { year: "Day 1", label: "MIL Digital starts in Bandung, helping brands grow their presence online" },
+  { year: "2021", label: "MIL Digital starts in Bandung, helping local brands grow in the digital era" },
   { year: "7 yrs", label: "Of combined digital marketing experience across the team" },
   { year: "15", label: "Certified digital marketing experts, Meta certified in media buying" },
   { year: "100+", label: "Client milestones achieved across 10+ industries" },
@@ -246,34 +246,57 @@ export const gallery = [
   { src: "/placeholders/work-16.jpg", alt: "MIL Digital studio" },
 ];
 
-/** MIL's core values (old site). Descriptions are new copy for review. */
+/**
+ * A.C.T.I.V.E.: MIL's promise to clients (Brand Book 2025). `mark` is the
+ * letter shown in place of a number.
+ */
 export const values = [
-  {
-    title: "Integrity",
-    body: "We say what we'll do and do what we say, even when the honest answer isn't the easy one.",
-    tag: "Honest",
-  },
-  {
-    title: "Transparency",
-    body: "Clear numbers and clear reporting. You always see what's working, what isn't and where your budget goes.",
-    tag: "Open books",
-  },
-  {
-    title: "Tailored to your goals",
-    body: "No templates. Every strategy starts from your business objectives and the metrics that matter to them.",
-    tag: "Your KPIs",
-  },
-  {
-    title: "Reliable",
-    body: "Consistent execution and a team you can count on, campaign after campaign.",
-    tag: "Dependable",
-  },
-  {
-    title: "Knowledge sharing",
-    body: "We explain the why behind every move, so your team grows sharper with every campaign.",
-    tag: "Grow together",
-  },
+  { mark: "A", title: "Attention", body: "We pay attention to our clients: their performance, their data, their concerns and challenges.", tag: "Client promise" },
+  { mark: "C", title: "Care", body: "We show real dedication to every brand we work with, and treat it as our own.", tag: "Client promise" },
+  { mark: "T", title: "Tailored strategy", body: "Strategies relevant to each client's goals, always backed by data.", tag: "Client promise" },
+  { mark: "I", title: "Initiatives", body: "We act proactively and bring solutions before they're asked for.", tag: "Client promise" },
+  { mark: "V", title: "Visionary", body: "We plan for where your brand is going, not just where it is today.", tag: "Client promise" },
+  { mark: "E", title: "Excellence", body: "Excellent digital marketing work, with the attitude and work ethic to match.", tag: "Client promise" },
 ];
+
+/** F.A.S.T.R.: how the MIL team works together (Brand Book 2025). */
+export const teamValues = [
+  { mark: "F", title: "Friendly", body: "Warm, positive and respectful relationships with teammates and clients; a supportive, inclusive workplace." },
+  { mark: "A", title: "Agile", body: "Quick to adapt to change and challenges, always ready with flexible, innovative solutions." },
+  { mark: "S", title: "Savvy", body: "Deep knowledge and skills in digital, and always improving to deliver the best results." },
+  { mark: "T", title: "Trustworthy", body: "Honest, keeps promises, acts with integrity and keeps confidential data secure." },
+  { mark: "R", title: "Reliable", body: "Consistent, responsible and dependable, delivering high-quality work." },
+];
+
+/** Story, purpose and frameworks from the Brand Book 2025. */
+export const brand = {
+  founded: 2021,
+  meaning: "MIL comes from the word MILESTONE: a symbol of progress, achievement and growth.",
+  mission: "Helping brands grow with a holistic & caring approach.",
+  vision:
+    "Facilitating growth through a strategic focus on product, branding and marketing (the Trinity Principles) while leveraging the digital pillars of organic, advertising and influencer (the Trinity Pillars).",
+  approach: [
+    { title: "Holistic approach", body: "We consider every aspect of a business when crafting digital strategies, to ensure sustainable growth." },
+    { title: "Caring approach", body: "We treat every brand as our own: not just providing services, but genuinely caring about its growth and long-term success." },
+  ],
+  logoMeaning: [
+    { shape: "graph", title: "Graph", body: "Growth you can measure." },
+    { shape: "people", title: "People", body: "The team and the brands we grow with." },
+    { shape: "scaling", title: "Scaling", body: "Reaching the next milestone." },
+  ],
+  trinityPrinciples: ["Product", "Branding", "Marketing"],
+  trinityPillars: ["Organic", "Advertising", "Influencer"],
+  positioning: [
+    { title: "We are not just an agency", body: "We are a partner in growth." },
+    { title: "We create solutions for brands to grow", body: "Combining strategy & execution." },
+    { title: "We bring a holistic & caring approach", body: "Helping SMEs & startups scale effectively." },
+  ],
+  audiences: [
+    { title: "Startups & new businesses", body: "Just starting and need guidance to enter the digital market." },
+    { title: "Small to medium enterprises", body: "Limited budgets and resources, but great potential for growth." },
+    { title: "Corporations", body: "Strengthening digital presence and engagement, and keeping strategies relevant in an evolving market." },
+  ],
+};
 
 export const testimonials = [
   {

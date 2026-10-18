@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
  * `primary` is solid MIL blue with a white label and arrow.
  */
 const variants = {
-  primary: "bg-[var(--cta-bg)] text-[var(--cta-fg)] hover:bg-[var(--cta-bg-hover)]",
+  primary: "[background:var(--cta-bg)] text-[var(--cta-fg)] hover:[background:var(--cta-bg-hover)]",
   blue: "bg-signal text-white hover:bg-[#5a9eff]",
   ghost: "border border-line-strong text-foreground hover:border-foreground/70 hover:bg-foreground/[0.06]",
   ink: "bg-paper-ink text-paper hover:bg-[#2b2e33]",

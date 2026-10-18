@@ -112,6 +112,24 @@ Panjang total hampir sama (MIL 19,7 layar, TT 19,3 layar). Yang perlu dipangkas 
 
 ---
 
+## 7. MIL Digital Brand Book 2025 (sumber utama identitas)
+
+Brand book resmi (37 halaman) kini menjadi acuan utama dan menggantikan token draft sebelumnya. Yang sudah diterapkan:
+
+| Brand book | Di website |
+|---|---|
+| Primary #1B3C7F / #00ADEE; secondary #FAAF40 / #F13F2D; gradient extra #00E4DC, #FF666C | Section gelap memakai keluarga navy MIL, aksen biru muda; kuning untuk aksen kecil (huruf A.C.T.I.V.E., badge, ikon); tombol utama memakai gradient navy → biru muda |
+| SF Pro Display Semibold (headline), Product Sans (body) | Headline memakai SF Pro Display di perangkat Apple (font sistem; tidak boleh di-host), fallback Inter Semibold; body memakai **Google Sans** (penerus open-source Product Sans) |
+| Primary logo untuk header website; aturan warna logo per latar | Header/footer memakai logo primary "Digital Marketing Consultant"; mark biru muda di latar navy, mark gradient di kertas Brief |
+| Brand story (2021), MIL = Milestone, makna logo Graph · People · Scaling | About: cerita, misi, visi, makna logo dengan bentuk yang diambil dari logomark; milestone 2021 |
+| Values: Holistic & Caring; A.C.T.I.V.E. (ke klien), F.A.S.T.R. (internal) | Homepage & About: A.C.T.I.V.E.; Our Team: F.A.S.T.R. |
+| Trinity Principles & Trinity Pillars | About (diagram) dan framework halaman Consultation |
+| Positioning, target audience, persona "Milers" | About (3 kartu positioning), Our Service ("Who we work with"), label testimoni "What our Milers say" |
+| Tagline "Let's grow MILes away together!" + elemen grafis (panah kuning, asterisk, background dari logomark) | Footer: band gradient dengan logomark besar dan tagline bergaya brand book |
+| Pictogram line-art | Ikon line (lucide) pada kartu positioning |
+
+Belum dipakai (relevan untuk media sosial, bukan website): pilar konten Instagram/TikTok dan panduan caption.
+
 ## 6. Revisi 18 Okt 2026
 
 - **Selang-seling gelap/terang** ala MGD (`.theme-light` per section) supaya halaman tidak terasa monoton. Logo klien tetap di section gelap karena PNG-nya putih.

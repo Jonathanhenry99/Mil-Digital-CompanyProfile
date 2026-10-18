@@ -53,7 +53,7 @@ export default async function ReportsPage() {
         </div>
       </section>
 
-      <section data-ground="#0c0d0f" className="sec" aria-label="All reports">
+      <section data-ground="#0e1f45" className="sec" aria-label="All reports">
         <div className="container-x">
           <SectionHead label="Latest reports" title={"Read the\nfindings."} />
           <div className="grid gap-6 md:grid-cols-2">

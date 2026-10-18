@@ -31,7 +31,7 @@ function Row({ items, reverse, duration }: { items: Client[]; reverse?: boolean;
 export function ClientMarquee({ clients }: { clients: Client[] }) {
   const half = Math.ceil(clients.length / 2);
   return (
-    <section data-ground="#0c0d0f" className="py-[clamp(64px,8vw,120px)]" aria-label="Clients">
+    <section data-ground="#0e1f45" className="py-[clamp(64px,8vw,120px)]" aria-label="Clients">
       <div className="container-x mb-10 grid gap-6 md:grid-cols-12 md:items-end">
         <h2 className="t-h2 md:col-span-6">Trusted by 150+ brands</h2>
         <Reveal className="md:col-span-5 md:col-start-8">

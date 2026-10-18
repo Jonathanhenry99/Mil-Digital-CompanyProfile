@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Geist, Geist_Mono } from "next/font/google";
+import { Google_Sans, Inter } from "next/font/google";
 import { site } from "@/content/site";
 import { getHomeData } from "@/lib/cms";
 import { Header } from "@/components/layout/header";
@@ -9,21 +9,20 @@ import { GroundDrift } from "@/components/motion/ground-drift";
 import { BriefProvider } from "@/components/brief/brief-provider";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Brand book typography: Product Sans for text (Google Sans is its open
+// successor) and SF Pro Display Semibold for headlines. SF Pro can't be
+// self-hosted, so headlines use the system font on Apple devices and Inter
+// Semibold, its closest match, everywhere else (see --font-display).
+const googleSans = Google_Sans({
+  variable: "--font-google-sans",
   subsets: ["latin"],
+  weight: ["400", "500", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-});
-
-// Display role: every headline. Variable width lets headlines run slightly condensed.
-const bricolage = Bricolage_Grotesque({
-  variable: "--font-bricolage",
-  subsets: ["latin"],
-  axes: ["opsz", "wdth"],
+  weight: ["500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -45,7 +44,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   // Featured work for the mega menu, from the CMS (cached).
   const { caseStudies } = await getHomeData();
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${bricolage.variable} antialiased`}>
+    <html lang="en" className={`${googleSans.variable} ${inter.variable} antialiased`}>
       <body className="min-h-svh">
         <a
           href="#main"

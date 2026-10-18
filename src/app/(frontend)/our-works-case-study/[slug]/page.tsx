@@ -65,7 +65,7 @@ async function CaseStudyPageContent({ params }: { params: PageProps<"/our-works-
         </div>
       </section>
 
-      <section data-ground="#0c0d0f" className="sec" aria-label="The story">
+      <section data-ground="#0e1f45" className="sec" aria-label="The story">
         <div className="container-x grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <p className="t-label">The story</p>

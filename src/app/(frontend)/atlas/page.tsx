@@ -33,7 +33,7 @@ const FAQ = [
 export default function AtlasPage() {
   return (
     <>
-      <section data-ground="#0a1324" className="grain relative overflow-hidden pt-40 md:pt-44" aria-label="ATLAS">
+      <section data-ground="#0b1b3d" className="grain relative overflow-hidden pt-40 md:pt-44" aria-label="ATLAS">
         <div className="container-x relative">
           <p className="fade-in-load t-label flex items-center gap-2.5">
             <span className="size-1.5 animate-pulse bg-aqua" /> ATLAS by MIL Digital · Coming soon
@@ -68,7 +68,7 @@ export default function AtlasPage() {
         </div>
       </section>
 
-      <section data-ground="#0c0d0f" className="sec" aria-label="Questions">
+      <section data-ground="#0e1f45" className="sec" aria-label="Questions">
         <div className="container-x grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <p className="t-label">Questions</p>

@@ -54,7 +54,7 @@ export function Process() {
   const frameY = useTransform(entry, [0.3, 1], [60, 0]);
 
   return (
-    <section ref={ref} data-ground="#0a1324" className="relative h-[420svh]" aria-label="How we grow brands">
+    <section ref={ref} data-ground="#0b1b3d" className="relative h-[420svh]" aria-label="How we grow brands">
       <div className="sticky top-0 flex h-svh items-center overflow-hidden">
         <div className="container-x grid w-full gap-6 lg:grid-cols-12 lg:gap-10">
           <div className="flex flex-col justify-center lg:col-span-4">
@@ -80,7 +80,7 @@ export function Process() {
             </ol>
           </div>
 
-          <motion.div style={{ opacity: frameOpacity, y: frameY }} className="ticks flex flex-col border border-line bg-[#08101f]/70 lg:col-span-8">
+          <motion.div style={{ opacity: frameOpacity, y: frameY }} className="ticks flex flex-col border border-line bg-[#0a1733]/70 lg:col-span-8">
             <div className="flex items-center justify-between border-b border-line px-4 py-3">
               <div className="flex items-center gap-3">
                 <span className="flex gap-1.5" aria-hidden>

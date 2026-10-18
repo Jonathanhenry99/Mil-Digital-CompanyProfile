@@ -83,7 +83,7 @@ export function Header({ features }: { features: CaseStudy[] }) {
         <div
           className={cn(
             "relative border-b transition-[background-color,border-color,backdrop-filter] duration-500",
-            scrolled || open !== null ? "border-line bg-[#0c0d0f]/85 backdrop-blur-xl" : "border-transparent",
+            scrolled || open !== null ? "border-line bg-[#0e1f45]/85 backdrop-blur-xl" : "border-transparent",
           )}
         >
           <div className="container-x flex h-16 items-center gap-6 md:h-20">
@@ -165,8 +165,8 @@ function NavEntry({
     <Link href={item.href} className={base} onMouseEnter={() => setOpen(null)}>
       {item.label}
       {item.badge ? (
-        <span className="ml-1.5 inline-flex items-center gap-1 border border-aqua/40 px-1.5 py-px text-[10px] font-semibold uppercase tracking-wider text-aqua">
-          <span className="size-1 animate-pulse bg-aqua" />
+        <span className="ml-1.5 inline-flex items-center gap-1 border border-warm/50 px-1.5 py-px text-[10px] font-semibold uppercase tracking-wider text-warm">
+          <span className="size-1 animate-pulse bg-warm" />
           {item.badge}
         </span>
       ) : null}
@@ -214,7 +214,7 @@ function MobileMenu({ pathname }: { pathname: string }) {
   const links = nav.flatMap((item) => ("children" in item ? item.children : [item]));
   return (
     <motion.div
-      className="fixed inset-0 z-40 flex flex-col bg-[#0c0d0f] pt-20 lg:hidden"
+      className="fixed inset-0 z-40 flex flex-col bg-[#0e1f45] pt-20 lg:hidden"
       initial={{ opacity: 0, y: -12 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -12 }}

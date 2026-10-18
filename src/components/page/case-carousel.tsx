@@ -57,7 +57,7 @@ export function CaseCarousel({
   };
 
   return (
-    <section id="work" data-ground={theme === "dark" ? "#0c0d0f" : undefined} className={cn("sec overflow-hidden", theme === "light" && "theme-light")} aria-label={label}>
+    <section id="work" data-ground={theme === "dark" ? "#0e1f45" : undefined} className={cn("sec overflow-hidden", theme === "light" && "theme-light")} aria-label={label}>
       <div className="container-x">
         <div className="mb-10 grid gap-6 md:grid-cols-12 md:items-end">
           <div className="md:col-span-6">
@@ -112,7 +112,7 @@ export function CaseCarousel({
                   <span className="t-display block text-[clamp(2.4rem,4vw,3.6rem)]">{c.metric.value}</span>
                   <span className="block text-[13px] text-white/75">{c.metric.label}</span>
                 </span>
-                <span className="absolute right-4 top-4 grid size-10 place-items-center bg-white text-[#0c0d0f] opacity-0 transition-opacity group-hover:opacity-100">
+                <span className="absolute right-4 top-4 grid size-10 place-items-center bg-white text-[#0e1f45] opacity-0 transition-opacity group-hover:opacity-100">
                   <ArrowUpRight className="size-5" />
                 </span>
               </div>

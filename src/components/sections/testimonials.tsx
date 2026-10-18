@@ -23,10 +23,10 @@ export function Testimonials({ testimonials }: { testimonials: HomeData["testimo
   const logo = LOGOS[t.company];
 
   return (
-    <section data-ground="#0c0d0f" className="sec" aria-label="Client stories">
+    <section data-ground="#0e1f45" className="sec" aria-label="Client stories">
       <div className="container-x">
         <div className="flex items-end justify-between gap-6">
-          <p className="t-label">What clients say</p>
+          <p className="t-label">What our Milers say</p>
           {many ? (
             <div className="flex gap-2">
               {[-1, 1].map((d) => (

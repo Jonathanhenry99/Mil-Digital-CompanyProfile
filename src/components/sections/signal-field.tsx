@@ -29,14 +29,14 @@ type Point = {
   oy: number;
   r: number;
   delay: number;
-  /** Top dot of a bar: drawn in sky blue once formed. */
+  /** Top dot of a bar: drawn in MIL yellow once formed. */
   peak: boolean;
 };
 
-// Brand blues on a dark ground: bars in signal blue, bar tops in sky,
-// loose points in a pale ink.
-const SIGNAL = [59, 140, 255];
-const SKY = [56, 198, 244];
+// Brand book colours on navy: bars in MIL light blue, bar tops in MIL
+// yellow, loose points in a pale ink.
+const SIGNAL = [0, 173, 238];
+const SKY = [250, 175, 64];
 const FG = [190, 200, 214];
 
 function lowPower() {

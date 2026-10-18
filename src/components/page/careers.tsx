@@ -28,7 +28,7 @@ export function Careers({ jobs }: { jobs: Job[] }) {
 
   return (
     <>
-      <section data-ground="#0c0d0f" className="sec" aria-label="Open roles">
+      <section data-ground="#0e1f45" className="sec" aria-label="Open roles">
         <div className="container-x grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <p className="t-label">Open roles</p>
@@ -87,7 +87,7 @@ export function Careers({ jobs }: { jobs: Job[] }) {
                             <button
                               type="button"
                               onClick={() => apply(j.id)}
-                              className="inline-flex h-11 items-center gap-3 bg-[var(--cta-bg)] px-5 text-[13px] font-semibold text-white transition-colors hover:bg-[var(--cta-bg-hover)]"
+                              className="inline-flex h-11 items-center gap-3 [background:var(--cta-bg)] px-5 text-[13px] font-semibold text-white transition-colors hover:[background:var(--cta-bg-hover)]"
                             >
                               Apply for this role →
                             </button>

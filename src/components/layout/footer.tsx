@@ -3,27 +3,47 @@ import { footerLinks, site, tagline } from "@/content/site";
 import { whatsappHref } from "@/lib/whatsapp";
 import { Logo } from "@/components/ui/logo";
 import { BriefTrigger } from "@/components/brief/brief-provider";
-import { Hairline } from "@/components/motion/hairline";
-import { SplitText } from "@/components/motion/split-text";
+import { ArrowBadge, BrandShapes, Spark } from "@/components/ui/brand-graphics";
+import { Reveal } from "@/components/motion/reveal";
 import { CurrentYear, StudioClock, WhatsAppCta } from "./live-details";
 
-/** Closing statement, the brief CTA, and an index of the site. */
+/** Brand-gradient closing band with the tagline, the brief CTA, and an index of the site. */
 export function Footer() {
   return (
-    <footer data-ground="#07080a" className="relative overflow-hidden">
-      <div aria-hidden className="pointer-events-none absolute -top-48 left-1/2 h-[420px] w-[70vw] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgb(59_140_255/0.22),transparent)]" />
-      <div className="container-x relative pb-10 pt-[var(--sec)]">
-        <SplitText as="p" text={tagline.replace("grow ", "grow\n") + "."} className="t-display text-[clamp(3rem,9vw,9rem)]" />
-        <div className="mt-12 flex flex-wrap gap-3">
-          <BriefTrigger>Book a free consultation</BriefTrigger>
-          <WhatsAppCta />
+    <footer data-ground="#0a1733" className="relative overflow-hidden">
+      {/* Brand book: gradient background with the enlarged logomark as a background element */}
+      <div className="relative overflow-hidden [background:var(--brand-gradient)]">
+        <BrandShapes className="absolute -bottom-[12%] -right-[6%] h-[115%] w-auto opacity-60 mix-blend-screen" />
+        <div className="container-x relative py-[var(--sec)]">
+          <p className="t-label text-white/80">Free consultation</p>
+          <Reveal>
+            <p aria-label={`${tagline}!`} className="mt-6 font-display text-[clamp(3rem,8.4vw,8.5rem)] font-semibold uppercase leading-[0.95] tracking-[-0.03em] text-white">
+              <span className="flex items-center gap-[0.15em]">
+                <ArrowBadge className="size-[0.7em] shrink-0" />
+                Let&apos;s grow
+              </span>
+              <span className="flex items-center gap-[0.12em] text-[#7fe0ff]">
+                MILes
+                <Spark className="size-[0.62em] shrink-0" />
+              </span>
+              <span className="block">away together!</span>
+            </p>
+          </Reveal>
+          <div className="mt-12 flex flex-wrap gap-3">
+            <BriefTrigger variant="ink" className="!bg-white !text-mil-blue hover:!bg-white/90">
+              Book a free consultation
+            </BriefTrigger>
+            <WhatsAppCta />
+          </div>
         </div>
+      </div>
 
-        <Hairline className="mt-20" />
+      <div className="container-x relative pb-10">
+        <div className="pt-4" />
         <div className="grid gap-10 py-12 md:grid-cols-12">
           <div className="md:col-span-4">
             <Logo />
-            <p className="mt-5 max-w-xs text-sm text-fg-2">Digital marketing consultant &amp; agency, helping brands across Indonesia grow online.</p>
+            <p className="mt-5 max-w-xs text-sm text-fg-2">Helping brands grow with a holistic &amp; caring approach, from Bandung for brands across Indonesia.</p>
           </div>
           {footerLinks.map((group, i) => (
             <div key={group.title} className={i === 1 ? "md:col-span-3" : "md:col-span-2"}>

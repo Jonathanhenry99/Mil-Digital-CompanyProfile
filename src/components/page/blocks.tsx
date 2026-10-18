@@ -45,7 +45,7 @@ export function CaseCard({ c, className, sizes = "(min-width: 1024px) 33vw, 100v
     <Link href={`/our-works-case-study/${c.slug}`} className={cn("group block", className)}>
       <div className="ticks relative aspect-[4/3] overflow-hidden bg-surface">
         <Image src={c.image} alt={`${c.client} case study`} fill sizes={sizes} className="object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.04]" />
-        <span className="absolute bottom-3 left-3 bg-[#0c0d0f]/85 px-3 py-2 backdrop-blur">
+        <span className="absolute bottom-3 left-3 bg-[#0e1f45]/85 px-3 py-2 backdrop-blur">
           <span className="t-display block text-2xl text-white">{c.metric.value}</span>
           <span className="block text-[11px] text-white/70">{c.metric.label}</span>
         </span>
@@ -118,7 +118,7 @@ export function Placeholder({ title, body }: { title: string; body: string }) {
  */
 export function PageSkeleton() {
   return (
-    <section data-ground="#0c0d0f" className="min-h-[70svh] pt-40" aria-busy="true" aria-label="Loading">
+    <section data-ground="#0e1f45" className="min-h-[70svh] pt-40" aria-busy="true" aria-label="Loading">
       <div className="container-x">
         <span className="block h-3 w-40 animate-pulse bg-surface-raised" />
         <span className="mt-8 block h-16 w-[min(720px,80%)] animate-pulse bg-surface" />

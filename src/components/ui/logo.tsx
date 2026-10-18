@@ -2,25 +2,33 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 /**
- * MIL Digital logo: the "mil" mark (high-res PNGs from the old site, in
- * public/brand) plus the "Digital" wordmark. White on dark grounds by
- * default; `tone="brand"` for paper/light. Swap for the official SVG when
- * it is available.
+ * MIL Digital primary logo (Brand Book 2025): the "mil" logomark with
+ * "Digital Marketing Consultant" beside it. Brand book colour rules:
+ * on dark blue grounds the mark is the light-blue version with white text;
+ * on light grounds the gradient mark with MIL dark blue text.
+ * `mark` renders the logomark alone, for tight spaces.
  */
-export function Logo({ className, tone = "white" }: { className?: string; tone?: "brand" | "white" }) {
+export function Logo({ className, tone = "dark", mark = false }: { className?: string; tone?: "dark" | "light"; mark?: boolean }) {
   return (
-    <span className={cn("inline-flex items-end gap-2", className)}>
+    <span className={cn("inline-flex items-center gap-2.5", className)}>
       <Image
-        src={tone === "white" ? "/brand/mil-mark-white.png" : "/brand/mil-mark.png"}
-        alt="MIL"
+        src={tone === "dark" ? "/brand/mil-mark-light.png" : "/brand/mil-mark.png"}
+        alt="MIL Digital"
         width={1200}
         height={733}
         priority
-        className="h-6 w-auto"
+        className="h-7 w-auto"
       />
-      <span className={cn("pb-px text-[15px] font-medium leading-none tracking-tight", tone === "white" ? "text-fg-2" : "text-paper-muted")}>
-        Digital
-      </span>
+      {mark ? null : (
+        <span
+          aria-hidden
+          className={cn("text-[12.5px] font-bold leading-[1.1] tracking-[-0.005em]", tone === "dark" ? "text-white" : "text-mil-blue")}
+        >
+          Digital Marketing
+          <br />
+          Consultant
+        </span>
+      )}
     </span>
   );
 }

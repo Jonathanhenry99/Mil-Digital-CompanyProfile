@@ -185,7 +185,7 @@ Bahasa visual:
 
 ### Design tokens
 
-> Diambil dari logo MIL (Assets/): gradient **#1C4489 → #03A5E6**. Sumber kebenaran ada di `src/app/globals.css`.
+> **Diperbarui mengikuti MIL Digital Brand Book 2025** (lihat DESIGN_REFERENCES.md §7): primary #1B3C7F & #00ADEE, secondary #FAAF40 & #F13F2D. Tabel di bawah adalah draft awal; sumber kebenaran ada di `src/app/(frontend)/globals.css`.
 
 **Warna**
 

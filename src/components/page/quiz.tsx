@@ -76,7 +76,7 @@ export function Quiz({ cases }: { cases: CaseLike[] }) {
   const progress = Math.max(0, Math.min(step, questions.length)) / questions.length;
 
   return (
-    <section data-ground="#0c0d0f" className="relative min-h-svh pb-20 pt-32 md:pt-40" aria-label="Brand quiz">
+    <section data-ground="#0e1f45" className="relative min-h-svh pb-20 pt-32 md:pt-40" aria-label="Brand quiz">
       <div className="container-x">
         {/* Segmented progress */}
         <div className="flex gap-1.5" aria-hidden>
@@ -96,7 +96,7 @@ export function Quiz({ cases }: { cases: CaseLike[] }) {
             <motion.div key="intro" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.6, ease: EASE }} className="mt-12 max-w-4xl">
               <h1 className="t-display text-[clamp(3rem,7vw,7rem)]">Which service fits your brand?</h1>
               <p className="t-body mt-6 text-lg">Six quick questions, about a minute. You&apos;ll get a recommended service, an engagement model and the reasons behind it.</p>
-              <button type="button" onClick={() => setStep(0)} className="mt-10 inline-flex h-[52px] items-center gap-6 bg-[var(--cta-bg)] pl-6 pr-[18px] text-sm font-semibold text-white transition-colors hover:bg-[var(--cta-bg-hover)]">
+              <button type="button" onClick={() => setStep(0)} className="mt-10 inline-flex h-[52px] items-center gap-6 [background:var(--cta-bg)] pl-6 pr-[18px] text-sm font-semibold text-white transition-colors hover:[background:var(--cta-bg-hover)]">
                 Start the quiz →
               </button>
             </motion.div>
@@ -138,7 +138,7 @@ export function Quiz({ cases }: { cases: CaseLike[] }) {
                     type="button"
                     disabled={!(answers[q.id]?.length)}
                     onClick={() => setStep((s) => s + 1)}
-                    className="inline-flex h-11 items-center bg-[var(--cta-bg)] px-5 text-[13px] font-semibold text-white transition-colors hover:bg-[var(--cta-bg-hover)] disabled:opacity-40"
+                    className="inline-flex h-11 items-center [background:var(--cta-bg)] px-5 text-[13px] font-semibold text-white transition-colors hover:[background:var(--cta-bg-hover)] disabled:opacity-40"
                   >
                     Continue →
                   </button>

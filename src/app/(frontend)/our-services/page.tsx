@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { extraServices } from "@/content/service-pages";
+import { brand } from "@/content/home";
 import { site } from "@/content/site";
 import { CtaLink } from "@/components/ui/cta-link";
 import { BriefTrigger } from "@/components/brief/brief-provider";
@@ -30,7 +31,7 @@ export default function OurServicesPage() {
 
       <Services />
 
-      <section data-ground="#0c0d0f" className="sec" aria-label="Additional services">
+      <section data-ground="#0e1f45" className="sec" aria-label="Additional services">
         <div className="container-x">
           <SectionHead label="Also from MIL" title={"Beyond the\nthree pillars."} intro="Supporting services that make the main work land better." />
           <div className="grid gap-px bg-line md:grid-cols-3">
@@ -50,7 +51,26 @@ export default function OurServicesPage() {
         </div>
       </section>
 
-      <section className="theme-light sec" aria-label="Personalized service">
+      <section className="theme-light sec" aria-label="Who we work with">
+        <div className="container-x">
+          <SectionHead
+            label="Who we work with"
+            title={"From first launch\nto national scale."}
+            intro="Our ideal partners are growth-oriented entrepreneurs: business owners focused on reaching their next milestone."
+          />
+          <div className="grid gap-px bg-line md:grid-cols-3">
+            {brand.audiences.map((a, i) => (
+              <Reveal key={a.title} delay={i * 0.08} className="bg-background p-8">
+                <p className="text-[13px] tabular-nums text-signal">0{i + 1}</p>
+                <h3 className="t-display mt-8 text-[1.8rem]">{a.title}</h3>
+                <p className="mt-3 text-[15px] leading-relaxed text-fg-2">{a.body}</p>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section data-ground="#0e1f45" className="sec" aria-label="Personalized service">
         <div className="container-x grid gap-10 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-7">
             <p className="t-label">Personalized service</p>

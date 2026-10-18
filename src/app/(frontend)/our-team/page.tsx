@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { ceo } from "@/content/site";
-import { values } from "@/content/home";
+import { teamValues } from "@/content/home";
 import { CtaLink } from "@/components/ui/cta-link";
 import { PageHero } from "@/components/page/page-hero";
 import { SectionHead } from "@/components/page/blocks";
@@ -52,11 +52,11 @@ export default function OurTeamPage() {
 
       <section className="theme-light sec" aria-label="Culture">
         <div className="container-x">
-          <SectionHead label="Culture" title={"How we work\ntogether."} intro="The same values we promise clients, practised inside the team first." />
+          <SectionHead label="Culture · F.A.S.T.R." title={"How we work\ntogether."} intro="Our internal values: how we work as a team, support each other and build the MIL culture." />
           <div className="grid gap-px bg-line md:grid-cols-2 lg:grid-cols-5">
-            {values.map((v, i) => (
+            {teamValues.map((v, i) => (
               <Reveal key={v.title} delay={i * 0.06} className="bg-background p-6">
-                <p className="text-[13px] tabular-nums text-signal">0{i + 1}</p>
+                <p className="font-display text-4xl font-semibold leading-none text-warm">{v.mark}</p>
                 <h3 className="t-display mt-6 text-[1.5rem]">{v.title}</h3>
                 <p className="mt-3 text-[14px] leading-relaxed text-fg-2">{v.body}</p>
               </Reveal>
@@ -65,7 +65,7 @@ export default function OurTeamPage() {
         </div>
       </section>
 
-      <section data-ground="#0c0d0f" className="sec" aria-label="Internal activities">
+      <section data-ground="#0e1f45" className="sec" aria-label="Internal activities">
         <div className="container-x">
           <SectionHead label="Inside MIL" title={"A few moments\nfrom the studio."} />
           <div className="grid gap-4 md:grid-cols-3">

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { BrandShapes } from "@/components/ui/brand-graphics";
 import { SplitText } from "@/components/motion/split-text";
 
 /**
@@ -27,7 +28,7 @@ export function PageHero({
 }) {
   return (
     <section
-      data-ground="#0c0d0f"
+      data-ground="#0e1f45"
       className={cn("grain relative overflow-hidden", image ? "flex min-h-[86svh] items-end" : "pt-40 md:pt-48", className)}
       aria-label={label}
     >
@@ -41,11 +42,13 @@ export function PageHero({
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(180deg, rgb(8 9 11 / .65) 0%, rgb(8 9 11 / 0) 25%), linear-gradient(0deg, #0c0d0f 0%, rgb(12 13 15 / .8) 22%, rgb(12 13 15 / .2) 60%), linear-gradient(90deg, rgb(12 13 15 / .6) 0%, rgb(12 13 15 / 0) 60%)",
+                "linear-gradient(180deg, rgb(10 23 51 / .65) 0%, rgb(10 23 51 / 0) 25%), linear-gradient(0deg, #0e1f45 0%, rgb(14 31 69 / .8) 22%, rgb(14 31 69 / .2) 60%), linear-gradient(90deg, rgb(14 31 69 / .6) 0%, rgb(14 31 69 / 0) 60%)",
             }}
           />
         </>
-      ) : null}
+      ) : (
+        <BrandShapes className="absolute -right-[4%] bottom-0 h-[92%] w-auto opacity-40" />
+      )}
       <div className="container-x relative w-full pb-[clamp(40px,6vw,88px)]">
         <p className="fade-in-load t-label mb-6 flex items-center gap-2.5 text-foreground/80" style={{ "--d": "100ms" } as React.CSSProperties}>
           <span className="size-1.5 bg-signal" />

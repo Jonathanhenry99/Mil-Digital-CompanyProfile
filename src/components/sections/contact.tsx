@@ -17,7 +17,7 @@ const channels = [
  */
 export function Contact() {
   return (
-    <section id="contact" data-ground="#0c0d0f" className="sec" aria-label="Contact">
+    <section id="contact" data-ground="#0e1f45" className="sec" aria-label="Contact">
       <div className="container-x grid gap-14 lg:grid-cols-12">
         <div className="lg:col-span-4">
           <p className="t-label">Contact us</p>

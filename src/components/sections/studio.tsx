@@ -85,17 +85,17 @@ export function Studio({ stats, wheel, photo }: { stats: Stat[]; wheel: string[]
 
   return (
     <>
-    <section data-ground="#0c0d0f" aria-label="About MIL Digital">
+    <section data-ground="#0e1f45" aria-label="About MIL Digital">
       <div ref={introRef} className="grain relative flex min-h-svh items-center overflow-hidden">
         <motion.div style={{ y: photoY }} className="absolute -inset-y-[10%] inset-x-0">
           <Image src={photo} alt="" fill sizes="100vw" className="object-cover brightness-[.42] saturate-[.85]" />
         </motion.div>
-        <div aria-hidden className="absolute inset-0 bg-[linear-gradient(0deg,#0c0d0f_0%,rgb(12_13_15/0)_40%,rgb(12_13_15/0)_70%,#0c0d0f_100%)]" />
+        <div aria-hidden className="absolute inset-0 bg-[linear-gradient(0deg,#0e1f45_0%,rgb(14_31_69/0)_40%,rgb(14_31_69/0)_70%,#0e1f45_100%)]" />
         <div className="container-x relative py-[18svh]">
           <p className="t-label mb-8">About MIL Digital</p>
           <SplitText
             as="p"
-            text={"Certified marketers, strategists and creators.\nOne table, from the first audit to the next milestone."}
+            text={"We're not just an agency.\nWe're your partner in growth, combining strategy and execution so your brand reaches its next milestone."}
             className="t-statement max-w-[24ch]"
           />
           <div className="mt-10">

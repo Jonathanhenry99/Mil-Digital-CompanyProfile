@@ -26,7 +26,7 @@ export default function ContactPage() {
         intro="Send a brief, book a session, or just say hello on WhatsApp. Your first consultation is free."
       />
 
-      <section data-ground="#0c0d0f" className="pb-[var(--sec)]" aria-label="Brief and booking">
+      <section data-ground="#0e1f45" className="pb-[var(--sec)]" aria-label="Brief and booking">
         <div className="container-x grid gap-12 lg:grid-cols-12">
           <div className="grid content-start gap-4 lg:col-span-4">
             <Reveal className="border border-line bg-surface p-6">

@@ -24,7 +24,7 @@ export function AtlasPreview() {
   }, [formed]);
 
   return (
-    <div className="ticks border border-line bg-[#08101f]/80 backdrop-blur" aria-label="ATLAS dashboard preview with sample data" role="img">
+    <div className="ticks border border-line bg-[#0a1733]/80 backdrop-blur" aria-label="ATLAS dashboard preview with sample data" role="img">
       <div className="flex items-center justify-between border-b border-line px-4 py-3 text-[13px] text-fg-2">
         <span className="flex items-center gap-3">
           <span className="flex gap-1.5" aria-hidden>

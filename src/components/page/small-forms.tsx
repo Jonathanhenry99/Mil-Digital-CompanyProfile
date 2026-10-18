@@ -47,7 +47,7 @@ function Submit({ pending, children }: { pending: boolean; children: React.React
 function Done({ title, body, children }: { title: string; body: string; children?: React.ReactNode }) {
   return (
     <div role="status" className="border border-line bg-surface p-8">
-      <span className="grid size-11 place-items-center bg-[var(--cta-bg)] text-white">
+      <span className="grid size-11 place-items-center [background:var(--cta-bg)] text-white">
         <Check className="size-5" />
       </span>
       <p className="t-display mt-6 text-3xl">{title}</p>

@@ -27,10 +27,12 @@ export const ceo = {
   name: "Indra Pratama",
   role: "Founder & CEO",
   photo: "/photos/indra-pratama-ceo.jpg",
+  story: "Indra Pratama saw a big opportunity: many brands had great potential but didn't know how to navigate the digital world. That's why MIL exists: to help brands grow and reach their milestones, no matter where they start.",
   bio: "Experienced senior digital marketing consultant with a demonstrated history in the marketing and advertising industry. Skilled in negotiation, sales, communication, management and teamwork, with a Bachelor of Economics in Marketing Management from Universitas Katolik Parahyangan.",
 };
 
-export const tagline = "Let's grow miles away together";
+/** Brand book tagline: MIL from MILestone, "miles away" for progress beyond expectations, "together" for partnership. */
+export const tagline = "Let's grow MILes away together";
 
 export type NavLink = {
   label: string;
