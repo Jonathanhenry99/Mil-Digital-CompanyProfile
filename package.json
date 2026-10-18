@@ -12,6 +12,7 @@
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "seed": "cross-env NODE_OPTIONS=--no-deprecation payload run src/seed/index.ts",
     "db:push": "cross-env NODE_OPTIONS=--no-deprecation payload run src/seed/sync-schema.ts",
+    "media:push": "cross-env NODE_OPTIONS=--no-deprecation payload run src/seed/push-media-to-blob.ts",
     "dev:raw": "cross-env NODE_OPTIONS=--no-deprecation next dev"
   },
   "dependencies": {
@@ -20,6 +21,7 @@
     "@payloadcms/richtext-lexical": "^3.91.0",
     "@payloadcms/storage-vercel-blob": "^3.91.0",
     "@payloadcms/ui": "^3.91.0",
+    "@vercel/blob": "^2.3.1",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.5.0",
     "cross-env": "^10.1.0",

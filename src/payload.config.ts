@@ -40,8 +40,11 @@ export default buildConfig({
     // is set (Vercel → Storage → Blob). Without it, files stay in ./media.
     // clientUploads sends files straight from the browser, past Vercel's
     // 4.5 MB request limit, so the journey film can be uploaded too.
+    // alwaysInsertFields keeps the media table identical with or without the
+    // token, since production never pushes schema changes.
     vercelBlobStorage({
       enabled: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
+      alwaysInsertFields: true,
       collections: { media: true },
       token: process.env.BLOB_READ_WRITE_TOKEN,
       clientUploads: true,
