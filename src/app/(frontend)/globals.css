@@ -470,3 +470,31 @@
     animation-play-state: paused;
   }
 }
+
+/* Growth scroll (Consultation page): the office scene and its shade. */
+.growth-scroll .fx[data-fx="grow"] { transform-box: fill-box; transform-origin: 50% 100%; }
+.growth-scroll .fx[data-fx="wipe"] { transform-box: fill-box; transform-origin: 0 50%; }
+.growth-scroll .fx[data-fx="pop"] { transform-box: fill-box; transform-origin: 50% 100%; }
+.growth-scroll .fx[data-fx="draw"] { stroke-dasharray: 1; }
+.growth-scroll .conf {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: growth-drift var(--dur, 3s) var(--d, 0s) ease-in-out infinite alternate;
+}
+@keyframes growth-drift {
+  from { transform: translateY(-14px) rotate(0deg); }
+  to { transform: translateY(54px) rotate(200deg); }
+}
+.growth-shade {
+  background:
+    linear-gradient(90deg, rgb(10 23 51 / 0.92) 0%, rgb(10 23 51 / 0.74) 28%, rgb(10 23 51 / 0.18) 55%, rgb(10 23 51 / 0) 68%),
+    linear-gradient(0deg, rgb(10 23 51 / 0.72) 0%, rgb(10 23 51 / 0) 22%);
+}
+@media (max-width: 767px) {
+  .growth-shade {
+    background: linear-gradient(180deg, #0a1733 0%, #0a1733 34%, rgb(10 23 51 / 0) 48%, rgb(10 23 51 / 0) 76%, rgb(10 23 51 / 0.7) 100%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .growth-scroll .conf { animation: none; }
+}

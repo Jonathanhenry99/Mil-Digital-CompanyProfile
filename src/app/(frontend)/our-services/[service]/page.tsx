@@ -10,7 +10,7 @@ import { PageHero } from "@/components/page/page-hero";
 import { SectionHead, PageSkeleton } from "@/components/page/blocks";
 import { CaseCarousel } from "@/components/page/case-carousel";
 import { ClientMarquee } from "@/components/sections/client-marquee";
-import { Process } from "@/components/sections/process";
+import { GrowthScroll } from "@/components/sections/growth-scroll";
 import { CurvedGallery } from "@/components/sections/curved-gallery";
 import { Hairline } from "@/components/motion/hairline";
 import { Odometer } from "@/components/motion/odometer";
@@ -61,7 +61,7 @@ async function ServicePageContent({ params }: { params: PageProps<"/our-services
 
       <ClientMarquee clients={home.clients} />
 
-      {s.feature === "approach" ? <Process /> : null}
+      {s.feature === "approach" ? <GrowthScroll /> : null}
 
       {s.feature === "platforms" ? (
         <section className="theme-light sec" aria-label="Platforms and results">
