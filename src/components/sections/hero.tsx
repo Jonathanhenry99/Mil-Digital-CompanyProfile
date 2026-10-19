@@ -97,7 +97,7 @@ export function Hero({ hero, video }: { hero: HomeData["hero"]; video: string | 
         }}
       />
 
-      <motion.div style={{ y: copyY, opacity: copyOpacity }} className="container-x relative flex h-full flex-col justify-end pb-[clamp(28px,5vw,56px)] pt-28">
+      <motion.div style={{ y: copyY, opacity: copyOpacity }} className="container-x relative flex h-full flex-col justify-end pb-[clamp(28px,5vw,56px)] pt-[var(--header-space)]">
         <p className="fade-in-load t-label mb-6 flex items-center gap-2.5 text-foreground/80" style={{ "--d": "150ms" } as React.CSSProperties}>
           <span className="size-1.5 bg-signal" />
           {hero.eyebrow}

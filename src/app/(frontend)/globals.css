@@ -31,6 +31,8 @@
   --frame: clamp(8px, 0.9vw, 14px);
   --frame-bg: #d7dde7;
   --card-radius: clamp(20px, 2.2vw, 34px);
+  /* Room the floating header needs above any opening copy. */
+  --header-space: clamp(104px, 9vw, 128px);
 
   --bg: var(--g-base);
   --surface: #16295a;
@@ -516,8 +518,10 @@ body {
 main {
   padding: var(--frame) var(--frame) 0;
 }
-main > :is(section, article, a) {
+main > a {
   display: block;
+}
+main > :is(section, article, a) {
   border-radius: var(--card-radius);
   overflow: clip;
   background: var(--g-base);

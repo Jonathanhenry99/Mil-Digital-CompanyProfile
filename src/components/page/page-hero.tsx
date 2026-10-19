@@ -29,7 +29,7 @@ export function PageHero({
   return (
     <section
       data-ground="#0e1f45"
-      className={cn("grain relative overflow-hidden", image ? "flex min-h-[86svh] items-end" : "pt-40 md:pt-48", className)}
+      className={cn("grain relative overflow-hidden", image ? "flex min-h-[86svh] items-end pt-[var(--header-space)]" : "pt-40 md:pt-48", className)}
       aria-label={label}
     >
       {image ? (
