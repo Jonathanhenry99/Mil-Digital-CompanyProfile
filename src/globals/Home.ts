@@ -25,7 +25,7 @@ export const Home: GlobalConfig = {
               name: "title",
               type: "textarea",
               required: true,
-              admin: { description: "Press Enter for a line break. The last line is shown in blue." },
+              admin: { description: "The last word is set huge behind the people in the photo; the rest sits above it." },
             },
             { name: "body", type: "textarea", required: true },
             {
@@ -35,7 +35,17 @@ export const Home: GlobalConfig = {
               filterOptions: { mimeType: { contains: "image" } },
               admin: {
                 description:
-                  "Photo behind the headline. It is faded and tinted blue automatically. Set its focal point in the Media library to choose what stays in frame.",
+                  "Used together with the cut-out below. While the cut-out is empty, the homepage shows the built-in MIL studio illustration instead.",
+              },
+            },
+            {
+              name: "foregroundImage",
+              type: "upload",
+              relationTo: "media",
+              filterOptions: { mimeType: { contains: "image" } },
+              admin: {
+                description:
+                  "Optional: the same photo with its background removed (transparent PNG/WebP, same size). The last word of the title is set huge between the two, so the people stand in front of it.",
               },
             },
           ],

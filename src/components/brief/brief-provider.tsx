@@ -3,7 +3,8 @@
 import * as React from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { getLenis } from "@/lib/lenis";
-import { CtaArrow, ctaClass, type CtaVariant } from "@/components/ui/cta-link";
+import { cn } from "@/lib/utils";
+import { CtaArrow, ctaClass, SplitCta, splitCtaClass, type CtaVariant } from "@/components/ui/cta-link";
 import { BriefPaper } from "./brief-paper";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -88,6 +89,7 @@ export function BriefTrigger({
   quiz,
   variant = "primary",
   size = "lg",
+  split = false,
   className,
   children,
 }: {
@@ -96,10 +98,21 @@ export function BriefTrigger({
   quiz?: string;
   variant?: CtaVariant;
   size?: "md" | "lg";
+  /** Label pill plus a separate round arrow (see <SplitCta>). */
+  split?: boolean;
   className?: string;
   children: React.ReactNode;
 }) {
   const { open } = useBrief();
+  if (split) {
+    return (
+      <button type="button" onClick={() => open(service, quiz)} className={cn(splitCtaClass, className)}>
+        <SplitCta variant={variant} size={size}>
+          {children}
+        </SplitCta>
+      </button>
+    );
+  }
   return (
     <button type="button" onClick={() => open(service, quiz)} className={ctaClass(variant, size, className)}>
       {children}

@@ -24,7 +24,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <Hero hero={data.hero} video={data.hero.video} />
+      <Hero hero={data.hero} video={data.hero.video} clients={data.clients} cases={data.caseStudies} />
       <Studio />
       <ClientMarquee clients={data.clients} />
       <CaseCarousel cases={data.caseStudies} />

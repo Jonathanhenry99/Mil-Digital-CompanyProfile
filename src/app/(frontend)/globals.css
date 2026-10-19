@@ -543,3 +543,64 @@ body > footer {
   border-radius: var(--card-radius);
   background: var(--g-deep);
 }
+
+/* ── Hero depth (homepage) ────────────────────────────────────────
+ * The headline's last word, huge, between the photo and the cut-out of
+ * the team; letters rise in one by one on load. The badge ring turns
+ * slowly; the case ticker fills over the 4.5s each slide is shown.
+ * ─────────────────────────────────────────────────────────────── */
+.hero-word {
+  font-size: clamp(5rem, 15vw, 17rem);
+  color: transparent;
+}
+
+/* Depth of field: the scene behind the word goes soft; the people stay sharp. */
+.hero-dof {
+  filter: blur(3px) saturate(0.85) brightness(1.06);
+}
+.hero-letter {
+  display: inline-block;
+  background: linear-gradient(180deg, #ffffff 0%, #ffffff 45%, #b9e6ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: hero-letter 1.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(350ms + var(--i) * 70ms);
+}
+@keyframes hero-letter {
+  from {
+    opacity: 0;
+    transform: translateY(28%) scale(0.96);
+    filter: blur(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+.hero-badge {
+  animation: hero-spin 22s linear infinite;
+}
+@keyframes hero-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.hero-tick {
+  animation: hero-tick 4.5s linear both;
+}
+@keyframes hero-tick {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-letter,
+  .hero-badge,
+  .hero-tick {
+    animation: none;
+  }
+}

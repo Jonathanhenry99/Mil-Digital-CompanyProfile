@@ -1,6 +1,6 @@
 import * as React from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /*
@@ -14,6 +14,7 @@ const variants = {
   blue: "bg-signal text-white hover:bg-[#5a9eff]",
   ghost: "border border-line-strong text-foreground hover:border-foreground/70 hover:bg-foreground/[0.06]",
   ink: "bg-paper-ink text-paper hover:bg-[#2b2e33]",
+  white: "bg-white text-mil-blue hover:bg-white/90",
 } as const;
 
 export type CtaVariant = keyof typeof variants;
@@ -27,6 +28,26 @@ export function ctaClass(variant: CtaVariant = "primary", size: "md" | "lg" = "l
     className,
   );
 }
+
+/**
+ * Split call-to-action: the label in one pill and a round ↗ beside it,
+ * which turns to point ahead on hover. For the hero's main action.
+ */
+export function SplitCta({ variant = "white", size = "lg", children }: { variant?: CtaVariant; size?: "md" | "lg"; children: React.ReactNode }) {
+  const h = size === "lg" ? "h-[52px]" : "h-11";
+  return (
+    <>
+      <span className={cn("inline-flex items-center rounded-full font-semibold tracking-tight transition-colors duration-200", h, size === "lg" ? "px-7 text-sm" : "px-5 text-[13px]", variants[variant])}>
+        {children}
+      </span>
+      <span aria-hidden className={cn("grid aspect-square place-items-center rounded-full transition-colors duration-200", h, variants[variant])}>
+        <ArrowUpRight className="size-5 transition-transform duration-500 ease-out-expo group-hover/cta:rotate-45" />
+      </span>
+    </>
+  );
+}
+
+export const splitCtaClass = "group/cta inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap transition-transform duration-200 active:scale-[0.98]";
 
 /** The sliding arrow; `tile` puts it on a blue square (primary buttons). */
 export function CtaArrow({ tile }: { tile?: boolean }) {

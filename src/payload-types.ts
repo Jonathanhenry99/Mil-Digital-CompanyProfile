@@ -809,14 +809,18 @@ export interface Home {
   hero: {
     eyebrow: string;
     /**
-     * Press Enter for a line break. The last line is shown in blue.
+     * The last word is set huge behind the people in the photo; the rest sits above it.
      */
     title: string;
     body: string;
     /**
-     * Photo behind the headline. It is faded and tinted blue automatically. Set its focal point in the Media library to choose what stays in frame.
+     * Used together with the cut-out below. While the cut-out is empty, the homepage shows the built-in MIL studio illustration instead.
      */
     backgroundImage?: (number | null) | Media;
+    /**
+     * Optional: the same photo with its background removed (transparent PNG/WebP, same size). The last word of the title is set huge between the two, so the people stand in front of it.
+     */
+    foregroundImage?: (number | null) | Media;
   };
   showreel: {
     title: string;
@@ -881,6 +885,7 @@ export interface HomeSelect<T extends boolean = true> {
         title?: T;
         body?: T;
         backgroundImage?: T;
+        foregroundImage?: T;
       };
   showreel?:
     | T

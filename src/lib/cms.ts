@@ -19,6 +19,8 @@ export type HomeData = {
     title: string;
     body: string;
     background: { image: string; focal: string } | null;
+    /** The background photo with its background removed, for the depth effect. */
+    foreground: string | null;
     /** The journey film, if uploaded: plays over the hero photo. */
     video: string | null;
   };
@@ -76,6 +78,7 @@ export async function getHomeData(): Promise<HomeData> {
   ]);
 
   const bg = file(home.hero?.backgroundImage);
+  const fg = file(home.hero?.foregroundImage);
   const report = home.featuredReport && typeof home.featuredReport === "object" ? home.featuredReport : null;
   const caseStudies = (home.featuredCaseStudies ?? []).filter((c) => typeof c === "object");
 
@@ -84,7 +87,11 @@ export async function getHomeData(): Promise<HomeData> {
       eyebrow: home.hero?.eyebrow || fallback.hero.eyebrow,
       title: home.hero?.title || fallback.hero.title,
       body: home.hero?.body || fallback.hero.body,
-      background: bg?.url ? { image: bg.url, focal: focal(bg) } : null,
+      // The depth effect needs a matching pair: the CMS photo + its cut-out,
+      // or, until a cut-out is uploaded, the built-in studio illustration.
+      ...(fg?.url
+        ? { background: bg?.url ? { image: bg.url, focal: focal(bg) } : null, foreground: fg.url }
+        : { background: fallback.hero.background, foreground: fallback.hero.foreground }),
       video: file(home.showreel?.video)?.url ?? null,
     },
     showreel: {

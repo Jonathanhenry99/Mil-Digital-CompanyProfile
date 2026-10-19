@@ -52,10 +52,12 @@ export const hero = {
    * `focal` here).
    */
   background: {
-    image: "/photos/mil-team-working.jpg",
-    /** CSS object-position: which part of the photo stays in frame. */
-    focal: "62% 35%",
+    image: "/photos/hero-illustration.webp",
+    /** CSS object-position: which part of the scene stays in frame. */
+    focal: "62% 40%",
   },
+  /** The same scene with its background removed: the people stand in front of the big word. */
+  foreground: "/photos/hero-illustration-cutout.webp",
 };
 
 export const showreel = {
